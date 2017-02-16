@@ -1,0 +1,31 @@
+<svg height="194pt" viewBox="0.00 0.00 170.00 194.00" width="170pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 190)">
+<title>G</title>
+<polygon fill="white" points="-4,5 -4,-190 167,-190 167,5 -4,5" stroke="white"/>
+<!-- 45635152 -->
+<g class="node" id="node1"><title>45635152</title>
+<polygon fill="none" points="-0.5,-149 -0.5,-185 162.5,-185 162.5,-149 -0.5,-149" stroke="black"/>
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="81" y="-163.3">dense_input_1: InputLayer</text>
+</g>
+<!-- 51061456 -->
+<g class="node" id="node2"><title>51061456</title>
+<polygon fill="none" points="30,-75 30,-111 132,-111 132,-75 30,-75" stroke="black"/>
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="81" y="-89.3">dense_1: Dense</text>
+</g>
+<!-- 45635152&#45;&gt;51061456 -->
+<g class="edge" id="edge1"><title>45635152-&gt;51061456</title>
+<path d="M81,-148.937C81,-140.807 81,-130.876 81,-121.705" fill="none" stroke="black"/>
+<polygon fill="black" points="84.5001,-121.441 81,-111.441 77.5001,-121.441 84.5001,-121.441" stroke="black"/>
+</g>
+<!-- 51061840 -->
+<g class="node" id="node3"><title>51061840</title>
+<polygon fill="none" points="7,-1 7,-37 155,-37 155,-1 7,-1" stroke="black"/>
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="81" y="-15.3">activation_1: Activation</text>
+</g>
+<!-- 51061456&#45;&gt;51061840 -->
+<g class="edge" id="edge2"><title>51061456-&gt;51061840</title>
+<path d="M81,-74.937C81,-66.8072 81,-56.8761 81,-47.7047" fill="none" stroke="black"/>
+<polygon fill="black" points="84.5001,-47.4406 81,-37.4407 77.5001,-47.4407 84.5001,-47.4406" stroke="black"/>
+</g>
+</g>
+</svg>
