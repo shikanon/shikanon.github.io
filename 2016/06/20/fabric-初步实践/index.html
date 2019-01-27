@@ -6,15 +6,15 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -32,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -66,21 +66,21 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="fabric,ssh,免密码登录,部署," />
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
+  <meta name="keywords" content="fabric,ssh,免密码登录,部署,">
 
 
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
 
 
 
@@ -88,12 +88,14 @@
 
 
 <meta name="description" content="在集群部署时，我们经常用到堡垒机作为跳板，堡垒机和集群的其他的用户名、密码、端口号都是不同的，fabric如何进行配置不同的用户、端口号和密码。">
+<meta name="keywords" content="fabric,ssh,免密码登录,部署">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fabric 初步实践">
 <meta property="og:url" content="http://yoursite.com/2016/06/20/fabric-初步实践/index.html">
 <meta property="og:site_name" content="shikanon">
 <meta property="og:description" content="在集群部署时，我们经常用到堡垒机作为跳板，堡垒机和集群的其他的用户名、密码、端口号都是不同的，fabric如何进行配置不同的用户、端口号和密码。">
-<meta property="og:updated_time" content="2017-02-16T03:34:34.702Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-16T03:34:34.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fabric 初步实践">
 <meta name="twitter:description" content="在集群部署时，我们经常用到堡垒机作为跳板，堡垒机和集群的其他的用户名、密码、端口号都是不同的，fabric如何进行配置不同的用户、端口号和密码。">
@@ -124,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/06/20/fabric-初步实践/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/06/20/fabric-初步实践/">
 
 
 
@@ -133,7 +135,7 @@
   <title> fabric 初步实践 | shikanon </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -158,12 +160,12 @@
   <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-meta ">
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">shikanon</span>
       <span class="logo-line-after"><i></i></span>
@@ -192,7 +194,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -202,7 +204,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -212,7 +214,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -222,7 +224,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -232,7 +234,7 @@
         <li class="menu-item menu-item-sitemap">
           <a href="/sitemap.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             Sitemap
           </a>
@@ -266,18 +268,18 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/20/fabric-初步实践/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <span style="display:none" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
     <meta itemprop="name" content="shikanon">
     <meta itemprop="description" content="">
     <meta itemprop="image" content="/images/avatar.gif">
   </span>
 
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+  <span style="display:none" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="shikanon">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+    <span style="display:none" itemprop="logo" itemscope="" itemtype="http://schema.org/ImageObject">
       <img style="display:none;" itemprop="url image" alt="shikanon" src="">
     </span>
   </span>
@@ -317,7 +319,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -328,7 +330,7 @@
                 <span class="post-meta-item-text">类别：</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/技术博文/" itemprop="url" rel="index">
                     <span itemprop="name">技术博文</span>
                   </a>
@@ -339,7 +341,7 @@
                   ， 
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/技术博文/系统运维/" itemprop="url" rel="index">
                     <span itemprop="name">系统运维</span>
                   </a>
@@ -391,8 +393,8 @@
 <hr>
 <a id="more"></a>
 <p>fabric作为一种强大的运维工具，可以让部署运维轻松很多，最简单的fabric使用，首先设置<strong>env.user, env.port, env.hosts, env.password</strong>,如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#coding:utf8</div><div class="line">from fabric.api import *</div><div class="line">#用户名</div><div class="line">env.user = &quot;shikanon&quot;</div><div class="line">#中转ip，堡垒机</div><div class="line">env.gateway = &quot;10.17.35.92&quot;</div><div class="line">env.port = 12303</div><div class="line">env.hosts = [&quot;192.168.6.%d&quot;%i for i in range(2,11)]</div><div class="line">#密码</div><div class="line">env.password = &quot;shikanon_123456&quot;</div></pre></td></tr></table></figure>
-<p>这样就配置好了集群，但通常情况下为了安全堡垒机和各机器的用户名、端口号、密码都是不同的，那么需要有针对性设置，在fabric中用env.hosts和env.password组合就可以了，不过需要注意的是原来的ip形式需要全部改为user@host:port这种形式，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#需要以user@host:port填写</div><div class="line">env.gateway = &quot;shikanon@183.3.169.134:12020&quot;</div><div class="line">env.hosts = [&quot;shikanon@183.3.169.134:12020&quot;, &quot;root@192.168.0.171:22&quot;, &quot;root@192.168.0.181:22&quot;]</div><div class="line">#可以定义不同的密码</div><div class="line">env.passwords = &#123;</div><div class="line">    &quot;shikanon@183.3.169.134:12020&quot;:&quot;shikanon_123456&quot;,</div><div class="line">    &quot;root@192.168.0.171:22&quot;:&quot;12shikanon_3456&quot;,</div><div class="line">    &quot;root@192.168.0.181:22&quot;:&quot;1234shikanon_56&quot;&#125;</div><div class="line">#下面是rsa免登录设置</div><div class="line">#</div><div class="line">def create_keygen():</div><div class="line">    with settings(warn_only=True):</div><div class="line">        run(&quot;rm -rf shikanon/.ssh&quot;)</div><div class="line">    with settings(warn_only=True):</div><div class="line">        run(&quot;mkdir -p shikanon/.ssh&quot;)</div><div class="line">    with settings(warn_only=True):</div><div class="line">        result = run(r&quot;ssh-keygen -t rsa -P &apos;&apos; -f ~/shikanon/.ssh/id_rsa&quot;)</div><div class="line"></div><div class="line">def get_ras_id():</div><div class="line">    get(&quot;~/shikanon/.ssh/id_rsa.pub&quot;,&quot;./rsa/rsa_%s_id_rsa.pub&quot;%(env.host))</div><div class="line"></div><div class="line">@runs_once</div><div class="line">def zip():</div><div class="line">    local(&quot;zip -r authorized_keys.zip rsa/&quot;)</div><div class="line"></div><div class="line">def clean():</div><div class="line">    run(&quot;rm -rf ~/shikanon/&quot;)</div><div class="line"></div><div class="line">def upload():</div><div class="line">    run(&quot;rm -f authorized_keys.zip&quot;)</div><div class="line">    put(&quot;authorized_keys.zip&quot;,&quot;~/shikanon/&quot;)</div><div class="line">    with settings(warn_only=True):</div><div class="line">        run(&quot;unzip ~/shikanon/authorized_keys.zip -d ~/shikanon/.ssh&quot;)</div><div class="line">    rsa_files = run(&quot;ls ~/shikanon/.ssh/rsa/&quot;)</div><div class="line">    for commandline in rsa_files.split(&quot;\r\n&quot;):</div><div class="line">        for rsa_file in commandline.split(&quot; &quot;):</div><div class="line">            if rsa_file:</div><div class="line">                print(&quot;rsa_file:&quot;,rsa_file)</div><div class="line">                run(&quot;cat ~/shikanon/.ssh/rsa/%s &gt;&gt; ~/shikanon/.ssh/authorized_keys&quot;%rsa_file)</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf8</span><br><span class="line">from fabric.api import *</span><br><span class="line">#用户名</span><br><span class="line">env.user = &quot;shikanon&quot;</span><br><span class="line">#中转ip，堡垒机</span><br><span class="line">env.gateway = &quot;10.17.35.92&quot;</span><br><span class="line">env.port = 12303</span><br><span class="line">env.hosts = [&quot;192.168.6.%d&quot;%i for i in range(2,11)]</span><br><span class="line">#密码</span><br><span class="line">env.password = &quot;shikanon_123456&quot;</span><br></pre></td></tr></table></figure>
+<p>这样就配置好了集群，但通常情况下为了安全堡垒机和各机器的用户名、端口号、密码都是不同的，那么需要有针对性设置，在fabric中用env.hosts和env.password组合就可以了，不过需要注意的是原来的ip形式需要全部改为user@host:port这种形式，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#需要以user@host:port填写</span><br><span class="line">env.gateway = &quot;shikanon@183.3.169.134:12020&quot;</span><br><span class="line">env.hosts = [&quot;shikanon@183.3.169.134:12020&quot;, &quot;root@192.168.0.171:22&quot;, &quot;root@192.168.0.181:22&quot;]</span><br><span class="line">#可以定义不同的密码</span><br><span class="line">env.passwords = &#123;</span><br><span class="line">    &quot;shikanon@183.3.169.134:12020&quot;:&quot;shikanon_123456&quot;,</span><br><span class="line">    &quot;root@192.168.0.171:22&quot;:&quot;12shikanon_3456&quot;,</span><br><span class="line">    &quot;root@192.168.0.181:22&quot;:&quot;1234shikanon_56&quot;&#125;</span><br><span class="line">#下面是rsa免登录设置</span><br><span class="line">#</span><br><span class="line">def create_keygen():</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;rm -rf shikanon/.ssh&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;mkdir -p shikanon/.ssh&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        result = run(r&quot;ssh-keygen -t rsa -P &apos;&apos; -f ~/shikanon/.ssh/id_rsa&quot;)</span><br><span class="line"></span><br><span class="line">def get_ras_id():</span><br><span class="line">    get(&quot;~/shikanon/.ssh/id_rsa.pub&quot;,&quot;./rsa/rsa_%s_id_rsa.pub&quot;%(env.host))</span><br><span class="line"></span><br><span class="line">@runs_once</span><br><span class="line">def zip():</span><br><span class="line">    local(&quot;zip -r authorized_keys.zip rsa/&quot;)</span><br><span class="line"></span><br><span class="line">def clean():</span><br><span class="line">    run(&quot;rm -rf ~/shikanon/&quot;)</span><br><span class="line"></span><br><span class="line">def upload():</span><br><span class="line">    run(&quot;rm -f authorized_keys.zip&quot;)</span><br><span class="line">    put(&quot;authorized_keys.zip&quot;,&quot;~/shikanon/&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;unzip ~/shikanon/authorized_keys.zip -d ~/shikanon/.ssh&quot;)</span><br><span class="line">    rsa_files = run(&quot;ls ~/shikanon/.ssh/rsa/&quot;)</span><br><span class="line">    for commandline in rsa_files.split(&quot;\r\n&quot;):</span><br><span class="line">        for rsa_file in commandline.split(&quot; &quot;):</span><br><span class="line">            if rsa_file:</span><br><span class="line">                print(&quot;rsa_file:&quot;,rsa_file)</span><br><span class="line">                run(&quot;cat ~/shikanon/.ssh/rsa/%s &gt;&gt; ~/shikanon/.ssh/authorized_keys&quot;%rsa_file)</span><br></pre></td></tr></table></figure></p>
 <p><strong>以上是一个设置ssh免密码登陆的脚本</strong></p>
 
       
@@ -402,7 +404,7 @@
       
         
 <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;"/>
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
     <div>欢迎您扫一扫，订阅上面↑↑↑的微信公众号！</div>
 </div>
 
@@ -485,8 +487,7 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/20/fabric-初步实践/"
-           data-title="fabric 初步实践" data-url="http://yoursite.com/2016/06/20/fabric-初步实践/">
+      <div class="ds-thread" data-thread-key="2016/06/20/fabric-初步实践/" data-title="fabric 初步实践" data-url="http://yoursite.com/2016/06/20/fabric-初步实践/">
       </div>
     
   </div>
@@ -512,10 +513,8 @@
       
 
       <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="shikanon" />
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="shikanon">
           <p class="site-author-name" itemprop="name">shikanon</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
@@ -524,7 +523,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -533,7 +532,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -542,7 +541,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -608,10 +607,10 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
