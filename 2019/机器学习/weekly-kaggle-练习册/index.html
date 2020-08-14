@@ -1,0 +1,2827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,kaggle,机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="解读 kaggle 各类型题目的做法，实战玩转机器学习，本题是一道17年的竞赛题，做房价预测，特征工程这里比较有趣的是对偏态数据的处理，项目地址：https://github.com/shikanon/kaggle-every-day-study">
+<meta name="keywords" content="算法,kaggle,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weekly kaggle 练习题解读(House Prices)">
+<meta property="og:url" content="http://shikanon.com/2019/机器学习/weekly-kaggle-练习册/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="解读 kaggle 各类型题目的做法，实战玩转机器学习，本题是一道17年的竞赛题，做房价预测，特征工程这里比较有趣的是对偏态数据的处理，项目地址：https://github.com/shikanon/kaggle-every-day-study">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_10_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_13_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_17_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_19_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_21_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_21_2.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_22_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_22_2.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_23_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_23_2.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_25_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_25_2.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_32_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_33_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_34_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_42_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_48_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_52_0.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_73_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_77_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_78_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/output_79_1.png">
+<meta property="og:image" content="http://shikanon.com/img/house-prices/QBuDOjs.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20171117094740886?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMTg5MTYzMTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.972Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weekly kaggle 练习题解读(House Prices)">
+<meta name="twitter:description" content="解读 kaggle 各类型题目的做法，实战玩转机器学习，本题是一道17年的竞赛题，做房价预测，特征工程这里比较有趣的是对偏态数据的处理，项目地址：https://github.com/shikanon/kaggle-every-day-study">
+<meta name="twitter:image" content="http://shikanon.com/img/house-prices/output_10_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>weekly kaggle 练习题解读(House Prices) | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2019/机器学习/weekly-kaggle-练习册/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">weekly kaggle 练习题解读(House Prices)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-20T21:07:18+08:00">
+                2019-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/kaggle/" itemprop="url" rel="index">
+                    <span itemprop="name">kaggle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  37 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  解读 kaggle 各类型题目的做法，实战玩转机器学习，本题是一道17年的竞赛题，做房价预测，特征工程这里比较有趣的是对偏态数据的处理，项目地址：https://github.com/shikanon/kaggle-every-day-study
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="每日一课-Kaggle-练习讲解"><a href="#每日一课-Kaggle-练习讲解" class="headerlink" title="每日一课 Kaggle 练习讲解"></a>每日一课 Kaggle 练习讲解</h1><p>每周一道Kaggle题，学习机器学习！</p>
+<p>今天给大家来讲讲《House Prices: Advanced Regression Techniques》（房价预测模型）的思路:</p>
+<ul>
+<li>（1） 数据可视化和数据分布变换</li>
+<li>（2） 缺省值处理</li>
+<li>（3） 数据特征变换</li>
+<li>（4） 数据建模及交叉检验</li>
+<li>（5） 模型组合</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> stats</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> norm, skew</span><br><span class="line"><span class="keyword">from</span> scipy.special <span class="keyword">import</span> boxcox1p</span><br><span class="line"><span class="keyword">from</span> scipy.stats <span class="keyword">import</span> boxcox_normmax</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold, cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<h2 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h2><p>去除ID</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train_path = <span class="string">"http://kaggle.shikanon.com/house-prices-advanced-regression-techniques/train.csv"</span></span><br><span class="line">test_path = <span class="string">"http://kaggle.shikanon.com/house-prices-advanced-regression-techniques/test.csv"</span></span><br><span class="line">train_df = pd.read_csv(train_path)</span><br><span class="line">test_df = pd.read_csv(test_path)</span><br><span class="line">train_df.head()</span><br></pre></td></tr></table></figure>
+
+<div class="output_html rendered_html output_subarea output_execute_result" style="overflow-x: auto;padding: 0.4em;">
+<div>
+<style scoped>
+
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+    .rendered_html th, .rendered_html td {
+    text-align: right;
+    vertical-align: middle;
+    padding: 0.5em 0.5em;
+    line-height: normal;
+    white-space: nowrap;
+    width: 80px;
+    border: none;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Id</th>
+      <th>MSSubClass</th>
+      <th>MSZoning</th>
+      <th>LotFrontage</th>
+      <th>LotArea</th>
+      <th>Street</th>
+      <th>Alley</th>
+      <th>LotShape</th>
+      <th>LandContour</th>
+      <th>Utilities</th>
+      <th>...</th>
+      <th>PoolArea</th>
+      <th>PoolQC</th>
+      <th>Fence</th>
+      <th>MiscFeature</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SaleType</th>
+      <th>SaleCondition</th>
+      <th>SalePrice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>65.0</td>
+      <td>8450</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>208500</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>20</td>
+      <td>RL</td>
+      <td>80.0</td>
+      <td>9600</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>Reg</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>5</td>
+      <td>2007</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>181500</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>68.0</td>
+      <td>11250</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>9</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>223500</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>70</td>
+      <td>RL</td>
+      <td>60.0</td>
+      <td>9550</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2006</td>
+      <td>WD</td>
+      <td>Abnorml</td>
+      <td>140000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>60</td>
+      <td>RL</td>
+      <td>84.0</td>
+      <td>14260</td>
+      <td>Pave</td>
+      <td>NaN</td>
+      <td>IR1</td>
+      <td>Lvl</td>
+      <td>AllPub</td>
+      <td>...</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>12</td>
+      <td>2008</td>
+      <td>WD</td>
+      <td>Normal</td>
+      <td>250000</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 81 columns</p>
+</div>
+</div>
+
+<p>我们在分析之前要先了解个字段的意思：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df.columns</span><br></pre></td></tr></table></figure>
+<pre><code>Index([&apos;Id&apos;, &apos;MSSubClass&apos;, &apos;MSZoning&apos;, &apos;LotFrontage&apos;, &apos;LotArea&apos;, &apos;Street&apos;,
+       &apos;Alley&apos;, &apos;LotShape&apos;, &apos;LandContour&apos;, &apos;Utilities&apos;, &apos;LotConfig&apos;,
+       &apos;LandSlope&apos;, &apos;Neighborhood&apos;, &apos;Condition1&apos;, &apos;Condition2&apos;, &apos;BldgType&apos;,
+       &apos;HouseStyle&apos;, &apos;OverallQual&apos;, &apos;OverallCond&apos;, &apos;YearBuilt&apos;, &apos;YearRemodAdd&apos;,
+       &apos;RoofStyle&apos;, &apos;RoofMatl&apos;, &apos;Exterior1st&apos;, &apos;Exterior2nd&apos;, &apos;MasVnrType&apos;,
+       &apos;MasVnrArea&apos;, &apos;ExterQual&apos;, &apos;ExterCond&apos;, &apos;Foundation&apos;, &apos;BsmtQual&apos;,
+       &apos;BsmtCond&apos;, &apos;BsmtExposure&apos;, &apos;BsmtFinType1&apos;, &apos;BsmtFinSF1&apos;,
+       &apos;BsmtFinType2&apos;, &apos;BsmtFinSF2&apos;, &apos;BsmtUnfSF&apos;, &apos;TotalBsmtSF&apos;, &apos;Heating&apos;,
+       &apos;HeatingQC&apos;, &apos;CentralAir&apos;, &apos;Electrical&apos;, &apos;1stFlrSF&apos;, &apos;2ndFlrSF&apos;,
+       &apos;LowQualFinSF&apos;, &apos;GrLivArea&apos;, &apos;BsmtFullBath&apos;, &apos;BsmtHalfBath&apos;, &apos;FullBath&apos;,
+       &apos;HalfBath&apos;, &apos;BedroomAbvGr&apos;, &apos;KitchenAbvGr&apos;, &apos;KitchenQual&apos;,
+       &apos;TotRmsAbvGrd&apos;, &apos;Functional&apos;, &apos;Fireplaces&apos;, &apos;FireplaceQu&apos;, &apos;GarageType&apos;,
+       &apos;GarageYrBlt&apos;, &apos;GarageFinish&apos;, &apos;GarageCars&apos;, &apos;GarageArea&apos;, &apos;GarageQual&apos;,
+       &apos;GarageCond&apos;, &apos;PavedDrive&apos;, &apos;WoodDeckSF&apos;, &apos;OpenPorchSF&apos;,
+       &apos;EnclosedPorch&apos;, &apos;3SsnPorch&apos;, &apos;ScreenPorch&apos;, &apos;PoolArea&apos;, &apos;PoolQC&apos;,
+       &apos;Fence&apos;, &apos;MiscFeature&apos;, &apos;MiscVal&apos;, &apos;MoSold&apos;, &apos;YrSold&apos;, &apos;SaleType&apos;,
+       &apos;SaleCondition&apos;, &apos;SalePrice&apos;],
+      dtype=&apos;object&apos;)
+</code></pre><ul>
+<li>MSSubClass: 建筑的等级，类型：类别型</li>
+<li>MSZoning: 区域分类，类型：类别型</li>
+<li>LotFrontage: 距离街道的直线距离，类型：数值型，单位：英尺</li>
+<li>LotArea: 地皮面积，类型：数值型，单位：平方英尺</li>
+<li>Street: 街道类型，类型：类别型</li>
+<li>Alley: 巷子类型，类型：类别型</li>
+<li>LotShape: 房子整体形状，类型：类别型</li>
+<li>LandContour: 平整度级别，类型：类别型</li>
+<li>Utilities: 公共设施类型，类型：类别型</li>
+<li>LotConfig: 房屋配置，类型：类别型</li>
+<li>LandSlope: 倾斜度，类型：类别型</li>
+<li>Neighborhood: 市区物理位置，类型：类别型</li>
+<li>Condition1: 主干道或者铁路便利程度，类型：类别型</li>
+<li>Condition2: 主干道或者铁路便利程度，类型：类别型</li>
+<li>BldgType: 住宅类型，类型：类别型</li>
+<li>HouseStyle: 住宅风格，类型：类别型</li>
+<li>OverallQual: 整体材料和饰面质量，类型：数值型</li>
+<li>OverallCond: 总体状况评价，类型：数值型</li>
+<li>YearBuilt: 建筑年份，类型：数值型</li>
+<li>YearRemodAdd: 改建年份，类型：数值型</li>
+<li>RoofStyle: 屋顶类型，类型：类别型</li>
+<li>RoofMatl: 屋顶材料，类型：类别型</li>
+<li>Exterior1st: 住宅外墙，类型：类别型</li>
+<li>Exterior2nd: 住宅外墙，类型：类别型</li>
+<li>MasVnrType: 砌体饰面类型，类型：类别型</li>
+<li>MasVnrArea: 砌体饰面面积，类型：数值型，单位：平方英尺</li>
+<li>ExterQual: 外部材料质量，类型：类别型</li>
+<li>ExterCond: 外部材料的现状，类型：类别型</li>
+<li>Foundation: 地基类型，类型：类别型</li>
+<li>BsmtQual: 地下室高度，类型：类别型</li>
+<li>BsmtCond: 地下室概况，类型：类别型</li>
+<li>BsmtExposure: 花园地下室墙，类型：类别型</li>
+<li>BsmtFinType1: 地下室装饰质量，类型：类别型</li>
+<li>BsmtFinSF1: 地下室装饰面积，类型：类别型</li>
+<li>BsmtFinType2: 地下室装饰质量，类型：类别型</li>
+<li>BsmtFinSF2: 地下室装饰面积，类型：类别型</li>
+<li>BsmtUnfSF: 未装饰的地下室面积，类型：数值型，单位：平方英尺</li>
+<li>TotalBsmtSF: 地下室总面积，类型：数值型，单位：平方英尺</li>
+<li>Heating: 供暖类型，类型：类别型</li>
+<li>HeatingQC: 供暖质量和条件，类型：类别型</li>
+<li>CentralAir: 中央空调状况，类型：类别型</li>
+<li>Electrical: 电力系统，类型：类别型</li>
+<li>1stFlrSF: 首层面积，类型：数值型，单位：平方英尺</li>
+<li>2ndFlrSF: 二层面积，类型：数值型，单位：平方英尺</li>
+<li>LowQualFinSF: 低质装饰面积，类型：数值型，单位：平方英尺</li>
+<li>GrLivArea: 地面以上居住面积，类型：数值型，单位：平方英尺</li>
+<li>BsmtFullBath: 地下室全浴室，类型：数值</li>
+<li>BsmtHalfBath: 地下室半浴室，类型：数值</li>
+<li>FullBath: 高档全浴室，类型：数值</li>
+<li>HalfBath: 高档半浴室，类型：数值</li>
+<li>BedroomAbvGr: 地下室以上的卧室数量，类型：数值</li>
+<li>KitchenAbvGr: 厨房数量，类型：数值</li>
+<li>KitchenQual: 厨房质量，类型：类别型</li>
+<li>TotRmsAbvGrd: 地上除卧室以外的房间数，类型：数值</li>
+<li>Functional: 房屋功用性评级，类型：类别型</li>
+<li>Fireplaces: 壁炉数量，类型：数值</li>
+<li>FireplaceQu: 壁炉质量，类型：类别型</li>
+<li>GarageType: 车库位置，类型：类别型</li>
+<li>GarageYrBlt: 车库建造年份，类别：数值型</li>
+<li>GarageFinish: 车库内饰，类型：类别型</li>
+<li>GarageCars: 车库车容量大小，类别：数值型</li>
+<li>GarageArea: 车库面积，类别：数值型，单位：平方英尺</li>
+<li>GarageQual: 车库质量，类型：类别型</li>
+<li>GarageCond: 车库条件，类型：类别型</li>
+<li>PavedDrive: 铺的车道情况，类型：类别型</li>
+<li>WoodDeckSF: 木地板面积，类型：数值型，单位：平方英尺</li>
+<li>OpenPorchSF: 开放式门廊区面积，类型：数值型，单位：平方英尺</li>
+<li>EnclosedPorch: 封闭式门廊区面积，类型：数值型，单位：平方英尺</li>
+<li>3SsnPorch: 三个季节门廊面积，类型：数值型，单位：平方英尺</li>
+<li>ScreenPorch: 纱门门廊面积，类型：数值型，单位：平方英尺</li>
+<li>PoolArea: 泳池面积，类型：数值型，单位：平方英尺</li>
+<li>PoolQC:泳池质量，类型：类别型</li>
+<li>Fence: 围墙质量，类型：类别型</li>
+<li>MiscFeature: 其他特征，类型：类别型</li>
+<li>MiscVal: 其他杂项特征值，类型：类别型</li>
+<li>MoSold: 卖出月份，类别：数值型</li>
+<li>YrSold: 卖出年份，类别：数值型</li>
+<li>SaleType: 交易类型，类型：类别型</li>
+<li>SaleCondition: 交易条件，类型：类别型<h2 id="数据处理和特征分析"><a href="#数据处理和特征分析" class="headerlink" title="数据处理和特征分析"></a>数据处理和特征分析</h2></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Saving Ids</span></span><br><span class="line">train_ID = train_df[<span class="string">'Id'</span>]</span><br><span class="line">test_ID = test_df[<span class="string">'Id'</span>]</span><br><span class="line"><span class="comment">#Dropping Ids</span></span><br><span class="line">train_df.drop(<span class="string">"Id"</span>, axis = <span class="number">1</span>, inplace = <span class="keyword">True</span>)</span><br><span class="line">test_df.drop(<span class="string">"Id"</span>, axis = <span class="number">1</span>, inplace = <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="数据观察和可视化"><a href="#数据观察和可视化" class="headerlink" title="数据观察和可视化"></a>数据观察和可视化</h3><p>更加常识，一般和房价最相关的是居住面积，也就是<code>GrLivArea</code>，我们查看下<code>GrLivArea</code>和<code>SalePrice</code>的关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax.scatter(x = train_df[<span class="string">'GrLivArea'</span>], y = train_df[<span class="string">'SalePrice'</span>], c = <span class="string">"skyblue"</span>)</span><br><span class="line">plt.ylabel(<span class="string">'SalePrice'</span>, fontsize=<span class="number">8</span>)</span><br><span class="line">plt.xlabel(<span class="string">'GrLivArea'</span>, fontsize=<span class="number">8</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_10_0.png" alt="png"></p>
+<p>我们发现有个别值特别的偏离，<code>GrLivArea</code>有两个点在4000以上，但其价格不到200000，首先这种点特别少（不到总数的3%），我们把他作为异常值去掉（其实是否去掉我们可以多做几次实验来验证）<br>Kaggle的作者在这里有建议去掉:)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_df.drop(train_df[(train_df[<span class="string">'GrLivArea'</span>]&gt;<span class="number">4000</span>)&amp;(train_df[<span class="string">'GrLivArea'</span>]&lt;<span class="number">30000</span>)].index,inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots()</span><br><span class="line">ax.scatter(x = train_df[<span class="string">'GrLivArea'</span>], y = train_df[<span class="string">'SalePrice'</span>], c = <span class="string">"skyblue"</span>)</span><br><span class="line">plt.ylabel(<span class="string">'SalePrice'</span>, fontsize=<span class="number">8</span>)</span><br><span class="line">plt.xlabel(<span class="string">'GrLivArea'</span>, fontsize=<span class="number">8</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_13_0.png" alt="png"></p>
+<ul>
+<li>最后一行是 <code>SalePrice</code>， 我们可以看到她跟各变量的关系，还有各变量相互之间的关系<h3 id="观察数据分布"><a href="#观察数据分布" class="headerlink" title="观察数据分布"></a>观察数据分布</h3>在机器学习中，对数据的认识是很重要的，他会影响我们的特征构建和建模，特别对于偏态分布，我们要做一些变换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统计表述</span></span><br><span class="line">train_df[<span class="string">'SalePrice'</span>].describe()</span><br></pre></td></tr></table></figure>
+<pre><code>count      1456.000000
+mean     180151.233516
+std       76696.592530
+min       34900.000000
+25%      129900.000000
+50%      163000.000000
+75%      214000.000000
+max      625000.000000
+Name: SalePrice, dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制分布图</span></span><br><span class="line">sns.distplot(train_df[<span class="string">'SalePrice'</span>], </span><br><span class="line">             kde_kws=&#123;<span class="string">"color"</span>: <span class="string">"coral"</span>, <span class="string">"lw"</span>: <span class="number">1</span>, <span class="string">"label"</span>: <span class="string">"KDE"</span>&#125;, </span><br><span class="line">             hist_kws=&#123;<span class="string">"histtype"</span>: <span class="string">"stepfilled"</span>, <span class="string">"linewidth"</span>: <span class="number">3</span>, <span class="string">"alpha"</span>: <span class="number">1</span>, <span class="string">"color"</span>: <span class="string">"skyblue"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_17_0.png" alt="png"></p>
+<p>Q-Q图，全称 Quantile Quantile Plot，中文名叫分位数图，Q-Q图是一个概率图，用于比较观测与预测值之间的概率分布差异，这里的比较对象一般采用正态分布，Q-Q图可以用于检验数据分布的相似性，而P-P图是根据变量的累积概率对应于所指定的理论分布累积概率绘制的散点图，两者基本一样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制P-P图</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">res = stats.probplot(train_df[<span class="string">'SalePrice'</span>], dist=<span class="string">"norm"</span>, plot=plt)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_19_0.png" alt="png"></p>
+<p>红色线是正态分布，蓝色线是我们的数据，可以看出，我们的数据头尾都严重偏离了正太分布,我们尝试对数据做变换，常用的变换有指数变换、对数变换、幂函数等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对数变换</span></span><br><span class="line">train_df[<span class="string">'SalePrice_Log'</span>] = np.log(train_df[<span class="string">'SalePrice'</span>])</span><br><span class="line">sns.distplot(train_df[<span class="string">'SalePrice_Log'</span>], </span><br><span class="line">             kde_kws=&#123;<span class="string">"color"</span>: <span class="string">"coral"</span>, <span class="string">"lw"</span>: <span class="number">1</span>, <span class="string">"label"</span>: <span class="string">"KDE"</span>&#125;, </span><br><span class="line">             hist_kws=&#123;<span class="string">"histtype"</span>: <span class="string">"stepfilled"</span>, <span class="string">"linewidth"</span>: <span class="number">3</span>, <span class="string">"alpha"</span>: <span class="number">1</span>, <span class="string">"color"</span>: <span class="string">"skyblue"</span>&#125;);</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 偏度与峰值(skewness and kurtosis)</span></span><br><span class="line">print(<span class="string">"Skewness: %f"</span> % train_df[<span class="string">'SalePrice_Log'</span>].skew())</span><br><span class="line">print(<span class="string">"Kurtosis: %f"</span> % train_df[<span class="string">'SalePrice_Log'</span>].kurt())</span><br><span class="line">fig = plt.figure()</span><br><span class="line">res = stats.probplot(train_df[<span class="string">'SalePrice_Log'</span>], plot=plt)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>Skewness: 0.065449
+Kurtosis: 0.666438
+</code></pre><p><img src="/img/house-prices/output_21_1.png" alt="png"></p>
+<p><img src="/img/house-prices/output_21_2.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指数变换</span></span><br><span class="line">train_df[<span class="string">'SalePrice_Exp'</span>] = np.exp(train_df[<span class="string">'SalePrice'</span>]/train_df[<span class="string">'SalePrice'</span>].mean())</span><br><span class="line">sns.distplot(train_df[<span class="string">'SalePrice_Exp'</span>], </span><br><span class="line">             kde_kws=&#123;<span class="string">"color"</span>: <span class="string">"coral"</span>, <span class="string">"lw"</span>: <span class="number">1</span>, <span class="string">"label"</span>: <span class="string">"KDE"</span>&#125;, </span><br><span class="line">             hist_kws=&#123;<span class="string">"histtype"</span>: <span class="string">"stepfilled"</span>, <span class="string">"linewidth"</span>: <span class="number">3</span>, <span class="string">"alpha"</span>: <span class="number">1</span>, <span class="string">"color"</span>: <span class="string">"skyblue"</span>&#125;);</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 偏度与峰值(skewness and kurtosis)</span></span><br><span class="line">print(<span class="string">"Skewness: %f"</span> % train_df[<span class="string">'SalePrice_Exp'</span>].skew())</span><br><span class="line">print(<span class="string">"Kurtosis: %f"</span> % train_df[<span class="string">'SalePrice_Exp'</span>].kurt())</span><br><span class="line">fig = plt.figure()</span><br><span class="line">res = stats.probplot(train_df[<span class="string">'SalePrice_Exp'</span>], plot=plt)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>Skewness: 6.060076
+Kurtosis: 56.822460
+</code></pre><p><img src="/img/house-prices/output_22_1.png" alt="png"></p>
+<p><img src="/img/house-prices/output_22_2.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 幂函数变换</span></span><br><span class="line">train_df[<span class="string">'SalePrice_Square'</span>] = train_df[<span class="string">'SalePrice'</span>]**<span class="number">0.5</span></span><br><span class="line">sns.distplot(train_df[<span class="string">'SalePrice_Square'</span>], </span><br><span class="line">             kde_kws=&#123;<span class="string">"color"</span>: <span class="string">"coral"</span>, <span class="string">"lw"</span>: <span class="number">1</span>, <span class="string">"label"</span>: <span class="string">"KDE"</span>&#125;, </span><br><span class="line">             hist_kws=&#123;<span class="string">"histtype"</span>: <span class="string">"stepfilled"</span>, <span class="string">"linewidth"</span>: <span class="number">3</span>, <span class="string">"alpha"</span>: <span class="number">1</span>, <span class="string">"color"</span>: <span class="string">"skyblue"</span>&#125;);</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 偏度与峰值(skewness and kurtosis)</span></span><br><span class="line">print(<span class="string">"Skewness: %f"</span> % train_df[<span class="string">'SalePrice_Square'</span>].skew())</span><br><span class="line">print(<span class="string">"Kurtosis: %f"</span> % train_df[<span class="string">'SalePrice_Square'</span>].kurt())</span><br><span class="line">fig = plt.figure()</span><br><span class="line">res = stats.probplot(train_df[<span class="string">'SalePrice_Square'</span>], plot=plt)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>Skewness: 0.810797
+Kurtosis: 1.245798
+</code></pre><p><img src="/img/house-prices/output_23_1.png" alt="png"></p>
+<p><img src="/img/house-prices/output_23_2.png" alt="png"></p>
+<p>三个函数拟合对比，对数转换最吻合,但是我们知道对数意味着小于1的时候为负数，这明显和认知不符合，应该采用log(1+x)，也就是log1p，保证了x数据的有效性，当x很小时,如: 10^{-16} ，由于太小超过数值有效性，用log(x+1)计算得到结果为0</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对数变换</span></span><br><span class="line">train_df[<span class="string">'SalePrice_Log1p'</span>] = np.log1p(train_df[<span class="string">'SalePrice'</span>])</span><br><span class="line">sns.distplot(train_df[<span class="string">'SalePrice_Log1p'</span>], </span><br><span class="line">             kde_kws=&#123;<span class="string">"color"</span>: <span class="string">"coral"</span>, <span class="string">"lw"</span>: <span class="number">1</span>, <span class="string">"label"</span>: <span class="string">"KDE"</span>&#125;, </span><br><span class="line">             hist_kws=&#123;<span class="string">"histtype"</span>: <span class="string">"stepfilled"</span>, <span class="string">"linewidth"</span>: <span class="number">3</span>, <span class="string">"alpha"</span>: <span class="number">1</span>, <span class="string">"color"</span>: <span class="string">"skyblue"</span>&#125;);</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 偏度与峰值(skewness and kurtosis)</span></span><br><span class="line">print(<span class="string">"Skewness: %f"</span> % train_df[<span class="string">'SalePrice_Log1p'</span>].skew())</span><br><span class="line">print(<span class="string">"Kurtosis: %f"</span> % train_df[<span class="string">'SalePrice_Log1p'</span>].kurt())</span><br><span class="line">fig = plt.figure()</span><br><span class="line">res = stats.probplot(train_df[<span class="string">'SalePrice_Log1p'</span>], plot=plt)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>Skewness: 0.065460
+Kurtosis: 0.666423
+</code></pre><p><img src="/img/house-prices/output_25_1.png" alt="png"></p>
+<p><img src="/img/house-prices/output_25_2.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">del</span> train_df[<span class="string">'SalePrice_Square'</span>]</span><br><span class="line"><span class="keyword">del</span> train_df[<span class="string">"SalePrice_Exp"</span>]</span><br><span class="line"><span class="keyword">del</span> train_df[<span class="string">'SalePrice_Log'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">del</span> train_df[<span class="string">"SalePrice"</span>]</span><br></pre></td></tr></table></figure>
+<p>将测试数据和训练数据联合一起进行特征分析</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">size_train_df = train_df.shape[<span class="number">0</span>]</span><br><span class="line">size_test_df = test_df.shape[<span class="number">0</span>]</span><br><span class="line">target_variable = train_df[<span class="string">'SalePrice_Log1p'</span>].values</span><br><span class="line">data = pd.concat((train_df, test_df),sort=<span class="keyword">False</span>).reset_index(drop=<span class="keyword">True</span>)</span><br><span class="line">data.drop([<span class="string">'SalePrice_Log1p'</span>], axis=<span class="number">1</span>, inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h3><p>缺失值是实际数据分析很重要的一块，在实际生产中一直都会有大量的缺失值存在，如何处理好缺失值是很关键也很重要的一步。<br>常见的缺失值处理有：</p>
+<ul>
+<li>（1）把缺失值单独作为一类，比如对类别型用none。</li>
+<li>（2）采用平均数、中值、众数等特定统计值来填充缺失值。</li>
+<li>（3）采用函数预测等方法填充缺失值。<br>这里的各变量填充策略：<br>NA for ‘PoolQC’ means “No Pool”.<br>MiscFeature: NA means “None”<br>Alley: NA means “No alley access”<br>Fence: NA means “No fence”<br>FireplaceQu: NA means “No fireplace”<br>LotFrontage: fill missing values with median LotFrontage of neighborhood<br>GarageFinish: NA means “None”<br>GarageQual: NA means “None”<br>GarageCond: NA means “None”<br>GarageYrBlt: NA means 0<br>GarageType: NA means “None”<br>BsmtCond: NA means “None”<br>BsmtExposure: NA means “None”<br>BsmtQual: NA means “None”<br>BsmtFinType2: NA means “None”<br>BsmtFinType1: NA means “None”<br>MasVnrType: NA means “None”<br>MasVnrArea: NA means “0”<br>BsmtHalfBath: NA means “0”<br>BsmtFullBath: NA means “0”<br>BsmtFinSF1: NA means “0”<br>BsmtFinSF2: NA means “0”<br>BsmtUnfSF: NA means “0”<br>TotalBsmtSF: NA means “0”<br>GarageCars: NA means 0<br>GarageArea: NA means 0</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.count().sort_values().head(<span class="number">20</span>) <span class="comment"># 通过 count 可以找出有缺失值的数据</span></span><br></pre></td></tr></table></figure>
+<pre><code>PoolQC             8
+MiscFeature      105
+Alley            198
+Fence            570
+FireplaceQu     1495
+LotFrontage     2429
+GarageCond      2756
+GarageYrBlt     2756
+GarageFinish    2756
+GarageQual      2756
+GarageType      2758
+BsmtExposure    2833
+BsmtCond        2833
+BsmtQual        2834
+BsmtFinType2    2835
+BsmtFinType1    2836
+MasVnrType      2891
+MasVnrArea      2892
+MSZoning        2911
+BsmtFullBath    2913
+dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">data_na = (data.isnull().sum() / len(data)) * <span class="number">100</span></span><br><span class="line">data_na.drop(data_na[data_na==<span class="number">0</span>].index,inplace=<span class="keyword">True</span>)</span><br><span class="line">data_na = data_na.sort_values(ascending=<span class="keyword">False</span>)</span><br><span class="line">f, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line">plt.xticks(rotation=<span class="string">'90'</span>)</span><br><span class="line">sns.barplot(x=data_na.index, y=data_na)</span><br><span class="line">plt.xlabel(<span class="string">'Features'</span>, fontsize=<span class="number">10</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Percent of missing values'</span>, fontsize=<span class="number">10</span>)</span><br><span class="line">plt.title(<span class="string">'Percent missing data by feature'</span>, fontsize=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Text(0.5, 1.0, &apos;Percent missing data by feature&apos;)
+</code></pre><p><img src="/img/house-prices/output_32_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var = <span class="string">'Utilities'</span></span><br><span class="line">train_var_count = train_df[var].value_counts()</span><br><span class="line">fig = sns.barplot(x=train_var_count.index, y=train_var_count)</span><br><span class="line">plt.xticks(rotation=<span class="number">90</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_33_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var = <span class="string">'MSZoning'</span></span><br><span class="line">train_var_count = train_df[var].value_counts()</span><br><span class="line">fig = sns.barplot(x=train_var_count.index, y=train_var_count)</span><br><span class="line">plt.xticks(rotation=<span class="number">90</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_34_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 填充nil</span></span><br><span class="line">features_fill_na_none = [<span class="string">'PoolQC'</span>,<span class="string">'MiscFeature'</span>,<span class="string">'Alley'</span>,<span class="string">'Fence'</span>,<span class="string">'FireplaceQu'</span>,</span><br><span class="line">               <span class="string">'GarageQual'</span>,<span class="string">'GarageCond'</span>,<span class="string">'GarageFinish'</span>,<span class="string">'GarageType'</span>,</span><br><span class="line">               <span class="string">'BsmtExposure'</span>,<span class="string">'BsmtCond'</span>,<span class="string">'BsmtQual'</span>,<span class="string">'BsmtFinType1'</span>,<span class="string">'BsmtFinType2'</span>,</span><br><span class="line">               <span class="string">'MasVnrType'</span>]</span><br><span class="line"><span class="comment"># 填充0</span></span><br><span class="line">features_fill_na_0 = [<span class="string">'GarageYrBlt'</span>, <span class="string">'GarageArea'</span>, <span class="string">'GarageCars'</span>, <span class="string">'MasVnrArea'</span>,</span><br><span class="line">                      <span class="string">'BsmtFullBath'</span>,<span class="string">'BsmtHalfBath'</span>, <span class="string">'BsmtFinSF1'</span>, <span class="string">'BsmtFinSF2'</span>, </span><br><span class="line">                      <span class="string">'BsmtUnfSF'</span>, <span class="string">'TotalBsmtSF'</span>]</span><br><span class="line"><span class="comment"># 填众数</span></span><br><span class="line">features_fill_na_mode = [<span class="string">"Functional"</span>, <span class="string">"MSZoning"</span>, <span class="string">"SaleType"</span>, <span class="string">"Electrical"</span>, </span><br><span class="line">                         <span class="string">"KitchenQual"</span>, <span class="string">"Exterior2nd"</span>, <span class="string">"Exterior1st"</span>]</span><br><span class="line"><span class="keyword">for</span> feature_none <span class="keyword">in</span> features_fill_na_none:</span><br><span class="line">    data[feature_none].fillna(<span class="string">'None'</span>,inplace=<span class="keyword">True</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> feature_0 <span class="keyword">in</span> features_fill_na_0:</span><br><span class="line">    data[feature_0].fillna(<span class="number">0</span>,inplace=<span class="keyword">True</span>)</span><br><span class="line"><span class="keyword">for</span> feature_mode <span class="keyword">in</span> features_fill_na_mode:</span><br><span class="line">    mode_value = data[feature_mode].value_counts().sort_values(ascending=<span class="keyword">False</span>).index[<span class="number">0</span>]</span><br><span class="line">    data[features_fill_na_mode] = data[features_fill_na_mode].fillna(mode_value)</span><br><span class="line"><span class="comment"># 用中值代替</span></span><br><span class="line">data[<span class="string">"LotFrontage"</span>] = data.groupby(<span class="string">"Neighborhood"</span>)[<span class="string">"LotFrontage"</span>].transform(</span><br><span class="line">    <span class="keyword">lambda</span> x: x.fillna(x.median()))</span><br><span class="line"><span class="comment"># 像 Utilities 这种总共才两个值，同时有一个值是作为主要的，这种字段是无意义的，应该删除</span></span><br><span class="line">data.drop([<span class="string">'Utilities'</span>], axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data_na = (data.isnull().sum() / len(data)) * <span class="number">100</span></span><br><span class="line">data_na.drop(data_na[data_na==<span class="number">0</span>].index,inplace=<span class="keyword">True</span>)</span><br><span class="line">data_na = data_na.sort_values(ascending=<span class="keyword">False</span>)</span><br><span class="line">data_na <span class="comment"># data_na 为空</span></span><br></pre></td></tr></table></figure>
+<pre><code>Series([], dtype: float64)
+</code></pre><p>类型转换，将某些实际是类别类型但用数字表示的强制转换成文本，比如有些调查男表示1，女表示0，在这种情况下，如果我们直接通过dataframe类型判断会导致错误，我们要根据实际情况做转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#MSSubClass=The building class</span></span><br><span class="line">data[<span class="string">'MSSubClass'</span>] = data[<span class="string">'MSSubClass'</span>].apply(str)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Changing OverallCond into a categorical variable</span></span><br><span class="line">data[<span class="string">'OverallCond'</span>] = data[<span class="string">'OverallCond'</span>].astype(str)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Year and month sold are transformed into categorical features.</span></span><br><span class="line">data[<span class="string">'YrSold'</span>] = data[<span class="string">'YrSold'</span>].astype(str)</span><br><span class="line">data[<span class="string">'MoSold'</span>] = data[<span class="string">'MoSold'</span>].astype(str)</span><br></pre></td></tr></table></figure>
+<h3 id="绘制关系矩阵"><a href="#绘制关系矩阵" class="headerlink" title="绘制关系矩阵"></a>绘制关系矩阵</h3><p>关系矩阵可以很直观的告诉我们那些变量之间相关，哪些变量并不相关</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关系矩阵</span></span><br><span class="line">corrmat = train_df.corr()</span><br><span class="line">corrmat</span><br></pre></td></tr></table></figure>
+
+<div class="output_html rendered_html output_subarea output_execute_result" style="overflow-x: auto;padding: 0.4em;">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+    .rendered_html th, .rendered_html td {
+    text-align: right;
+    vertical-align: middle;
+    padding: 0.5em 0.5em;
+    line-height: normal;
+    white-space: nowrap;
+    width: 80px;
+    border: none;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MSSubClass</th>
+      <th>LotFrontage</th>
+      <th>LotArea</th>
+      <th>OverallQual</th>
+      <th>OverallCond</th>
+      <th>YearBuilt</th>
+      <th>YearRemodAdd</th>
+      <th>MasVnrArea</th>
+      <th>BsmtFinSF1</th>
+      <th>BsmtFinSF2</th>
+      <th>...</th>
+      <th>WoodDeckSF</th>
+      <th>OpenPorchSF</th>
+      <th>EnclosedPorch</th>
+      <th>3SsnPorch</th>
+      <th>ScreenPorch</th>
+      <th>PoolArea</th>
+      <th>MiscVal</th>
+      <th>MoSold</th>
+      <th>YrSold</th>
+      <th>SalePrice_Log1p</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MSSubClass</th>
+      <td>1.000000</td>
+      <td>-0.408655</td>
+      <td>-0.142192</td>
+      <td>0.032416</td>
+      <td>-0.059277</td>
+      <td>0.027689</td>
+      <td>0.040459</td>
+      <td>0.022800</td>
+      <td>-0.075268</td>
+      <td>-0.065598</td>
+      <td>...</td>
+      <td>-0.012853</td>
+      <td>-0.006687</td>
+      <td>-0.011966</td>
+      <td>-0.043802</td>
+      <td>-0.025979</td>
+      <td>0.007957</td>
+      <td>-0.007666</td>
+      <td>-0.013512</td>
+      <td>-0.021330</td>
+      <td>-0.075083</td>
+    </tr>
+    <tr>
+      <th>LotFrontage</th>
+      <td>-0.408655</td>
+      <td>1.000000</td>
+      <td>0.387570</td>
+      <td>0.225994</td>
+      <td>-0.055673</td>
+      <td>0.113913</td>
+      <td>0.079785</td>
+      <td>0.162026</td>
+      <td>0.133704</td>
+      <td>0.056971</td>
+      <td>...</td>
+      <td>0.077154</td>
+      <td>0.116131</td>
+      <td>0.017010</td>
+      <td>0.075575</td>
+      <td>0.047832</td>
+      <td>0.075160</td>
+      <td>0.005636</td>
+      <td>0.028042</td>
+      <td>0.010598</td>
+      <td>0.363286</td>
+    </tr>
+    <tr>
+      <th>LotArea</th>
+      <td>-0.142192</td>
+      <td>0.387570</td>
+      <td>1.000000</td>
+      <td>0.088719</td>
+      <td>-0.002832</td>
+      <td>0.006590</td>
+      <td>0.006930</td>
+      <td>0.081170</td>
+      <td>0.173426</td>
+      <td>0.114691</td>
+      <td>...</td>
+      <td>0.167040</td>
+      <td>0.061679</td>
+      <td>-0.016108</td>
+      <td>0.021505</td>
+      <td>0.045620</td>
+      <td>0.033875</td>
+      <td>0.039192</td>
+      <td>0.007188</td>
+      <td>-0.013014</td>
+      <td>0.258945</td>
+    </tr>
+    <tr>
+      <th>OverallQual</th>
+      <td>0.032416</td>
+      <td>0.225994</td>
+      <td>0.088719</td>
+      <td>1.000000</td>
+      <td>-0.090692</td>
+      <td>0.571712</td>
+      <td>0.550971</td>
+      <td>0.400028</td>
+      <td>0.213079</td>
+      <td>-0.057520</td>
+      <td>...</td>
+      <td>0.232819</td>
+      <td>0.297803</td>
+      <td>-0.112407</td>
+      <td>0.031621</td>
+      <td>0.067732</td>
+      <td>0.018121</td>
+      <td>-0.031068</td>
+      <td>0.076414</td>
+      <td>-0.024321</td>
+      <td>0.819240</td>
+    </tr>
+    <tr>
+      <th>OverallCond</th>
+      <td>-0.059277</td>
+      <td>-0.055673</td>
+      <td>-0.002832</td>
+      <td>-0.090692</td>
+      <td>1.000000</td>
+      <td>-0.375691</td>
+      <td>0.074703</td>
+      <td>-0.130053</td>
+      <td>-0.042542</td>
+      <td>0.040015</td>
+      <td>...</td>
+      <td>-0.003063</td>
+      <td>-0.029649</td>
+      <td>0.070103</td>
+      <td>0.025419</td>
+      <td>0.054617</td>
+      <td>0.008079</td>
+      <td>0.068729</td>
+      <td>-0.003135</td>
+      <td>0.043755</td>
+      <td>-0.036843</td>
+    </tr>
+    <tr>
+      <th>YearBuilt</th>
+      <td>0.027689</td>
+      <td>0.113913</td>
+      <td>0.006590</td>
+      <td>0.571712</td>
+      <td>-0.375691</td>
+      <td>1.000000</td>
+      <td>0.591906</td>
+      <td>0.314066</td>
+      <td>0.248272</td>
+      <td>-0.048393</td>
+      <td>...</td>
+      <td>0.222690</td>
+      <td>0.183905</td>
+      <td>-0.386904</td>
+      <td>0.031717</td>
+      <td>-0.049703</td>
+      <td>-0.014373</td>
+      <td>-0.034193</td>
+      <td>0.013881</td>
+      <td>-0.012593</td>
+      <td>0.588977</td>
+    </tr>
+    <tr>
+      <th>YearRemodAdd</th>
+      <td>0.040459</td>
+      <td>0.079785</td>
+      <td>0.006930</td>
+      <td>0.550971</td>
+      <td>0.074703</td>
+      <td>0.591906</td>
+      <td>1.000000</td>
+      <td>0.176067</td>
+      <td>0.121690</td>
+      <td>-0.067188</td>
+      <td>...</td>
+      <td>0.204020</td>
+      <td>0.222649</td>
+      <td>-0.193348</td>
+      <td>0.045596</td>
+      <td>-0.038176</td>
+      <td>-0.009490</td>
+      <td>-0.010100</td>
+      <td>0.022629</td>
+      <td>0.036597</td>
+      <td>0.568986</td>
+    </tr>
+    <tr>
+      <th>MasVnrArea</th>
+      <td>0.022800</td>
+      <td>0.162026</td>
+      <td>0.081170</td>
+      <td>0.400028</td>
+      <td>-0.130053</td>
+      <td>0.314066</td>
+      <td>0.176067</td>
+      <td>1.000000</td>
+      <td>0.235557</td>
+      <td>-0.071337</td>
+      <td>...</td>
+      <td>0.149491</td>
+      <td>0.106073</td>
+      <td>-0.109453</td>
+      <td>0.020270</td>
+      <td>0.065296</td>
+      <td>-0.016025</td>
+      <td>-0.029691</td>
+      <td>0.004019</td>
+      <td>-0.004880</td>
+      <td>0.430073</td>
+    </tr>
+    <tr>
+      <th>BsmtFinSF1</th>
+      <td>-0.075268</td>
+      <td>0.133704</td>
+      <td>0.173426</td>
+      <td>0.213079</td>
+      <td>-0.042542</td>
+      <td>0.248272</td>
+      <td>0.121690</td>
+      <td>0.235557</td>
+      <td>1.000000</td>
+      <td>-0.048738</td>
+      <td>...</td>
+      <td>0.201462</td>
+      <td>0.071851</td>
+      <td>-0.103053</td>
+      <td>0.029879</td>
+      <td>0.070026</td>
+      <td>0.016380</td>
+      <td>0.005149</td>
+      <td>-0.001773</td>
+      <td>0.018506</td>
+      <td>0.382710</td>
+    </tr>
+    <tr>
+      <th>BsmtFinSF2</th>
+      <td>-0.065598</td>
+      <td>0.056971</td>
+      <td>0.114691</td>
+      <td>-0.057520</td>
+      <td>0.040015</td>
+      <td>-0.048393</td>
+      <td>-0.067188</td>
+      <td>-0.071337</td>
+      <td>-0.048738</td>
+      <td>1.000000</td>
+      <td>...</td>
+      <td>0.069028</td>
+      <td>0.005083</td>
+      <td>0.036269</td>
+      <td>-0.030090</td>
+      <td>0.088676</td>
+      <td>0.053178</td>
+      <td>0.004871</td>
+      <td>-0.015726</td>
+      <td>0.031384</td>
+      <td>0.006420</td>
+    </tr>
+    <tr>
+      <th>BsmtUnfSF</th>
+      <td>-0.140890</td>
+      <td>0.142075</td>
+      <td>-0.003774</td>
+      <td>0.310164</td>
+      <td>-0.137267</td>
+      <td>0.148810</td>
+      <td>0.180972</td>
+      <td>0.111684</td>
+      <td>-0.526140</td>
+      <td>-0.209286</td>
+      <td>...</td>
+      <td>-0.006876</td>
+      <td>0.129148</td>
+      <td>-0.002336</td>
+      <td>0.020843</td>
+      <td>-0.012435</td>
+      <td>-0.031244</td>
+      <td>-0.023802</td>
+      <td>0.035456</td>
+      <td>-0.040834</td>
+      <td>0.223248</td>
+    </tr>
+    <tr>
+      <th>TotalBsmtSF</th>
+      <td>-0.255441</td>
+      <td>0.313392</td>
+      <td>0.221940</td>
+      <td>0.532666</td>
+      <td>-0.176000</td>
+      <td>0.399867</td>
+      <td>0.294866</td>
+      <td>0.337869</td>
+      <td>0.460324</td>
+      <td>0.116478</td>
+      <td>...</td>
+      <td>0.229984</td>
+      <td>0.215559</td>
+      <td>-0.095872</td>
+      <td>0.041762</td>
+      <td>0.094511</td>
+      <td>0.004418</td>
+      <td>-0.018253</td>
+      <td>0.030026</td>
+      <td>-0.012192</td>
+      <td>0.641553</td>
+    </tr>
+    <tr>
+      <th>1stFlrSF</th>
+      <td>-0.265001</td>
+      <td>0.398400</td>
+      <td>0.267644</td>
+      <td>0.462042</td>
+      <td>-0.145613</td>
+      <td>0.279929</td>
+      <td>0.238304</td>
+      <td>0.316507</td>
+      <td>0.386453</td>
+      <td>0.106134</td>
+      <td>...</td>
+      <td>0.230865</td>
+      <td>0.179049</td>
+      <td>-0.063074</td>
+      <td>0.060553</td>
+      <td>0.097093</td>
+      <td>0.032088</td>
+      <td>-0.020801</td>
+      <td>0.045081</td>
+      <td>-0.010014</td>
+      <td>0.613742</td>
+    </tr>
+    <tr>
+      <th>2ndFlrSF</th>
+      <td>0.311294</td>
+      <td>0.049902</td>
+      <td>0.037277</td>
+      <td>0.279745</td>
+      <td>0.031297</td>
+      <td>0.002953</td>
+      <td>0.136103</td>
+      <td>0.156796</td>
+      <td>-0.183358</td>
+      <td>-0.098241</td>
+      <td>...</td>
+      <td>0.083670</td>
+      <td>0.198407</td>
+      <td>0.065690</td>
+      <td>-0.023740</td>
+      <td>0.043308</td>
+      <td>0.038375</td>
+      <td>0.017111</td>
+      <td>0.039163</td>
+      <td>-0.024874</td>
+      <td>0.306605</td>
+    </tr>
+    <tr>
+      <th>LowQualFinSF</th>
+      <td>0.046499</td>
+      <td>0.042589</td>
+      <td>0.005675</td>
+      <td>-0.029826</td>
+      <td>0.025406</td>
+      <td>-0.183720</td>
+      <td>-0.062215</td>
+      <td>-0.069533</td>
+      <td>-0.066611</td>
+      <td>0.014714</td>
+      <td>...</td>
+      <td>-0.025114</td>
+      <td>0.019339</td>
+      <td>0.060975</td>
+      <td>-0.004334</td>
+      <td>0.026713</td>
+      <td>0.073070</td>
+      <td>-0.003822</td>
+      <td>-0.022441</td>
+      <td>-0.029074</td>
+      <td>-0.037698</td>
+    </tr>
+    <tr>
+      <th>GrLivArea</th>
+      <td>0.077956</td>
+      <td>0.341427</td>
+      <td>0.231887</td>
+      <td>0.583519</td>
+      <td>-0.078567</td>
+      <td>0.192645</td>
+      <td>0.289264</td>
+      <td>0.363472</td>
+      <td>0.121479</td>
+      <td>-0.004995</td>
+      <td>...</td>
+      <td>0.241827</td>
+      <td>0.307325</td>
+      <td>0.016148</td>
+      <td>0.023967</td>
+      <td>0.112408</td>
+      <td>0.064346</td>
+      <td>-0.000974</td>
+      <td>0.065328</td>
+      <td>-0.031898</td>
+      <td>0.718844</td>
+    </tr>
+    <tr>
+      <th>BsmtFullBath</th>
+      <td>0.003282</td>
+      <td>0.074686</td>
+      <td>0.147595</td>
+      <td>0.104092</td>
+      <td>-0.053107</td>
+      <td>0.185009</td>
+      <td>0.116765</td>
+      <td>0.080342</td>
+      <td>0.661933</td>
+      <td>0.160254</td>
+      <td>...</td>
+      <td>0.174636</td>
+      <td>0.056251</td>
+      <td>-0.049034</td>
+      <td>0.000249</td>
+      <td>0.024075</td>
+      <td>0.037039</td>
+      <td>-0.022877</td>
+      <td>-0.023770</td>
+      <td>0.067665</td>
+      <td>0.238851</td>
+    </tr>
+    <tr>
+      <th>BsmtHalfBath</th>
+      <td>-0.002509</td>
+      <td>-0.009424</td>
+      <td>0.047391</td>
+      <td>-0.047172</td>
+      <td>0.117207</td>
+      <td>-0.039945</td>
+      <td>-0.013297</td>
+      <td>0.012157</td>
+      <td>0.068869</td>
+      <td>0.071986</td>
+      <td>...</td>
+      <td>0.034626</td>
+      <td>-0.024385</td>
+      <td>-0.007803</td>
+      <td>0.035565</td>
+      <td>0.032902</td>
+      <td>0.027886</td>
+      <td>-0.007211</td>
+      <td>0.038478</td>
+      <td>-0.045303</td>
+      <td>-0.014974</td>
+    </tr>
+    <tr>
+      <th>FullBath</th>
+      <td>0.132131</td>
+      <td>0.187048</td>
+      <td>0.117336</td>
+      <td>0.543791</td>
+      <td>-0.194167</td>
+      <td>0.466710</td>
+      <td>0.438212</td>
+      <td>0.266317</td>
+      <td>0.037159</td>
+      <td>-0.075291</td>
+      <td>...</td>
+      <td>0.182131</td>
+      <td>0.252911</td>
+      <td>-0.113812</td>
+      <td>0.036304</td>
+      <td>-0.006557</td>
+      <td>0.021509</td>
+      <td>-0.013872</td>
+      <td>0.058197</td>
+      <td>-0.016574</td>
+      <td>0.590919</td>
+    </tr>
+    <tr>
+      <th>HalfBath</th>
+      <td>0.177476</td>
+      <td>0.037031</td>
+      <td>0.005981</td>
+      <td>0.267431</td>
+      <td>-0.059927</td>
+      <td>0.240144</td>
+      <td>0.181136</td>
+      <td>0.195264</td>
+      <td>-0.014508</td>
+      <td>-0.031243</td>
+      <td>...</td>
+      <td>0.104538</td>
+      <td>0.194921</td>
+      <td>-0.094317</td>
+      <td>-0.004590</td>
+      <td>0.073497</td>
+      <td>0.001010</td>
+      <td>0.001589</td>
+      <td>-0.007127</td>
+      <td>-0.008853</td>
+      <td>0.311191</td>
+    </tr>
+    <tr>
+      <th>BedroomAbvGr</th>
+      <td>-0.023627</td>
+      <td>0.269945</td>
+      <td>0.118960</td>
+      <td>0.096848</td>
+      <td>0.013249</td>
+      <td>-0.072623</td>
+      <td>-0.041919</td>
+      <td>0.099176</td>
+      <td>-0.121893</td>
+      <td>-0.015134</td>
+      <td>...</td>
+      <td>0.044039</td>
+      <td>0.093803</td>
+      <td>0.042402</td>
+      <td>-0.024263</td>
+      <td>0.044941</td>
+      <td>0.064118</td>
+      <td>0.007965</td>
+      <td>0.048477</td>
+      <td>-0.034849</td>
+      <td>0.204117</td>
+    </tr>
+    <tr>
+      <th>KitchenAbvGr</th>
+      <td>0.281783</td>
+      <td>-0.002959</td>
+      <td>-0.016565</td>
+      <td>-0.184281</td>
+      <td>-0.087204</td>
+      <td>-0.174481</td>
+      <td>-0.149288</td>
+      <td>-0.036558</td>
+      <td>-0.082722</td>
+      <td>-0.040926</td>
+      <td>...</td>
+      <td>-0.089670</td>
+      <td>-0.069738</td>
+      <td>0.037113</td>
+      <td>-0.024670</td>
+      <td>-0.051779</td>
+      <td>-0.012306</td>
+      <td>0.062294</td>
+      <td>0.026340</td>
+      <td>0.031454</td>
+      <td>-0.147891</td>
+    </tr>
+    <tr>
+      <th>TotRmsAbvGrd</th>
+      <td>0.040247</td>
+      <td>0.330249</td>
+      <td>0.173629</td>
+      <td>0.415834</td>
+      <td>-0.055766</td>
+      <td>0.089207</td>
+      <td>0.187520</td>
+      <td>0.265334</td>
+      <td>0.001877</td>
+      <td>-0.033490</td>
+      <td>...</td>
+      <td>0.159720</td>
+      <td>0.219969</td>
+      <td>0.006790</td>
+      <td>-0.005908</td>
+      <td>0.061924</td>
+      <td>0.041588</td>
+      <td>0.025640</td>
+      <td>0.041966</td>
+      <td>-0.032190</td>
+      <td>0.533446</td>
+    </tr>
+    <tr>
+      <th>Fireplaces</th>
+      <td>-0.046377</td>
+      <td>0.238140</td>
+      <td>0.259701</td>
+      <td>0.387425</td>
+      <td>-0.022277</td>
+      <td>0.143162</td>
+      <td>0.108732</td>
+      <td>0.236906</td>
+      <td>0.236219</td>
+      <td>0.049027</td>
+      <td>...</td>
+      <td>0.194972</td>
+      <td>0.160647</td>
+      <td>-0.022885</td>
+      <td>0.012042</td>
+      <td>0.187656</td>
+      <td>0.051221</td>
+      <td>0.001943</td>
+      <td>0.053947</td>
+      <td>-0.022567</td>
+      <td>0.487126</td>
+    </tr>
+    <tr>
+      <th>GarageYrBlt</th>
+      <td>0.084926</td>
+      <td>0.058055</td>
+      <td>-0.033111</td>
+      <td>0.547320</td>
+      <td>-0.323836</td>
+      <td>0.825192</td>
+      <td>0.641445</td>
+      <td>0.249917</td>
+      <td>0.146532</td>
+      <td>-0.087353</td>
+      <td>...</td>
+      <td>0.222580</td>
+      <td>0.224239</td>
+      <td>-0.296517</td>
+      <td>0.023897</td>
+      <td>-0.074779</td>
+      <td>-0.035670</td>
+      <td>-0.032231</td>
+      <td>0.006725</td>
+      <td>-0.000030</td>
+      <td>0.544005</td>
+    </tr>
+    <tr>
+      <th>GarageCars</th>
+      <td>-0.040490</td>
+      <td>0.289064</td>
+      <td>0.150977</td>
+      <td>0.598739</td>
+      <td>-0.185494</td>
+      <td>0.536749</td>
+      <td>0.419573</td>
+      <td>0.362122</td>
+      <td>0.224043</td>
+      <td>-0.037331</td>
+      <td>...</td>
+      <td>0.223010</td>
+      <td>0.209762</td>
+      <td>-0.150590</td>
+      <td>0.036290</td>
+      <td>0.051622</td>
+      <td>0.003360</td>
+      <td>-0.042886</td>
+      <td>0.041608</td>
+      <td>-0.037179</td>
+      <td>0.680408</td>
+    </tr>
+    <tr>
+      <th>GarageArea</th>
+      <td>-0.100145</td>
+      <td>0.318820</td>
+      <td>0.162183</td>
+      <td>0.554905</td>
+      <td>-0.150679</td>
+      <td>0.477311</td>
+      <td>0.369590</td>
+      <td>0.361810</td>
+      <td>0.268651</td>
+      <td>-0.016485</td>
+      <td>...</td>
+      <td>0.219967</td>
+      <td>0.228089</td>
+      <td>-0.120615</td>
+      <td>0.036213</td>
+      <td>0.053732</td>
+      <td>0.011637</td>
+      <td>-0.027088</td>
+      <td>0.034602</td>
+      <td>-0.025870</td>
+      <td>0.655212</td>
+    </tr>
+    <tr>
+      <th>WoodDeckSF</th>
+      <td>-0.012853</td>
+      <td>0.077154</td>
+      <td>0.167040</td>
+      <td>0.232819</td>
+      <td>-0.003063</td>
+      <td>0.222690</td>
+      <td>0.204020</td>
+      <td>0.149491</td>
+      <td>0.201462</td>
+      <td>0.069028</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.053498</td>
+      <td>-0.125151</td>
+      <td>-0.032472</td>
+      <td>-0.073489</td>
+      <td>0.068309</td>
+      <td>-0.009287</td>
+      <td>0.024595</td>
+      <td>0.023860</td>
+      <td>0.330573</td>
+    </tr>
+    <tr>
+      <th>OpenPorchSF</th>
+      <td>-0.006687</td>
+      <td>0.116131</td>
+      <td>0.061679</td>
+      <td>0.297803</td>
+      <td>-0.029649</td>
+      <td>0.183905</td>
+      <td>0.222649</td>
+      <td>0.106073</td>
+      <td>0.071851</td>
+      <td>0.005083</td>
+      <td>...</td>
+      <td>0.053498</td>
+      <td>1.000000</td>
+      <td>-0.092094</td>
+      <td>-0.005148</td>
+      <td>0.077261</td>
+      <td>0.030360</td>
+      <td>-0.018277</td>
+      <td>0.072515</td>
+      <td>-0.056326</td>
+      <td>0.327038</td>
+    </tr>
+    <tr>
+      <th>EnclosedPorch</th>
+      <td>-0.011966</td>
+      <td>0.017010</td>
+      <td>-0.016108</td>
+      <td>-0.112407</td>
+      <td>0.070103</td>
+      <td>-0.386904</td>
+      <td>-0.193348</td>
+      <td>-0.109453</td>
+      <td>-0.103053</td>
+      <td>0.036269</td>
+      <td>...</td>
+      <td>-0.125151</td>
+      <td>-0.092094</td>
+      <td>1.000000</td>
+      <td>-0.037427</td>
+      <td>-0.083154</td>
+      <td>0.068796</td>
+      <td>0.018277</td>
+      <td>-0.029565</td>
+      <td>-0.010343</td>
+      <td>-0.148636</td>
+    </tr>
+    <tr>
+      <th>3SsnPorch</th>
+      <td>-0.043802</td>
+      <td>0.075575</td>
+      <td>0.021505</td>
+      <td>0.031621</td>
+      <td>0.025419</td>
+      <td>0.031717</td>
+      <td>0.045596</td>
+      <td>0.020270</td>
+      <td>0.029879</td>
+      <td>-0.030090</td>
+      <td>...</td>
+      <td>-0.032472</td>
+      <td>-0.005148</td>
+      <td>-0.037427</td>
+      <td>1.000000</td>
+      <td>-0.031526</td>
+      <td>-0.006770</td>
+      <td>0.000326</td>
+      <td>0.029386</td>
+      <td>0.018516</td>
+      <td>0.056065</td>
+    </tr>
+    <tr>
+      <th>ScreenPorch</th>
+      <td>-0.025979</td>
+      <td>0.047832</td>
+      <td>0.045620</td>
+      <td>0.067732</td>
+      <td>0.054617</td>
+      <td>-0.049703</td>
+      <td>-0.038176</td>
+      <td>0.065296</td>
+      <td>0.070026</td>
+      <td>0.088676</td>
+      <td>...</td>
+      <td>-0.073489</td>
+      <td>0.077261</td>
+      <td>-0.083154</td>
+      <td>-0.031526</td>
+      <td>1.000000</td>
+      <td>0.063724</td>
+      <td>0.031884</td>
+      <td>0.022863</td>
+      <td>0.010383</td>
+      <td>0.123860</td>
+    </tr>
+    <tr>
+      <th>PoolArea</th>
+      <td>0.007957</td>
+      <td>0.075160</td>
+      <td>0.033875</td>
+      <td>0.018121</td>
+      <td>0.008079</td>
+      <td>-0.014373</td>
+      <td>-0.009490</td>
+      <td>-0.016025</td>
+      <td>0.016380</td>
+      <td>0.053178</td>
+      <td>...</td>
+      <td>0.068309</td>
+      <td>0.030360</td>
+      <td>0.068796</td>
+      <td>-0.006770</td>
+      <td>0.063724</td>
+      <td>1.000000</td>
+      <td>0.035480</td>
+      <td>-0.022901</td>
+      <td>-0.062640</td>
+      <td>0.040679</td>
+    </tr>
+    <tr>
+      <th>MiscVal</th>
+      <td>-0.007666</td>
+      <td>0.005636</td>
+      <td>0.039192</td>
+      <td>-0.031068</td>
+      <td>0.068729</td>
+      <td>-0.034193</td>
+      <td>-0.010100</td>
+      <td>-0.029691</td>
+      <td>0.005149</td>
+      <td>0.004871</td>
+      <td>...</td>
+      <td>-0.009287</td>
+      <td>-0.018277</td>
+      <td>0.018277</td>
+      <td>0.000326</td>
+      <td>0.031884</td>
+      <td>0.035480</td>
+      <td>1.000000</td>
+      <td>-0.006657</td>
+      <td>0.004806</td>
+      <td>-0.019752</td>
+    </tr>
+    <tr>
+      <th>MoSold</th>
+      <td>-0.013512</td>
+      <td>0.028042</td>
+      <td>0.007188</td>
+      <td>0.076414</td>
+      <td>-0.003135</td>
+      <td>0.013881</td>
+      <td>0.022629</td>
+      <td>0.004019</td>
+      <td>-0.001773</td>
+      <td>-0.015726</td>
+      <td>...</td>
+      <td>0.024595</td>
+      <td>0.072515</td>
+      <td>-0.029565</td>
+      <td>0.029386</td>
+      <td>0.022863</td>
+      <td>-0.022901</td>
+      <td>-0.006657</td>
+      <td>1.000000</td>
+      <td>-0.146229</td>
+      <td>0.062231</td>
+    </tr>
+    <tr>
+      <th>YrSold</th>
+      <td>-0.021330</td>
+      <td>0.010598</td>
+      <td>-0.013014</td>
+      <td>-0.024321</td>
+      <td>0.043755</td>
+      <td>-0.012593</td>
+      <td>0.036597</td>
+      <td>-0.004880</td>
+      <td>0.018506</td>
+      <td>0.031384</td>
+      <td>...</td>
+      <td>0.023860</td>
+      <td>-0.056326</td>
+      <td>-0.010343</td>
+      <td>0.018516</td>
+      <td>0.010383</td>
+      <td>-0.062640</td>
+      <td>0.004806</td>
+      <td>-0.146229</td>
+      <td>1.000000</td>
+      <td>-0.034319</td>
+    </tr>
+    <tr>
+      <th>SalePrice_Log1p</th>
+      <td>-0.075083</td>
+      <td>0.363286</td>
+      <td>0.258945</td>
+      <td>0.819240</td>
+      <td>-0.036843</td>
+      <td>0.588977</td>
+      <td>0.568986</td>
+      <td>0.430073</td>
+      <td>0.382710</td>
+      <td>0.006420</td>
+      <td>...</td>
+      <td>0.330573</td>
+      <td>0.327038</td>
+      <td>-0.148636</td>
+      <td>0.056065</td>
+      <td>0.123860</td>
+      <td>0.040679</td>
+      <td>-0.019752</td>
+      <td>0.062231</td>
+      <td>-0.034319</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>37 rows × 37 columns</p>
+</div>
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mask = np.zeros_like(corrmat) <span class="comment"># 返回相同大小的0矩阵</span></span><br><span class="line">mask[np.triu_indices_from(mask)] = <span class="keyword">True</span> <span class="comment"># triu_indices_from: 函数的上三角矩阵</span></span><br><span class="line">mask</span><br></pre></td></tr></table></figure>
+<pre><code>array([[1., 1., 1., ..., 1., 1., 1.],
+       [0., 1., 1., ..., 1., 1., 1.],
+       [0., 0., 1., ..., 1., 1., 1.],
+       ...,
+       [0., 0., 0., ..., 1., 1., 1.],
+       [0., 0., 0., ..., 0., 1., 1.],
+       [0., 0., 0., ..., 0., 0., 1.]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制热力图</span></span><br><span class="line">plt.subplots(figsize=(<span class="number">12</span>,<span class="number">9</span>))</span><br><span class="line">sns.heatmap(corrmat, mask=mask, linewidths=<span class="number">.5</span>, vmax=<span class="number">0.9</span>, square=<span class="keyword">True</span>, cmap=<span class="string">"YlGnBu"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f8c20d156d8&gt;
+</code></pre><p><img src="/img/house-prices/output_42_1.png" alt="png"></p>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><p>对数据做特征变换:<br>对于类别数据，一般采用<code>LabelEncoder</code>的方式，把每个类别的数据变成数值型；也可以采用<code>one-hot</code>变成稀疏矩阵<br>对于数值型的数据，尽量将其变为正态分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">encode_cat_variables = (<span class="string">'Alley'</span>, <span class="string">'BldgType'</span>, <span class="string">'BsmtCond'</span>, <span class="string">'BsmtExposure'</span>, <span class="string">'BsmtFinType1'</span>, <span class="string">'BsmtFinType2'</span>, <span class="string">'BsmtQual'</span>, <span class="string">'CentralAir'</span>, </span><br><span class="line">                        <span class="string">'Condition1'</span>, <span class="string">'Condition2'</span>, <span class="string">'Electrical'</span>, <span class="string">'ExterCond'</span>, <span class="string">'ExterQual'</span>, <span class="string">'Exterior1st'</span>, <span class="string">'Exterior2nd'</span>, <span class="string">'Fence'</span>, </span><br><span class="line">                        <span class="string">'FireplaceQu'</span>, <span class="string">'Foundation'</span>, <span class="string">'Functional'</span>, <span class="string">'GarageCond'</span>, <span class="string">'GarageFinish'</span>, <span class="string">'GarageQual'</span>, <span class="string">'GarageType'</span>, </span><br><span class="line">                        <span class="string">'Heating'</span>, <span class="string">'HeatingQC'</span>, <span class="string">'HouseStyle'</span>, <span class="string">'KitchenQual'</span>, <span class="string">'LandContour'</span>, <span class="string">'LandSlope'</span>, <span class="string">'LotConfig'</span>, <span class="string">'LotShape'</span>, </span><br><span class="line">                        <span class="string">'MSSubClass'</span>, <span class="string">'MSZoning'</span>, <span class="string">'MasVnrType'</span>, <span class="string">'MiscFeature'</span>, <span class="string">'MoSold'</span>, <span class="string">'Neighborhood'</span>, <span class="string">'OverallCond'</span>, <span class="string">'PavedDrive'</span>, </span><br><span class="line">                        <span class="string">'PoolQC'</span>, <span class="string">'RoofMatl'</span>, <span class="string">'RoofStyle'</span>, <span class="string">'SaleCondition'</span>, <span class="string">'SaleType'</span>, <span class="string">'Street'</span>, <span class="string">'YrSold'</span>)</span><br><span class="line">numerical_features = [col <span class="keyword">for</span> col <span class="keyword">in</span> data.columns <span class="keyword">if</span> col <span class="keyword">not</span> <span class="keyword">in</span> encode_cat_variables]</span><br><span class="line"><span class="comment"># for variable in encode_cat_variables:</span></span><br><span class="line"><span class="comment">#     lbl = LabelEncoder() </span></span><br><span class="line"><span class="comment">#     lbl.fit(list(data[variable].values)) </span></span><br><span class="line"><span class="comment">#     data[variable] = lbl.transform(list(data[variable].values))</span></span><br><span class="line"><span class="keyword">for</span> variable <span class="keyword">in</span> data.columns:</span><br><span class="line">    <span class="keyword">if</span> variable <span class="keyword">not</span> <span class="keyword">in</span> encode_cat_variables:</span><br><span class="line">        data[variable] = data[variable].apply(float)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        data[variable] = data[variable].apply(str)</span><br><span class="line">print(data.shape)</span><br><span class="line">data = pd.get_dummies(data)</span><br><span class="line">print(data.shape)</span><br></pre></td></tr></table></figure>
+<pre><code>(2915, 78)
+(2915, 343)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以计算一个总面积指标</span></span><br><span class="line">data[<span class="string">'TotalSF'</span>] = data[<span class="string">'TotalBsmtSF'</span>] + data[<span class="string">'1stFlrSF'</span>] + data[<span class="string">'2ndFlrSF'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">"Categorical Features: %d"</span>%len(encode_cat_variables))</span><br><span class="line">print(<span class="string">"Numerical Features: %d"</span>%len(numerical_features))</span><br></pre></td></tr></table></figure>
+<pre><code>Categorical Features: 46
+Numerical Features: 32
+</code></pre><p>数值型变量的分布</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Boxplot for numerical_features</span></span><br><span class="line">sns.set_style(<span class="string">"whitegrid"</span>)</span><br><span class="line">f, ax = plt.subplots(figsize=(<span class="number">15</span>, <span class="number">15</span>))</span><br><span class="line">ax.set_xscale(<span class="string">"log"</span>)</span><br><span class="line">ax = sns.boxplot(data=data[numerical_features] , orient=<span class="string">"h"</span>, palette=<span class="string">"ch:2.5,-.2,dark=.3"</span>)</span><br><span class="line">ax.set(ylabel=<span class="string">"Features"</span>)</span><br><span class="line">ax.set(xlabel=<span class="string">"Value"</span>)</span><br><span class="line">ax.set(title=<span class="string">"Distribution"</span>)</span><br><span class="line">sns.despine(trim=<span class="keyword">True</span>, left=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_48_0.png" alt="png"></p>
+<p><strong>box-cox变换</strong><br><a href="https://baike.baidu.com/item/box-cox%E5%8F%98%E6%8D%A2/10278422?fr=aladdin" target="_blank" rel="noopener">Box-Cox</a>变换是Box和Cox在1964年提出的一种广义幂变换方法，用于连续的响应变量不满足正态分布的情况。Box-Cox变换之后，可以一定程度上减小不可观测的误差和预测变量的相关性。Box-Cox变换的主要特点是引入一个参数，通过数据本身估计该参数进而确定应采取的数据变换形式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算数值型变量的偏态</span></span><br><span class="line">skewed_features = data[numerical_features].apply(<span class="keyword">lambda</span> x: skew(x.dropna())).sort_values(ascending=<span class="keyword">False</span>)</span><br><span class="line">skewed_features</span><br></pre></td></tr></table></figure>
+<pre><code>MiscVal          21.932147
+PoolArea         18.701829
+LotArea          13.123758
+LowQualFinSF     12.080315
+3SsnPorch        11.368094
+KitchenAbvGr      4.298845
+BsmtFinSF2        4.142863
+EnclosedPorch     4.000796
+ScreenPorch       3.943508
+BsmtHalfBath      3.942892
+MasVnrArea        2.600697
+OpenPorchSF       2.529245
+WoodDeckSF        1.848285
+1stFlrSF          1.253011
+LotFrontage       1.092709
+GrLivArea         0.977860
+BsmtFinSF1        0.974138
+BsmtUnfSF         0.920135
+2ndFlrSF          0.843237
+TotRmsAbvGrd      0.749579
+Fireplaces        0.725958
+HalfBath          0.698770
+TotalBsmtSF       0.662657
+BsmtFullBath      0.622820
+BedroomAbvGr      0.328129
+GarageArea        0.217748
+OverallQual       0.181902
+FullBath          0.159917
+GarageCars       -0.219402
+YearRemodAdd     -0.449113
+YearBuilt        -0.598087
+GarageYrBlt      -3.903046
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">skewed_features = skewed_features[abs(skewed_features) &gt; <span class="number">0.75</span>]</span><br><span class="line">print(<span class="string">"There are &#123;&#125; skewed numerical features to Box Cox transform"</span>.format(skewed_features.shape[<span class="number">0</span>]))</span><br><span class="line"><span class="keyword">from</span> scipy.special <span class="keyword">import</span> boxcox1p</span><br><span class="line">skewed_features_name = skewed_features.index</span><br><span class="line">lam = <span class="number">0.15</span> <span class="comment"># 超参数</span></span><br><span class="line"><span class="keyword">for</span> feat <span class="keyword">in</span> skewed_features_name:</span><br><span class="line">    tranformer_feat = boxcox1p(data[feat], lam)</span><br><span class="line">    data[feat] = tranformer_feat</span><br><span class="line">data[numerical_features].apply(<span class="keyword">lambda</span> x: skew(x.dropna())).sort_values(ascending=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>There are 20 skewed numerical features to Box Cox transform
+
+
+PoolArea         16.487849
+3SsnPorch         8.918476
+LowQualFinSF      8.737917
+MiscVal           5.592866
+BsmtHalfBath      3.798589
+KitchenAbvGr      3.695780
+ScreenPorch       2.975708
+BsmtFinSF2        2.561989
+EnclosedPorch     2.023182
+TotRmsAbvGrd      0.749579
+Fireplaces        0.725958
+HalfBath          0.698770
+TotalBsmtSF       0.662657
+MasVnrArea        0.636713
+BsmtFullBath      0.622820
+2ndFlrSF          0.329999
+BedroomAbvGr      0.328129
+WoodDeckSF        0.225571
+GarageArea        0.217748
+OverallQual       0.181902
+LotArea           0.178523
+1stFlrSF          0.173668
+FullBath          0.159917
+GrLivArea         0.102287
+OpenPorchSF       0.100679
+GarageCars       -0.219402
+YearRemodAdd     -0.449113
+BsmtFinSF1       -0.488447
+YearBuilt        -0.598087
+LotFrontage      -0.808022
+BsmtUnfSF        -1.536727
+GarageYrBlt      -3.922152
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Boxplot for numerical_features</span></span><br><span class="line">sns.set_style(<span class="string">"whitegrid"</span>)</span><br><span class="line">f, ax = plt.subplots(figsize=(<span class="number">15</span>, <span class="number">15</span>))</span><br><span class="line">ax.set_xscale(<span class="string">"log"</span>)</span><br><span class="line">ax = sns.boxplot(data=data[numerical_features] , orient=<span class="string">"h"</span>, palette=<span class="string">"ch:2.5,-.2,dark=.3"</span>)</span><br><span class="line">ax.set(ylabel=<span class="string">"Features"</span>)</span><br><span class="line">ax.set(xlabel=<span class="string">"Value"</span>)</span><br><span class="line">ax.set(title=<span class="string">"Distribution"</span>)</span><br><span class="line">sns.despine(trim=<span class="keyword">True</span>, left=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/img/house-prices/output_52_0.png" alt="png"></p>
+<p>特征处理完后可以将数据再分割开：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train = data[:size_train_df]</span><br><span class="line">test = data[size_train_df:]</span><br></pre></td></tr></table></figure>
+<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>构建算法模型，常用的几个算法模型都试试，然后设置交叉检验:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> ElasticNet, Lasso,  BayesianRidge, LassoLarsIC</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor,  GradientBoostingRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.kernel_ridge <span class="keyword">import</span> KernelRidge</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> RobustScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.base <span class="keyword">import</span> BaseEstimator, TransformerMixin, RegressorMixin, clone</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> KFold, cross_val_score, train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_squared_error</span><br><span class="line"><span class="keyword">import</span> xgboost <span class="keyword">as</span> xgb</span><br><span class="line"><span class="keyword">import</span> lightgbm <span class="keyword">as</span> lgb</span><br></pre></td></tr></table></figure>
+<p>定义一个交叉评估函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Validation function</span></span><br><span class="line">n_folds = <span class="number">5</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rmsle_cv</span><span class="params">(model)</span>:</span></span><br><span class="line">    kf = KFold(n_folds, shuffle=<span class="keyword">True</span>, random_state=<span class="number">42</span>).get_n_splits(train.values)</span><br><span class="line">    rmse= np.sqrt(-cross_val_score(model, train.values, target_variable, scoring=<span class="string">"neg_mean_squared_error"</span>, cv = kf))</span><br><span class="line">    <span class="keyword">return</span>(rmse)</span><br></pre></td></tr></table></figure>
+<p><strong>LASSO回归(LASSO Regression)</strong><br>采用了<em>L1范数</em>，即绝对值之和。<br><em>注：当数据包含许多异常值，使用均值和方差缩放可能并不是一个很好的选择。这种情况下，可以使用 <code>robust_scale</code> 以及 <code>RobustScaler</code> 作为替代品。</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lasso = make_pipeline(RobustScaler(), Lasso(alpha =<span class="number">0.0005</span>, random_state=<span class="number">1</span>))</span><br><span class="line">score = rmsle_cv(lasso)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1101 (0.0058)
+</code></pre><p><strong>岭回归（Kernel Ridge Regression）</strong><br>采用了<em>L2范数</em>，即平方和。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KRR = make_pipeline(RobustScaler(), KernelRidge(alpha=<span class="number">0.6</span>, kernel=<span class="string">'polynomial'</span>, degree=<span class="number">2</span>, coef0=<span class="number">2.5</span>))</span><br><span class="line">score = rmsle_cv(KRR)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1152 (0.0043)
+</code></pre><p><strong>弹性网络回归(Elastic Net Regression)</strong><br>ElasticNet 是一种使用L1和L2先验作为正则化矩阵的线性回归模型,弹性网络是结合了岭回归和Lasso回归，由两者加权平均所得。<br><a href="https://www.jianshu.com/p/65a573b9fe32" target="_blank" rel="noopener">https://www.jianshu.com/p/65a573b9fe32</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ENet = make_pipeline(RobustScaler(), ElasticNet(alpha=<span class="number">0.0005</span>, l1_ratio=<span class="number">.9</span>, random_state=<span class="number">3</span>))</span><br><span class="line">score = rmsle_cv(ENet)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1100 (0.0059)
+</code></pre><p><strong>组合模型</strong><br>现在常用的组合模型有提升树(Gradient Boosting Regression)、XGBoost、LightGBM 等<br><strong>提升树(Gradient Boosting Regression)</strong>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GBoost = GradientBoostingRegressor(n_estimators=<span class="number">3000</span>, learning_rate=<span class="number">0.05</span>,</span><br><span class="line">                                   max_depth=<span class="number">4</span>, max_features=<span class="string">'sqrt'</span>,</span><br><span class="line">                                   min_samples_leaf=<span class="number">15</span>, min_samples_split=<span class="number">10</span>, </span><br><span class="line">                                   loss=<span class="string">'huber'</span>, random_state=<span class="number">5</span>)</span><br><span class="line">score = rmsle_cv(GBoost)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1164 (0.0082)
+</code></pre><p><strong>XGBoost</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model_xgb = xgb.XGBRegressor(colsample_bytree=<span class="number">0.4603</span>, gamma=<span class="number">0.0468</span>, </span><br><span class="line">                             learning_rate=<span class="number">0.05</span>, max_depth=<span class="number">3</span>, </span><br><span class="line">                             min_child_weight=<span class="number">1.7817</span>, n_estimators=<span class="number">2200</span>,</span><br><span class="line">                             reg_alpha=<span class="number">0.4640</span>, reg_lambda=<span class="number">0.8571</span>,</span><br><span class="line">                             subsample=<span class="number">0.5213</span>, silent=<span class="number">1</span>,</span><br><span class="line">                             random_state =<span class="number">7</span>, nthread = <span class="number">-1</span>)</span><br><span class="line">score = rmsle_cv(model_xgb)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1172 (0.0053)
+</code></pre><p><strong>LightGBM</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model_lgb = lgb.LGBMRegressor(objective=<span class="string">'regression'</span>,num_leaves=<span class="number">5</span>,</span><br><span class="line">                              learning_rate=<span class="number">0.05</span>, n_estimators=<span class="number">720</span>,</span><br><span class="line">                              max_bin = <span class="number">55</span>, bagging_fraction = <span class="number">0.8</span>,</span><br><span class="line">                              bagging_freq = <span class="number">5</span>, feature_fraction = <span class="number">0.2319</span>,</span><br><span class="line">                              feature_fraction_seed=<span class="number">9</span>, bagging_seed=<span class="number">9</span>,</span><br><span class="line">                              min_data_in_leaf =<span class="number">6</span>, min_sum_hessian_in_leaf = <span class="number">11</span>)</span><br><span class="line">score = rmsle_cv(model_lgb)</span><br><span class="line">print(<span class="string">"\nLasso score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Lasso score: 0.1162 (0.0060)
+</code></pre><p><strong>寻找最优参数</strong><br>通过可视化的方式来看看如何寻找模型最优参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alphas = [<span class="number">0.00005</span>, <span class="number">0.0001</span>, <span class="number">0.0005</span>, <span class="number">0.001</span>, <span class="number">0.005</span>, <span class="number">0.01</span>]</span><br><span class="line">cv_ridge_score = [rmsle_cv(make_pipeline(RobustScaler(), Lasso(alpha=alpha, random_state=<span class="number">1</span>))).mean() </span><br><span class="line">            <span class="keyword">for</span> alpha <span class="keyword">in</span> alphas]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cv_ridge = pd.Series(cv_ridge_score, index = alphas)</span><br><span class="line">cv_ridge.plot(title = <span class="string">"Validation - Just Do It"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"alpha"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"rmse"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Text(0, 0.5, &apos;rmse&apos;)
+</code></pre><p><img src="/img/house-prices/output_73_1.png" alt="png"></p>
+<p>几个基础模型预测值的比较:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">train_size = int(len(train)*<span class="number">0.7</span>)</span><br><span class="line">X_train = train.values[:train_size]</span><br><span class="line">X_test = train.values[train_size:]</span><br><span class="line">y_train = target_variable[:train_size]</span><br><span class="line">y_test = target_variable[train_size:]</span><br><span class="line">GBoost.fit(X_train, y_train)</span><br><span class="line">ENet.fit(X_train, y_train)</span><br></pre></td></tr></table></figure>
+<pre><code>Pipeline(memory=None,
+     steps=[(&apos;robustscaler&apos;, RobustScaler(copy=True, quantile_range=(25.0, 75.0), with_centering=True,
+       with_scaling=True)), (&apos;elasticnet&apos;, ElasticNet(alpha=0.0005, copy_X=True, fit_intercept=True, l1_ratio=0.9,
+      max_iter=1000, normalize=False, positive=False, precompute=False,
+      random_state=3, selection=&apos;cyclic&apos;, tol=0.0001, warm_start=False))])
+</code></pre><p>残差图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">preds = pd.DataFrame(&#123;<span class="string">"preds"</span>:GBoost.predict(X_test), <span class="string">"true"</span>:y_test&#125;)</span><br><span class="line">preds[<span class="string">"residuals"</span>] = preds[<span class="string">"true"</span>] - preds[<span class="string">"preds"</span>]</span><br><span class="line">preds.plot(x = <span class="string">"preds"</span>, y = <span class="string">"residuals"</span>,kind = <span class="string">"scatter"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f8c1a72aef0&gt;
+</code></pre><p><img src="/img/house-prices/output_77_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">preds = pd.DataFrame(&#123;<span class="string">"preds"</span>:ENet.predict(X_test), <span class="string">"true"</span>:y_test&#125;)</span><br><span class="line">preds[<span class="string">"residuals"</span>] = preds[<span class="string">"true"</span>] - preds[<span class="string">"preds"</span>]</span><br><span class="line">preds.plot(x = <span class="string">"preds"</span>, y = <span class="string">"residuals"</span>,kind = <span class="string">"scatter"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f8c1a6ed128&gt;
+</code></pre><p><img src="/img/house-prices/output_78_1.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xgb_preds = np.expm1(GBoost.predict(X_test))</span><br><span class="line">lasso_preds = np.expm1(ENet.predict(X_test))</span><br><span class="line">predictions = pd.DataFrame(&#123;<span class="string">"xgb"</span>:xgb_preds, <span class="string">"lasso"</span>:lasso_preds&#125;)</span><br><span class="line">predictions.plot(x = <span class="string">"xgb"</span>, y = <span class="string">"lasso"</span>, kind = <span class="string">"scatter"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f8c00ba9d30&gt;
+</code></pre><p><img src="/img/house-prices/output_79_1.png" alt="png"></p>
+<h2 id="集成学习-模型融合"><a href="#集成学习-模型融合" class="headerlink" title="集成学习(模型融合)"></a>集成学习(模型融合)</h2><p>Stacking models 是指通过将多个模型进行集成以取得更小预测方差的方法, 通过前面的两个模型残差图的分布可以发现具有一定的互补性，所以这才是融合的目的，将他的残差分布变得更均匀。<br><strong>平均模型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AveragingModels</span><span class="params">(BaseEstimator, RegressorMixin, TransformerMixin)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, models)</span>:</span></span><br><span class="line">        self.models = models</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># we define clones of the original models to fit the data in</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        self.models_ = [clone(x) <span class="keyword">for</span> x <span class="keyword">in</span> self.models]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># Train cloned base models</span></span><br><span class="line">        <span class="keyword">for</span> model <span class="keyword">in</span> self.models_:</span><br><span class="line">            model.fit(X, y)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#Now we do the predictions for cloned models and average them</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        predictions = np.column_stack([</span><br><span class="line">            model.predict(X) <span class="keyword">for</span> model <span class="keyword">in</span> self.models_</span><br><span class="line">        ])</span><br><span class="line">        <span class="keyword">return</span> np.mean(predictions, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">averaged_models = AveragingModels(models = (ENet, GBoost, KRR, lasso))</span><br><span class="line">score = rmsle_cv(averaged_models)</span><br><span class="line">print(<span class="string">" Averaged base models score: &#123;:.4f&#125; (&#123;:.4f&#125;)\n"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Averaged base models score: 0.1081 (0.0056)
+</code></pre><p><strong>堆叠模型(Stacking Averaged Models)</strong><br>其由两部分组成，一部分是基准模型，一部分是回归模型：<br>基准模型和大量数据组合预测一堆结果，然后根据预测结果通过回归模型预测和真实值的差异。具体如下：<br><img src="/img/house-prices/QBuDOjs.jpg" alt=""><br><img src="https://img-blog.csdn.net/20171117094740886?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMTg5MTYzMTE=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StackingAveragedModels</span><span class="params">(BaseEstimator, RegressorMixin, TransformerMixin)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, base_models, meta_model, n_folds=<span class="number">5</span>)</span>:</span></span><br><span class="line">        self.base_models = base_models</span><br><span class="line">        self.meta_model = meta_model</span><br><span class="line">        self.n_folds = n_folds</span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fit</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        self.base_models_ = [list() <span class="keyword">for</span> x <span class="keyword">in</span> self.base_models]</span><br><span class="line">        self.meta_model_ = clone(self.meta_model) <span class="comment"># 复制基准模型，因为这里会有多个模型</span></span><br><span class="line">        kfold = KFold(n_splits=self.n_folds, shuffle=<span class="keyword">True</span>, random_state=<span class="number">156</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 训练基准模型，基于基准模型训练的结果导出成特征</span></span><br><span class="line">        <span class="comment"># that are needed to train the cloned meta-model</span></span><br><span class="line">        out_of_fold_predictions = np.zeros((X.shape[<span class="number">0</span>], len(self.base_models)))</span><br><span class="line">        <span class="keyword">for</span> i, model <span class="keyword">in</span> enumerate(self.base_models):</span><br><span class="line">            <span class="keyword">for</span> train_index, holdout_index <span class="keyword">in</span> kfold.split(X, y): <span class="comment">#分为预测和训练</span></span><br><span class="line">                instance = clone(model)</span><br><span class="line">                self.base_models_[i].append(instance)</span><br><span class="line">                instance.fit(X[train_index], y[train_index])</span><br><span class="line">                y_pred = instance.predict(X[holdout_index])</span><br><span class="line">                out_of_fold_predictions[holdout_index, i] = y_pred</span><br><span class="line">                </span><br><span class="line">        <span class="comment"># 将基准模型预测数据作为特征用来给meta_model训练</span></span><br><span class="line">        self.meta_model_.fit(out_of_fold_predictions, y)</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        meta_features = np.column_stack([</span><br><span class="line">            np.column_stack([model.predict(X) <span class="keyword">for</span> model <span class="keyword">in</span> base_models]).mean(axis=<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">for</span> base_models <span class="keyword">in</span> self.base_models_ ])</span><br><span class="line">        <span class="keyword">return</span> self.meta_model_.predict(meta_features)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">meta_model = LinearRegression()</span><br><span class="line">stacked_averaged_models = StackingAveragedModels(base_models = (ENet, GBoost, KRR, lasso),</span><br><span class="line">                                                 meta_model = meta_model,</span><br><span class="line">                                                n_folds=<span class="number">10</span>)</span><br><span class="line">score = rmsle_cv(stacked_averaged_models)</span><br><span class="line">print(<span class="string">"Stacking Averaged models score: &#123;:.4f&#125; (&#123;:.4f&#125;)"</span>.format(score.mean(), score.std()))</span><br></pre></td></tr></table></figure>
+<pre><code>Stacking Averaged models score: 0.1086 (0.0060)
+</code></pre><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.kaggle.com/serigne/stacked-regressions-top-4-on-leaderboard" target="_blank" rel="noopener">https://www.kaggle.com/serigne/stacked-regressions-top-4-on-leaderboard</a><br><a href="https://www.kaggle.com/jolasa/eda-anda-data-preparation-7th-place" target="_blank" rel="noopener">https://www.kaggle.com/jolasa/eda-anda-data-preparation-7th-place</a><br><a href="https://www.kaggle.com/apapiu/regularized-linear-models" target="_blank" rel="noopener">https://www.kaggle.com/apapiu/regularized-linear-models</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2019/机器学习/weekly-kaggle-练习册/" title="weekly kaggle 练习题解读(House Prices)">http://shikanon.com/2019/机器学习/weekly-kaggle-练习册/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/kaggle/" rel="tag"># kaggle</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/机器学习/NLP数据集介绍/" rel="next" title="NLP数据集介绍">
+                <i class="fa fa-chevron-left"></i> NLP数据集介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/机器学习/注意力机制及其意义/" rel="prev" title="注意力机制及其理解">
+                注意力机制及其理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#每日一课-Kaggle-练习讲解"><span class="nav-number">1.</span> <span class="nav-text">每日一课 Kaggle 练习讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载数据"><span class="nav-number">1.1.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理和特征分析"><span class="nav-number">1.2.</span> <span class="nav-text">数据处理和特征分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据观察和可视化"><span class="nav-number">1.2.1.</span> <span class="nav-text">数据观察和可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察数据分布"><span class="nav-number">1.2.2.</span> <span class="nav-text">观察数据分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺失值处理"><span class="nav-number">1.2.3.</span> <span class="nav-text">缺失值处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制关系矩阵"><span class="nav-number">1.2.4.</span> <span class="nav-text">绘制关系矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">1.3.</span> <span class="nav-text">特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建模"><span class="nav-number">1.4.</span> <span class="nav-text">建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成学习-模型融合"><span class="nav-number">1.5.</span> <span class="nav-text">集成学习(模型融合)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.6.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

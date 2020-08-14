@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="入门教程,算法,性能优化,Pandas,数据处理,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Pandas 是一个非常好用的 Python 数据处理库，可以理解他就是编程界的 Excel ，但是总所周知，Python 的性能一直以来都是其核心痛点，暇瑜不掩，那么如何提高我们程序的性能呢，今天我给大家介绍下， Pandas 在性能优化方面的一些小技巧。">
+<meta name="keywords" content="入门教程,算法,性能优化,Pandas,数据处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas 高性能优化小技巧">
+<meta property="og:url" content="http://shikanon.com/2018/机器学习/Pandas-高性能优化小技巧/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="Pandas 是一个非常好用的 Python 数据处理库，可以理解他就是编程界的 Excel ，但是总所周知，Python 的性能一直以来都是其核心痛点，暇瑜不掩，那么如何提高我们程序的性能呢，今天我给大家介绍下， Pandas 在性能优化方面的一些小技巧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/pandas_vs_ray.png">
+<meta property="og:image" content="http://shikanon.com/img/dataframe数据存储格式.jpg">
+<meta property="og:image" content="http://shikanon.com/img/dataframe数据类型.jpg">
+<meta property="og:image" content="http://shikanon.com/img/object数据类型.jpg">
+<meta property="og:image" content="http://shikanon.com/img/category数据类型.jpg">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.972Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas 高性能优化小技巧">
+<meta name="twitter:description" content="Pandas 是一个非常好用的 Python 数据处理库，可以理解他就是编程界的 Excel ，但是总所周知，Python 的性能一直以来都是其核心痛点，暇瑜不掩，那么如何提高我们程序的性能呢，今天我给大家介绍下， Pandas 在性能优化方面的一些小技巧。">
+<meta name="twitter:image" content="http://shikanon.com/img/pandas_vs_ray.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>Pandas 高性能优化小技巧 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2018/机器学习/Pandas-高性能优化小技巧/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Pandas 高性能优化小技巧</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-02T00:45:50+08:00">
+                2018-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/编程语言/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/编程语言/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  Pandas 是一个非常好用的 Python 数据处理库，可以理解他就是编程界的 Excel ，但是总所周知，Python 的性能一直以来都是其核心痛点，暇瑜不掩，那么如何提高我们程序的性能呢，今天我给大家介绍下， Pandas 在性能优化方面的一些小技巧。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>Pandas 对于Pythoner的搞数据分析的来说是常用的数据操作库，对于很多刚接触Pandas的人来说会发现它是一个很方便而且好用的库，它提供了各种数据变化、查询和操作，它的dataframe数据结构和R语言、Spark的dataframe的API基本一样，因此上手起来也非常简单。但是很多新手在使用过程中会发现pandas的dataframe的性能并不是很高，而且有时候占用大量内存，并且总喜欢将罪名归于Python身上(lll￢ω￢)，今天我这里给大家总结了在使用Pandas的一些技巧和代码优化方法。</p>
+<h2 id="1-使用Pandas-on-Ray"><a href="#1-使用Pandas-on-Ray" class="headerlink" title="1.使用Pandas on Ray"></a>1.使用Pandas on Ray</h2><hr>
+<p>Pandas on Ray 主要针对的是希望在不切换 API 的情况下提高性能和运行速度的 Pandas 用户。Pandas on Ray 实现了Pandas 的大部分API 功能，可已作为Pandas的一个子集，其主要是利用并行化进行加速。</p>
+<p>Pandas on Ray 既可以以多线程模式运行，也可以以多进程模式运行。Ray 的默认模式是多进程，它可以从一台本地机器的多个核心扩展到一个机器集群上。在通信方面，Ray 使用共享内存，并且通过 Apache Arrow 实现零拷贝串行化，显著降低了进程之间的通信代价。</p>
+<p><img src="/img/pandas_vs_ray.png" alt="pandas_vs_ray"></p>
+<p>Ray 将根据可用内核的数量进行自动初始化,以<a href="https://www.kaggle.com/census/international-data/data" target="_blank" rel="noopener">一个1.8GB的全球健康数据为例</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import ray.dataframe as pd</span><br><span class="line">import pandas as old_pd</span><br><span class="line"></span><br><span class="line">print(&quot;Pandas on Ray:&quot;)</span><br><span class="line">%time pandas_on_ray = pd.read_csv&quot;midyear_population_age_country_code.csv&quot;)</span><br><span class="line"></span><br><span class="line"># Pandas</span><br><span class="line">print(&quot;\nPandas:&quot;)</span><br><span class="line">%time pandas_native = old_pd.read_csv(&quot;midyear_population_age_country_code.csv&quot;)</span><br></pre></td></tr></table></figure>
+<p>输出结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Pandas on Ray:</span><br><span class="line">CPU times: user 48.5 ms, sys: 19.1 ms, total: 67.6 ms</span><br><span class="line">Wall time: 68 ms</span><br><span class="line"></span><br><span class="line">Pandas:</span><br><span class="line">CPU times: user 49.3 s, sys: 4.09 s, total: 53.4 s</span><br><span class="line">Wall time: 54.3 s</span><br></pre></td></tr></table></figure></p>
+<p>Pandas on Ray主要是通过并线化来加速，就和Spark一样，</p>
+<h2 id="1-1使用iterrows或者apply代替直接对dataframe遍历"><a href="#1-1使用iterrows或者apply代替直接对dataframe遍历" class="headerlink" title="1.1使用iterrows或者apply代替直接对dataframe遍历"></a>1.1使用iterrows或者apply代替直接对dataframe遍历</h2><hr>
+<p>用过Pandas的都知道直接对dataframe进行遍历是十分低效的，当需要对dataframe进行遍历的时候我们可以使用迭代器iterrow代替。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(&apos;输出结果_总量_迁出.csv&apos;,encoding=&apos;gbk&apos;,engine=&apos;python&apos;)</span><br><span class="line"></span><br><span class="line">def loop_test(df):</span><br><span class="line">    result = list()</span><br><span class="line">    for i in range(len(df)):</span><br><span class="line">        result.append(df.iloc[i][&apos;迁出量&apos;])</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">def loop_iterrows_test(df):</span><br><span class="line">    result = list()</span><br><span class="line">    for index, row in df.iterrows():</span><br><span class="line">        result.append(row[&apos;迁出量&apos;])</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">print(&apos;loop directly...&apos;)</span><br><span class="line">%time result = loop_test(df)</span><br><span class="line">print(&apos;loop with iterrows...&apos;)</span><br><span class="line">%time result = loop_iterrows_test(df)</span><br></pre></td></tr></table></figure>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loop directly...</span><br><span class="line">Wall time: 29.2 s</span><br><span class="line">loop with iterrows...</span><br><span class="line">Wall time: 10.6 s</span><br></pre></td></tr></table></figure></p>
+<p>实验证明iterrow的效果在三倍以上。</p>
+<h3 id="1-2apply方法"><a href="#1-2apply方法" class="headerlink" title="1.2apply方法"></a>1.2apply方法</h3><p>dataframe是一种列数据，apply对特定的轴计算做了优化,在针对特定轴（行/列）进行运算操作的时候，apply的效率甚至比iterrow更高.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def loop_iterrows_test(df):</span><br><span class="line">    result = list()</span><br><span class="line">    for index, row in df.iterrows():</span><br><span class="line">        result.append(row[&apos;汽车百分比&apos;]+row[&apos;火车百分比&apos;])</span><br><span class="line">    return result</span><br><span class="line"></span><br><span class="line">def loop_apply_test(row):</span><br><span class="line">    return row[&apos;汽车百分比&apos;]+row[&apos;火车百分比&apos;]</span><br><span class="line"></span><br><span class="line">print(&apos;func iterrows test...&apos;)</span><br><span class="line">%time df[&apos;iterrow&apos;] = loop_iterrows_test(df)</span><br><span class="line">print(&apos;func apply test...&apos;)</span><br><span class="line">%time df[&apos;apply&apos;] = df.apply(loop_apply_test,axis=1)</span><br></pre></td></tr></table></figure>
+<p>结果输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func iterrows test...</span><br><span class="line">Wall time: 12.3 s</span><br><span class="line">func apply test...</span><br><span class="line">Wall time: 3.8 s</span><br></pre></td></tr></table></figure></p>
+<p>apply函数比iterrow提高了4倍</p>
+<h3 id="1-3直接使用内置函数进行计算"><a href="#1-3直接使用内置函数进行计算" class="headerlink" title="1.3直接使用内置函数进行计算"></a>1.3直接使用内置函数进行计算</h3><p>Dataframe、Series具有大量的矢量函数，比如sum,mean等，基于内置函数的计算可以让性能更好，比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%time df[&apos;add&apos;] = df[&apos;汽车百分比&apos;]+df[&apos;火车百分比&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Wall time: 546 ms</span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到性能又往上提高了近6倍。</p>
+<p>因此，我们在使用pandas进行计算的时候，如果可以使用内置的矢量方法计算最好选用内置方法，其次可以考虑apply方法，如果对于非轴向的循环可以考虑iterrow方法。</p>
+<h2 id="2-数据类型优化"><a href="#2-数据类型优化" class="headerlink" title="2.数据类型优化"></a>2.数据类型优化</h2><hr>
+<p>Pandas的内存使用率一直被大家抱怨，特别对于初学者，当机器资源不足的时候，经常会发现相比其他的数据结构，Pandas存储的数据很容易就会爆掉。</p>
+<p><img src="/img/dataframe数据存储格式.jpg" alt="dataframe数据存储格式"></p>
+<p>在底层的设计中，pandas按照数据类型将列分组形成数据块（blocks）。pandas使用ObjectBlock类来表示包含字符串列的数据块，用FloatBlock类来表示包含浮点型列的数据块。对于包含数值型数据（比如整型和浮点型）的数据块，pandas会合并这些列，并把它们存储为一个Numpy数组（ndarray）。Numpy数组是在C数组的基础上创建的，其值在内存中是连续存储的。基于这种存储机制，对其切片的访问是相当快的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">df.info(memory_usage=&apos;deep&apos;)</span><br><span class="line"></span><br><span class="line">&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;</span><br><span class="line">RangeIndex: 307870 entries, 0 to 307869</span><br><span class="line">Data columns (total 16 columns):</span><br><span class="line">起点城市       307870 non-null object</span><br><span class="line">起点城市代码     307870 non-null int64</span><br><span class="line">起点城市lng    291690 non-null float64</span><br><span class="line">起点城市lat    291690 non-null float64</span><br><span class="line">终点城市       307870 non-null object</span><br><span class="line">终点城市代码     307870 non-null object</span><br><span class="line">终点城市lng    304000 non-null object</span><br><span class="line">终点城市lat    304000 non-null object</span><br><span class="line">日期         307870 non-null object</span><br><span class="line">迁出量        307870 non-null int64</span><br><span class="line">汽车百分比      307870 non-null float64</span><br><span class="line">火车百分比      307870 non-null float64</span><br><span class="line">飞机百分比      307870 non-null float64</span><br><span class="line">iterrow    307870 non-null float64</span><br><span class="line">apply      307870 non-null float64</span><br><span class="line">add        307870 non-null float64</span><br><span class="line">dtypes: float64(8), int64(2), object(6)</span><br><span class="line">memory usage: 151.5 MB</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-子类型优化数值型列"><a href="#2-1-子类型优化数值型列" class="headerlink" title="2.1 子类型优化数值型列"></a>2.1 子类型优化数值型列</h3><p>pandas中的许多数据类型具有多个子类型，比如，float型就有float16、float32和float64子类型,分别使用了2、4、8个字节。</p>
+<p><img src="/img/dataframe数据类型.jpg" alt="dataframe数据类型"></p>
+<p>我们可以用函数<code>pd.to_numeric()</code>来对数值型进行向下类型转换。用<code>DataFrame.select_dtypes</code>来只选择特定类型列，然后我们优化这种类型，并比较内存使用量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df_int = df.select_dtypes(include=[&apos;float&apos;])</span><br><span class="line">converted_int = df_int.apply(pd.to_numeric, downcast=&apos;float&apos;)</span><br><span class="line"></span><br><span class="line">print(df_int.dtypes.iloc[0],df_int.memory_usage(deep=True).sum())</span><br><span class="line">print(converted_int.iloc[0].dtypes,converted_int.memory_usage(deep=True).sum())</span><br></pre></td></tr></table></figure>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">float64 19703760</span><br><span class="line">float32 9851920</span><br></pre></td></tr></table></figure></p>
+<p>实验表明,float32比float64整好优化了一半内存</p>
+<h3 id="2-2-用category类型代替object类型"><a href="#2-2-用category类型代替object类型" class="headerlink" title="2.2 用category类型代替object类型"></a>2.2 用category类型代替object类型</h3><p>object类型用来表示用到了Python字符串对象的值，有一部分原因是Numpy缺少对缺失字符串值的支持。因为Python是一种高层、解析型语言，它没有提供很好的对内存中数据如何存储的细粒度控制。</p>
+<p>这一限制导致了字符串以一种碎片化方式进行存储，消耗更多的内存，并且访问速度低下。在object列中的每一个元素实际上都是存放内存中真实数据位置的指针。</p>
+<p>category类型在底层使用整型数值来表示该列的值，而不是用原值。Pandas用一个字典来构建这些整型数据到原数据的映射关系。<strong>当一列只包含有限种值时，这种设计是很不错的。当我们把一列转换成category类型时，pandas会用一种最省空间的int子类型去表示这一列中所有的唯一值。</strong></p>
+<center><img src="/img/object数据类型.jpg" alt="object数据类型"></center><br><center>object数据类型</center>
+
+<p></p><p></p><p></p>
+<center><img src="/img/category数据类型.jpg" alt="category数据类型"></center><br><center>category数据类型</center>
+
+<p><strong>实验</strong><br>输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_object = df.select_dtypes(include=[&apos;object&apos;])</span><br><span class="line">print(df_object.columns)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Index([&apos;起点城市&apos;, &apos;终点城市&apos;, &apos;终点城市代码&apos;, &apos;终点城市lng&apos;, &apos;终点城市lat&apos;, &apos;日期&apos;], dtype=&apos;object&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">down_cast_cols = df_object[&apos;起点城市&apos;].astype(&apos;category&apos;)</span><br><span class="line">print(&apos;before...&apos;)</span><br><span class="line">print(df_object[&apos;起点城市&apos;].memory_usage(deep=True))</span><br><span class="line">print(&apos;after...&apos;)</span><br><span class="line">print(down_cast_cols.memory_usage(deep=True))</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">before...</span><br><span class="line">28885690</span><br><span class="line">after...</span><br><span class="line">659649</span><br></pre></td></tr></table></figure></p>
+<p>可以看出效果是非常明显的，压缩了近30倍的内存空间~</p>
+<p>这种基于类型的优化我们一般在数据载入的时候就可以进行自定义了，这样即可以大大的节省内存的空间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">df_origin = pd.read_csv(&apos;输出结果_总量_迁出.csv&apos;,encoding=&apos;gbk&apos;,engine=&apos;python&apos;)</span><br><span class="line">converted_df = pd.read_csv(&apos;输出结果_总量_迁出.csv&apos;,encoding=&apos;gbk&apos;,engine=&apos;python&apos;,</span><br><span class="line">                           dtype=&#123;&apos;起点城市&apos;: &apos;category&apos;, &apos;终点城市&apos;: &apos;category&apos;, &apos;终点城市代码&apos;:&apos;category&apos;, &apos;终点城市代码&apos;: &apos;category&apos;,</span><br><span class="line">                                 &apos;汽车百分比&apos;: &apos;float32&apos;, &apos;火车百分比&apos;:&apos;float32&apos;, &apos;飞机百分比&apos;: &apos;float32&apos;, &#125;,</span><br><span class="line">                          parse_dates=[&apos;日期&apos;])</span><br><span class="line"></span><br><span class="line">print(&apos;No optimization... &apos;)</span><br><span class="line">print(int(df_origin.memory_usage(deep=True).sum() / 1024))</span><br><span class="line"></span><br><span class="line">print(&apos;After optimization ....&apos;)</span><br><span class="line">print(int(converted_df.memory_usage(deep=True).sum() / 1024))</span><br></pre></td></tr></table></figure>
+<p>输出结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">No optimization... </span><br><span class="line">147934</span><br><span class="line">After optimization ....</span><br><span class="line">35437</span><br></pre></td></tr></table></figure></p>
+<p>原始结果内存147M，优化后35M，内存优化了<strong>近四倍</strong></p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p>对于Pands的优化还有很多，这里主要介绍三种最常用的优化方法，一种是对于数据量极大的情况，可以使用<a href="http://ray.readthedocs.io/" target="_blank" rel="noopener">Pandas on Ray</a> 或者 <a href="http://dask.pydata.org/en/latest/" target="_blank" rel="noopener">Dask</a> 优化，第二种是对于在运算的时候采用自定义的矢量迭代函数代替<strong>for循环</strong>可以取得显著的性能提升，第三种方法是通过对存储类型的设置或转换来优化pandas内存使用。</p>
+<p><a href="https://github.com/shikanon/MyPresentations" target="_blank" rel="noopener">github地址</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2018/机器学习/Pandas-高性能优化小技巧/" title="Pandas 高性能优化小技巧">http://shikanon.com/2018/机器学习/Pandas-高性能优化小技巧/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/入门教程/" rel="tag"># 入门教程</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+            <a href="/tags/Pandas/" rel="tag"># Pandas</a>
+          
+            <a href="/tags/数据处理/" rel="tag"># 数据处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/安全/通过jpg图片隐藏文件/" rel="next" title="通过jpg图片隐藏文件">
+                <i class="fa fa-chevron-left"></i> 通过jpg图片隐藏文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/运维/用crontab运行定时任务/" rel="prev" title="用crontab运行定时任务">
+                用crontab运行定时任务 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用Pandas-on-Ray"><span class="nav-number">2.</span> <span class="nav-text">1.使用Pandas on Ray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1使用iterrows或者apply代替直接对dataframe遍历"><span class="nav-number">3.</span> <span class="nav-text">1.1使用iterrows或者apply代替直接对dataframe遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2apply方法"><span class="nav-number">3.1.</span> <span class="nav-text">1.2apply方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3直接使用内置函数进行计算"><span class="nav-number">3.2.</span> <span class="nav-text">1.3直接使用内置函数进行计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-数据类型优化"><span class="nav-number">4.</span> <span class="nav-text">2.数据类型优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-子类型优化数值型列"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 子类型优化数值型列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-用category类型代替object类型"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 用category类型代替object类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-总结"><span class="nav-number">5.</span> <span class="nav-text">3. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="大数据,Dokcer,容器技术,数据挖掘,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="广州市科技计划项目科技型中小企业创新项目申报项目，2016年申报由我主笔申报，并于2017完成验收。由于这个项目是第一年，申报难度和验收难度相对偏低。">
+<meta name="keywords" content="大数据,Dokcer,容器技术,数据挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Docker容器云技术的大数据智能挖掘处理一站式服务平台">
+<meta property="og:url" content="http://shikanon.com/2017/架构/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="广州市科技计划项目科技型中小企业创新项目申报项目，2016年申报由我主笔申报，并于2017完成验收。由于这个项目是第一年，申报难度和验收难度相对偏低。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/Docker容器云架构.png">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片1.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片2.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片3.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片4.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片5.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片6.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片7.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片8.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片9.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片10.JPG">
+<meta property="og:image" content="http://shikanon.com/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片11.JPG">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Docker容器云技术的大数据智能挖掘处理一站式服务平台">
+<meta name="twitter:description" content="广州市科技计划项目科技型中小企业创新项目申报项目，2016年申报由我主笔申报，并于2017完成验收。由于这个项目是第一年，申报难度和验收难度相对偏低。">
+<meta name="twitter:image" content="http://shikanon.com/img/Docker容器云架构.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>基于Docker容器云技术的大数据智能挖掘处理一站式服务平台 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2017/架构/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">基于Docker容器云技术的大数据智能挖掘处理一站式服务平台</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-30T19:13:55+08:00">
+                2017-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/" itemprop="url" rel="index">
+                    <span itemprop="name">演讲稿展示</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  广州市科技计划项目科技型中小企业创新项目申报项目，2016年申报由我主笔申报，并于2017完成验收。由于这个项目是第一年，申报难度和验收难度相对偏低。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="背景简介"><a href="#背景简介" class="headerlink" title="背景简介"></a>背景简介</h2><p>随着各行业信息化速度的加快，不同类型的数据皆呈现出爆发性的增长并质变成大数据。随着海量、细致的新数据源的不断呈现，大数据在运营、策划、营销等方面的应用，得到不同层面的技术指标，产生系列的报表并反馈在生产和运营中，大数据价值的挖掘应用成为智慧企业发展的所迫切需要迈出的重要一步。</p>
+<p>随着海量、细致的新数据源的呈现，基于海量数据的存储技术、挖掘技术、计算技术、剖析技术等各种技术的飞速进步，使企业可以深化发掘大数据的发展潜力，应用以往无法应用的商业信息，从而发现大量的商机。自2012年发展至今，大数据已经渗透到了每个行业和业务领域，逐渐成为重要的生产因素。但是，传统的信息化系统和工具逐渐无法承载如此庞大的数据存储和运算，分析效率逐步地下，以至于无法胜任数据挖掘分析的需求。在这种情况下，决策者们往往向大数据靠拢，对原有信息系统进行改造，去拥抱真正意义上的大数据资产。</p>
+<p>面对如此庞大而复杂的数据，还需要专门设计的软硬件工具进行处理，数据分析类产品应运而生。数据分析类产品侧重于数据的分析和挖掘以及为企业用户提供比较完整的解决方案。目前国内外市场的大数据服务商纷纷推出了面向云计算、数据挖掘和数据可视化等领域的的大数据服务应用技术及平台，但由于受到研发投入不足、研发人才稀缺等因素的制约，主要是仅面向其中一个细分领域应用的功能性产品，存在应用操作复杂、对操作人员的技术素质的要求高、多功能产品整合利用成本高等不足，制约了中小企业对大数据技术的应用。</p>
+<p>因此，站在对大数据全局认识的角度、深入中小企业的大数据应用需求研究一套从大数据数据采集到数据清洗、到数据挖掘和数据处理可视化的一站式大数据应用解决方案对推动大数据及相关行业的发展具有非常重要意义。</p>
+<h2 id="技术研发情况"><a href="#技术研发情况" class="headerlink" title="技术研发情况"></a>技术研发情况</h2><p>本项目是站在对大数据全局认识的角度、深入中小企业低成本大数据应用需求，研究的一套基于Docker容器云技术的大数据智能挖掘处理一站式服务平台，是一个面向中小企业通用型的集成智能数据采集、数据分析挖掘、数据可视化的一站式大数据服务平台，使得用户无需关心集群的搭建和运维，WEB页面的工作环境实现了拖拽式、点击式等类似于桌面操作方式，从最初始的网站数据采集到对采集回来的数据进行数据清洗和数据分析，最后以可视化图表的形式呈现分析结果，为中小企业提供安全、便捷、高效的一站式数据挖掘处理服务，基于轻量级虚拟化技术——docker技术实现了一站式云计算与大数据智能挖掘处理的完美结合。</p>
+<h3 id="所采用的关键技术"><a href="#所采用的关键技术" class="headerlink" title="所采用的关键技术"></a>所采用的关键技术</h3><h4 id="（1）-基于Docker和Mesos结合的分布式计算架构"><a href="#（1）-基于Docker和Mesos结合的分布式计算架构" class="headerlink" title="（1）    基于Docker和Mesos结合的分布式计算架构"></a>（1）    基于Docker和Mesos结合的分布式计算架构</h4><p>本项目整合了Mesos和Docker的优势，实现Mesos和Docker的无缝对接，将各应用通过Docker进行容器化管理，让应用在更轻量化的情况下分配资源、隔离进程和网络，完成从开发到部署的快速搭建，同时将Docker作为分布式环境下的进程管理，对通过Mesos各应用进行管理，既解决了分布式的痛点，又为用户提供基于集群环境的高速计算能力，极大地提高了发布效率。</p>
+<h4 id="（2）-基于机器学习的防封杀智能数据爬取技术"><a href="#（2）-基于机器学习的防封杀智能数据爬取技术" class="headerlink" title="（2）    基于机器学习的防封杀智能数据爬取技术"></a>（2）    基于机器学习的防封杀智能数据爬取技术</h4><p>该平台首先，模拟浏览器头文件请求，模拟浏览器头文件请求可以伪装成浏览器对服务器进行访问，模拟的头请求包括了手机PC端等数十种浏览器；其次，构建ip代理池，可以通过切换ip防止服务器对ip访问的限制，通过蒙特卡罗算法随机切换ip代理，伪装成多个用户进行访问，并利用机器学习学习网站封杀规律使得代理池可以最大效率的利用代理ip，从而防止某些网站对单个用户的访问限制；最后，通过Phantomjs对javascript代码进行模拟运行，从而实现对网站的交互式操作，模范真人上网行为，防止网站对爬虫的封杀。采用基于机器学习的多种反封杀组合实现对数据的智能爬取，提高抓取数据的质量、可靠性和完整性。</p>
+<h4 id="（3）-基于MD5树的URL去重算法的数据清洗技术"><a href="#（3）-基于MD5树的URL去重算法的数据清洗技术" class="headerlink" title="（3）    基于MD5树的URL去重算法的数据清洗技术"></a>（3）    基于MD5树的URL去重算法的数据清洗技术</h4><p>对URL进行去重是实现高性能数据挖掘服务的一项十分关键的技术之一。该平台将 MD5 加密算法以及树相结合设计出一种基于 MD5 的URL去重树对URL进行去重处理，避免了数据的重复。主要方法如下：1）由于在网络爬虫抓取过程中需要频繁的解析URL，导致对DNS服务器的压力过大，本项目引入并且优化了 DNS 本地缓存模块，将域名使用哈希函数到哈希表，利用线性指针将域名到ip的映射指向至冲突域，以此解决当数据量较大时发生碰撞的情形。2）再利用了MD5加密的低碰撞率，将MD5和树相结合构成去重树，由于树的结构与操作系统文件目录的结构一样，去重树也可以用另一种方法即基于磁盘符号的查找方式，将密文生成的数组转为相应的路径，如果路径存在则代表linkurl中已有相应的url，如果不存在说明此url为新的url。</p>
+<h4 id="（4）-基于二分策略分组的负载均衡改进算法的数据分析技术"><a href="#（4）-基于二分策略分组的负载均衡改进算法的数据分析技术" class="headerlink" title="（4）    基于二分策略分组的负载均衡改进算法的数据分析技术"></a>（4）    基于二分策略分组的负载均衡改进算法的数据分析技术</h4><p>对于服务类型的应用，分布式系统用负载均衡器和服务发现来保证高可靠性的服务。本项目基于Spark对APFP_Growth 算法进行改进，研究基于二分策略分组的负载均衡改进，改进现有的并行PFP_Growth 算法在 FList 分组的步骤中没有考虑分组中负载均衡的问题，改进的 APFP_Growth 算法具有很好的可扩展性，并且比 PFP_Growth 算法具有更好的负载均衡效果。</p>
+<h4 id="（5）-基于改进的并行协同过滤算法的数据处理技术"><a href="#（5）-基于改进的并行协同过滤算法的数据处理技术" class="headerlink" title="（5）    基于改进的并行协同过滤算法的数据处理技术"></a>（5）    基于改进的并行协同过滤算法的数据处理技术</h4><p>本项目基于Spark通过将构建共现矩阵、矩阵相乘简化为获取邻居用户改进基于共现矩阵的并行算法，改进的并行协同过滤算法比原来基于共现矩阵的并行算法更适合于分布式并行计算，具有更好的运行效率和更高的推荐精度。改进后的并行算法主要通过三个步骤实现：生成评分矩阵、获取邻居用户、形成推荐。获取邻居用户主要是通过相似度计算方法来找出目标用户的 K 个邻居用户，即用 K 最小堆的算法来找出 K 个相似度最大值。</p>
+<h2 id="技术研发方案"><a href="#技术研发方案" class="headerlink" title="技术研发方案"></a>技术研发方案</h2><p>该平台以Apache Mesos为资源管理框架支持资源调度，以Spark、Storm、Hive作为计算框架，使用Docker作为容器包装Mesos、Spark、Storm、Hive实现资源隔离。</p>
+<p>本项目以Docker容器为单元为每个应用构建一个容器（如图1所示），借助Docker实现用户定制的分布式系统。</p>
+<p><img src="/img/Docker容器云架构.png" alt=""></p>
+<p>Docker主要包括了Docker Client、Docker Daemon、Docker Registry、Graph、Driver、libcontainer以及Docker container七个模块，其中Docker Client是Docker架构中用户用来和Docker Daemon建立通信的客户端;Docker Daemon是Docker架构中一个常驻在后台的系统进程，其负责接受并处理Docker Client发送的请求;Docker Registry是一个存储容器镜像的仓库;Graph负责对Docker已下载容器镜像的保管者，以及已下载容器镜像之间关系的记录者;Driver是Docker架构中的驱动模块，通过Driver驱动，Docker可以实现对Docker容器执行环境的定制，为了将Docker容器的管理从Docker Daemon内部业务逻辑中区分开来，设计了Driver层驱动来接管所有这部分请求；libcontainer是Docker架构直接访问内核中与容器相关的API，libcontainer扩展了LXC特性并使用高层的 API，LXC 作为一种共享 Kernel 的操作系统级别的虚拟化解决方案，通过在执行时不重复加载内核，且虚拟容器(Container)与宿主机(Host)之间共享内核来加快启动速度和减少内存消耗；Docker container（Docker容器）是Docker架构中服务交付的最终体现形式。</p>
+<p>Mesos用于实现了双层调度机制，使它可以管理多种类型的应用程序：第一级调度是Master的守护进程，管理Mesos集群中所有节点上运行的Slave守护进程。集群由物理服务器或虚拟服务器组成，用于运行应用程序的任务，比如Hadoop和MPI作业；第二级调度由被称作Framework的“组件”组成，包括调度器（Scheduler）和执行器（Executor）进程，其中每个节点上都会运行执行器。</p>
+<p>Mesos由四个组件组成，分别是Mesos-master，mesos-slave，framework和executor。Mesos-master是整个系统的核心，负责管理接入mesos的各个framework和slave，并将slave上的资源按照某种策略分配给framework。Mesos-slave负责接收并执行来自mesos-master的命令、管理节点上的mesos-task，并为各个task分配资源。mesos-slave将自己的资源量发送给mesos-master，由mesos-master中的Allocator模块决定将资源分配给哪个framework。Framework是指外部的计算框架，本项目中采用的计算框架包括了Spark、Storm、Hive等，可通过注册的方式接入mesos，以便mesos进行统一管理和资源分配，整个mesos系统采用了双层调度框架：第一层，由mesos将资源分配给框架；第二层，框架自己的调度器将资源分配给自己内部的任务。Executor主要用于启动框架内部的task。由于不同的框架，启动task的接口或者方式不同，当一个新的框架要接入mesos时，需要编写一个executor，告诉mesos如何启动该框架中的task。</p>
+<p>该平台的架构主要围绕这数据采集、数据分析挖掘、数据处理这几个关键点进行构建，分别实现在云平台上实行数据计算、挖掘、服务等相关功能，数据采集挖掘能力是该架构的核心能力，可以实现在云计算平台上实现对不同格式的数据进行并行挖掘，使数据的分析处理能够运行更加稳定，方便整个架构的高效运行。</p>
+<h4 id="A-大数据采集"><a href="#A-大数据采集" class="headerlink" title="A.    大数据采集"></a>A.    大数据采集</h4><p>大数据的采集是整个流程的基础。随着互联网技术和应用的发展以及各种终端设备的普及，使得数据生产者范围越来越大，数据的产量也越来越多，数据之间的关联也越来越复杂，因此对数据采集速度和精度的要求越来越高。</p>
+<p>该模块的核心是智能爬虫抓取模块的实现，主要将互联网数据通过WebUI操作界面对数据采集规则进行个性化设定实现对大数据的个性化采集，该平台采用机器学习方法的主动爬虫技术实现智能数据高并发爬取提高数据的采集精度，整个过程无需太多的人工介入，降低学习门槛，平滑学习曲线，同时将更多设置放在底层处理，实现半自动化设计，使得界面简单清晰，提高数据的采集效率。</p>
+<h4 id="B-大数据挖掘处理"><a href="#B-大数据挖掘处理" class="headerlink" title="B.    大数据挖掘处理"></a>B.    大数据挖掘处理</h4><p>大数据挖掘是整个流程的核心，数据挖掘则是将大量的、不完全的、有噪声的、模糊的、随机的实际应用数据经过加工处理，筛选优化后，提取隐藏其中的有价值的信息。由于数据复杂多样、数据挖掘和处理需要高速、高效，基于Docker容器云技术的数据挖掘架构是能够利用Docker容器云技术的轻量级虚拟化海量存储和并行计算能力解决了大数据的海量、高可靠性和高效性要求。</p>
+<p>该模块主要提供数据预处理到模型评估的一站式平台服务，基于WEB工作界面，通过拖、拉、拽等方式即可完成复杂数据挖掘流程，支持自定义算法和组件，灵活开放的个性化设置，提供丰富的分布式算法，提高模型精度，其核心内容主要包括：数据挖掘流程配置服务、DMS数据挖掘服务、数据挖掘模型管理等。</p>
+<h4 id="C-大数据分析展示"><a href="#C-大数据分析展示" class="headerlink" title="C.    大数据分析展示"></a>C.    大数据分析展示</h4><p>大数据分析展示是整个流程的目标。在完成数据的采集和处理后，需要对数据进行分析，因为在进行数据分析后才能体现所有大数据的重要价值。数据分析的对象是对上一步数据的处理与集成后的统一格式数据，根据所需数据的应用需求和价值体现方向对这些数据进一步处理和分析，并将分析的结果向用户进行交互展示。</p>
+<p>该平台主要采用ECharts框架和D3框架相结合的方式，为中小企业提供运营动态直播、数据综合展示、设备监控预警等多种可视化场景模板；通过拖拽即可实现灵活的可视化布局；以WebGL技术作为支撑，能够绘制海量数据下的地理轨迹、飞线、热力、区块、3D地图/地球，支持多层叠加，支持关系型数据库、非关系型数据库、Restful API、CSV、静态JSON等多种数据来源，且能够实现动态轮询，将多个数据源汇聚于一个可视化界面中，并同时实现在线分享应用功能。</p>
+<h2 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h2><ul>
+<li>A.    该平台整合了Mesos和Docker的优势，实现Mesos和Docker的无缝对接，利用Mesos实现对分布式集群做细粒度资源分配，结合Docker规避了Mesos无中心化缺陷，将各应用通过Docker进行容器化管理，让应用在更轻量化的情况下分配资源、隔离进程和网络，完成从开发到部署的快速搭建，既解决了分布式的痛点，又为用户提供基于集群环境的高速计算能力，极大地提高了发布效率</li>
+<li>B.    该平台将数据采集模块的解析、设计和点击功能全部通过网页的Web端实现，从而可以使得平台具有跨平台特性和自定义数据服务功能，满足中小企业低成本享受一站式大数据服务需求。</li>
+<li>C.    采用基于机器学习的多种反封杀组合实现对数据的智能爬取，结合基于 MD5 的URL去重树对URL进行去重处理对数据进行清洗，提高挖掘数据的质量、可靠性和完整性。</li>
+<li>D.    该平台基于Spark对并行协同过滤算法和APFP_Growth 算法进行改进，改进的并行协同过滤算法比原来基于共现矩阵的并行算法具有更高的运行效率和更高的推荐精度，基于二分策略分组的负载均衡改进的APFP_Growth算法，规避了现有的并行 PFP_Growth 算法在 FList 分组的步骤中没有考虑分组中负载均衡的问题，达到更好的负载均衡效果。</li>
+</ul>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片1.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片2.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片3.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片4.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片5.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片6.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片7.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片8.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片9.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片10.JPG" alt=""></p>
+<p><img src="/img/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/幻灯片11.JPG" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2017/架构/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/" title="基于Docker容器云技术的大数据智能挖掘处理一站式服务平台">http://shikanon.com/2017/架构/基于Docker容器云技术的大数据智能挖掘处理一站式服务平台/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          
+            <a href="/tags/Dokcer/" rel="tag"># Dokcer</a>
+          
+            <a href="/tags/容器技术/" rel="tag"># 容器技术</a>
+          
+            <a href="/tags/数据挖掘/" rel="tag"># 数据挖掘</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/架构/CAP简易理解/" rel="next" title="CAP简易理解">
+                <i class="fa fa-chevron-left"></i> CAP简易理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/架构/基于实时流式计算技术的高吞吐量网络数据分析云平台/" rel="prev" title="基于实时流式计算技术的高吞吐量网络数据分析云平台">
+                基于实时流式计算技术的高吞吐量网络数据分析云平台 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景简介"><span class="nav-number">1.</span> <span class="nav-text">背景简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术研发情况"><span class="nav-number">2.</span> <span class="nav-text">技术研发情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#所采用的关键技术"><span class="nav-number">2.1.</span> <span class="nav-text">所采用的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）-基于Docker和Mesos结合的分布式计算架构"><span class="nav-number">2.1.1.</span> <span class="nav-text">（1）    基于Docker和Mesos结合的分布式计算架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）-基于机器学习的防封杀智能数据爬取技术"><span class="nav-number">2.1.2.</span> <span class="nav-text">（2）    基于机器学习的防封杀智能数据爬取技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）-基于MD5树的URL去重算法的数据清洗技术"><span class="nav-number">2.1.3.</span> <span class="nav-text">（3）    基于MD5树的URL去重算法的数据清洗技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（4）-基于二分策略分组的负载均衡改进算法的数据分析技术"><span class="nav-number">2.1.4.</span> <span class="nav-text">（4）    基于二分策略分组的负载均衡改进算法的数据分析技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（5）-基于改进的并行协同过滤算法的数据处理技术"><span class="nav-number">2.1.5.</span> <span class="nav-text">（5）    基于改进的并行协同过滤算法的数据处理技术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术研发方案"><span class="nav-number">3.</span> <span class="nav-text">技术研发方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-大数据采集"><span class="nav-number">3.0.1.</span> <span class="nav-text">A.    大数据采集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-大数据挖掘处理"><span class="nav-number">3.0.2.</span> <span class="nav-text">B.    大数据挖掘处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-大数据分析展示"><span class="nav-number">3.0.3.</span> <span class="nav-text">C.    大数据分析展示</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#关键技术"><span class="nav-number">4.</span> <span class="nav-text">关键技术</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

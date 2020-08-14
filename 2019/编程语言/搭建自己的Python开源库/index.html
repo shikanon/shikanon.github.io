@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="入门教程,Python,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="从零开始的社区之路，手把手教你开源自己的Python包。">
+<meta name="keywords" content="入门教程,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建自己的Python开源包">
+<meta property="og:url" content="http://shikanon.com/2019/编程语言/搭建自己的Python开源库/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="从零开始的社区之路，手把手教你开源自己的Python包。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/创建GITHUB项目.png">
+<meta property="og:image" content="http://shikanon.com/img/python项目结构目录.png">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.975Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="构建自己的Python开源包">
+<meta name="twitter:description" content="从零开始的社区之路，手把手教你开源自己的Python包。">
+<meta name="twitter:image" content="http://shikanon.com/img/创建GITHUB项目.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>构建自己的Python开源包 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2019/编程语言/搭建自己的Python开源库/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">构建自己的Python开源包</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T01:44:32+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/编程语言/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/编程语言/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  从零开始的社区之路，手把手教你开源自己的Python包。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>要融入社区，第一步当然是要撰写一个自己的包。整个过程主要分为五步：</p>
+<ul>
+<li>项目创建</li>
+<li>搭建虚拟运行环境</li>
+<li>编写项目代码</li>
+<li>编写安装脚本</li>
+<li>上传PyPi</li>
+</ul>
+<h2 id="GIT-创建项目"><a href="#GIT-创建项目" class="headerlink" title="GIT 创建项目"></a>GIT 创建项目</h2><p>创建项目，确定项目名称，description, license等：</p>
+<p><img src="/img/创建GITHUB项目.png" alt=""><br>项目地址：<a href="https://github.com/shikanon/BaiduMapAPI" target="_blank" rel="noopener">https://github.com/shikanon/BaiduMapAPI</a></p>
+<h2 id="搭建虚拟环境"><a href="#搭建虚拟环境" class="headerlink" title="搭建虚拟环境"></a>搭建虚拟环境</h2><p>我们在搭建自己的库的时候，是希望有一个干净的项目环境的，这时候<code>virtualenv</code>就很有用了，采用 <code>virtualev</code> 搭建虚拟环境，可以方便为后面生成私有项目的 <code>requirement.txt</code> 依赖包文件。</p>
+<p>创建虚拟环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualev venv</span><br></pre></td></tr></table></figure></p>
+<p>启用 <code>virtualev</code> :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source venv/Script/activate</span><br></pre></td></tr></table></figure></p>
+<h2 id="构建项目代码"><a href="#构建项目代码" class="headerlink" title="构建项目代码"></a>构建项目代码</h2><p>简单，快速构建框架原型和骨架，记得包之间需要 <code>__init__.py</code> 文件，后面在编写<code>setup.py</code>也会很有用。<br>项目结构：<br><img src="/img/python项目结构目录.png" alt=""></p>
+<p>构建好架构后，可以开始编写单元测试代码，<code>pytest</code>是个简单易用的库，可以帮助我们快速完成单元测试构建。</p>
+<h2 id="构建安装脚本，编写-setup-py-文件"><a href="#构建安装脚本，编写-setup-py-文件" class="headerlink" title="构建安装脚本，编写 setup.py 文件"></a>构建安装脚本，编写 setup.py 文件</h2><p>完成代码构建和测试就可以开始进入构建安装包环节。<br>Python三方库安装常用的主要有两种模式：一种是直接从 github 上 clone 下来用 <code>setup.py</code> 安装，另一种是用 <code>pip install</code> 来安装。两种安装方法都是需要编写 <code>setup.py</code> 文件的。</p>
+<p>对于第一种方法我们在安装前一般还要提供安装的依赖包， 也就是<code>requirement.txt</code>文件。在这里我们可以直接用 <code>pip freeze</code> 命令生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirement.txt</span><br></pre></td></tr></table></figure>
+<p>因为我们是采用新建的虚拟环境开发，所以可以直接把环境中的三方库导入到<code>requirement.txt</code> 文件中。</p>
+<p>构建好 <code>requirement.txt</code>后，就可以编写安装脚本。<br>这里采用了<code>setuptools</code>编写安装脚本，Setuptools是一个包开发过程库，其增强Python标准库distutils，使得打包Python项目更简单。</p>
+<p><code>setup.py</code>文件案例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import Command, find_packages, setup</span><br><span class="line"></span><br><span class="line">__lib_name__ = &quot;BaiduMapAPI&quot;</span><br><span class="line">__lib_version__ = &quot;0.1.1&quot;</span><br><span class="line">__description__ = &quot;The Package of Baidu Map, with unofficial&quot;</span><br><span class="line">__url__ = &quot;https://github.com/shikanon/BaiduMapAPI&quot;</span><br><span class="line">__author__ = &quot;shikanon&quot;</span><br><span class="line">__author_email__ = &quot;account@shikanon.com&quot;</span><br><span class="line">__license__ = &quot;MIT&quot;</span><br><span class="line">__keywords__ = [&quot;Baidu&quot;, &quot;map&quot;]</span><br><span class="line">__requires__ = [&quot;requests&quot;,]</span><br><span class="line"></span><br><span class="line">with open(&quot;README.rst&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:</span><br><span class="line">    __long_description__ = f.read()</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name = __lib_name__,</span><br><span class="line">    version = __lib_version__,</span><br><span class="line">    description = __description__,</span><br><span class="line">    url = __url__,</span><br><span class="line">    author = __author__,</span><br><span class="line">    author_email = __author_email__,</span><br><span class="line">    license = __license__,</span><br><span class="line">    packages = find_packages(exclude=(&quot;tests&quot;, &quot;exmaple&quot;)),</span><br><span class="line">    install_requires = __requires__,</span><br><span class="line">    zip_safe = False,</span><br><span class="line">    include_package_data = True,</span><br><span class="line">    data_files = [(&quot;BaiduMapAPI/data&quot;, [&quot;BaiduMapAPI/data/BaiduMap_cityCode_1102.txt&quot;])],</span><br><span class="line">    long_description = __long_description__</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><code>name</code> 包名称<br><code>version</code> 版本号<br><code>description</code> 包描述<br><code>url</code> 包地址<br><code>license</code> 授权信息<br><code>packages</code> 需要处理的包目录，也就是包含<code>__init__.py</code>的文件夹<br><code>install_requires</code> 需要安装的依赖包<br><code>data_files</code> 可以用于引入一些额外的信息文件和数据，如图片、配置文件， <code>[(&#39;文件要放入的文件夹1&#39;,[&#39;file1&#39;,file2&#39;]),(&#39;文件要放入的文件夹2&#39;,[&#39;file3&#39;,file4&#39;])]</code> 第一个元素指最后在文件<strong>要放的位置/目录</strong>，如果空字符，表示放在根目录，第二个元素指原文件所在的位置。<br><code>long_description</code> 包的详细描述，后续上传到<code>pypi</code>，可以用于显示在主页上的描述</p>
+<p><strong>find_packages()</strong>:这个函数会默认在和setup.py同一目录下搜索各个含有<strong>init</strong>.py的包。<br>除了通过<code>data_files</code>添加数据包文件，还可以通过<code>package_data</code>设置可以被<code>find_packages</code>找到添加的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">packages = find_packages(exclude=(&quot;tests&quot;, &quot;exmaple&quot;)),  # 所有包除了tests和exmaple</span><br><span class="line">package_data = &#123;</span><br><span class="line">    &apos;&apos;: [&apos;*.csv&apos;], # 任何包中含有.csv文件，都包含它</span><br><span class="line">    &apos;data&apos;: [&apos;data/*.dat&apos;], # 包含data包data文件夹中的 *.dat文件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>写好<code>setup.py</code>文件，可以<code>python setupy install</code>进行安装测试。</p>
+<h2 id="注册-pypi-并上传自己的库"><a href="#注册-pypi-并上传自己的库" class="headerlink" title="注册 pypi 并上传自己的库"></a>注册 pypi 并上传自己的库</h2><p>编写好安装脚本，就可以上传PyPi，当然，上传前要先看看上面是否已经有编写好的相关库了。<br>如果很幸运没有，那么可以开始上传自己的包了，这里我们采用<code>twine</code>协助上传。</p>
+<ul>
+<li>首先，完成PyPi的账户注册。</li>
+<li><p>在用户目录下创建<code>.pypirc</code>文件， Linux在<code>$HOME</code>创建<code>.pypirc</code>， Windows在<code>%HOMEDRIVE%</code>下创建<code>.pypirc</code>，加入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[distutils]</span><br><span class="line">index-servers = </span><br><span class="line">  pypi</span><br><span class="line">  pypitest</span><br><span class="line"></span><br><span class="line">[pypi]</span><br><span class="line">repository: https://upload.pypi.org/legacy/</span><br><span class="line">username: 账户</span><br><span class="line">password: 密码</span><br><span class="line"></span><br><span class="line">[pypitest]</span><br><span class="line">repository: https://test.pypi.org/legacy/</span><br><span class="line">username: 账户</span><br><span class="line">password: 密码</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装twine: <code>pip install twine</code></p>
+</li>
+<li>创建： <code>python setup.py sdist bdist_wheel</code></li>
+<li>上传PyPi: <code>twine upload dist/*</code></li>
+</ul>
+<p>上传成功后可以运行<code>pip install</code>命令测试。</p>
+<h2 id="编写文档"><a href="#编写文档" class="headerlink" title="编写文档"></a>编写文档</h2><p>编写<code>README.md</code>和说明文档<code>docs</code>，这里我们用<code>sphinx</code>库来创建文档架构，<code>sphinx</code>是一个智能、漂亮的文档生成工具。</p>
+<p>初始化<code>docs</code>文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sphinx-quickstart</span><br></pre></td></tr></table></figure></p>
+<p>编写<code>rst</code>文件，运行<code>make html</code>即可生成<code>html</code>文档,</p>
+<p><code>rst</code>文档例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Welcome to BaiduMapAPI&apos;s documentation!</span><br><span class="line">=======================================</span><br><span class="line"></span><br><span class="line">.. toctree::</span><br><span class="line">   :caption: Basic concepts</span><br><span class="line">   :hidden:</span><br><span class="line"></span><br><span class="line">   api</span><br><span class="line">   dataset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Indices and tables</span><br><span class="line">==================</span><br><span class="line"></span><br><span class="line">* :ref:`genindex`</span><br><span class="line">* :ref:`modindex`</span><br><span class="line">* :ref:`search`</span><br></pre></td></tr></table></figure></p>
+<p>注：<br>如果已经有配置文件了，可以用<code>sphinx-build</code>来指定生成目录<br><code>sphinx-build -b html source/ build/</code></p>
+<h2 id="上传github"><a href="#上传github" class="headerlink" title="上传github"></a>上传github</h2><p>最后上传到 github，这样一个完整的 Python 三方包的开源完成了。</p>
+<hr>
+<p>Windows上得中文Python二进制包资源：<br><a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2019/编程语言/搭建自己的Python开源库/" title="构建自己的Python开源包">http://shikanon.com/2019/编程语言/搭建自己的Python开源库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/入门教程/" rel="tag"># 入门教程</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/编程语言/浅谈：并发/" rel="next" title="浅谈：Golang 并发">
+                <i class="fa fa-chevron-left"></i> 浅谈：Golang 并发
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/架构/汽车大数据-天眼猎产品矩阵介绍/" rel="prev" title="汽车大数据:天眼猎产品矩阵介绍">
+                汽车大数据:天眼猎产品矩阵介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GIT-创建项目"><span class="nav-number">1.</span> <span class="nav-text">GIT 创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建虚拟环境"><span class="nav-number">2.</span> <span class="nav-text">搭建虚拟环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建项目代码"><span class="nav-number">3.</span> <span class="nav-text">构建项目代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建安装脚本，编写-setup-py-文件"><span class="nav-number">4.</span> <span class="nav-text">构建安装脚本，编写 setup.py 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册-pypi-并上传自己的库"><span class="nav-number">5.</span> <span class="nav-text">注册 pypi 并上传自己的库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写文档"><span class="nav-number">6.</span> <span class="nav-text">编写文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传github"><span class="nav-number">7.</span> <span class="nav-text">上传github</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

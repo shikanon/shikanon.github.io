@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="入门教程,算法,技术分享,RTB,DSP,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这是一份关于精准广告投放技术的演示稿，从基本概念、到原理实现到具体的市面上的大厂框架进行了详细的剖析。">
+<meta name="keywords" content="入门教程,算法,技术分享,RTB,DSP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DSP 及 RTB 基本概念、原理、理论及应用介绍">
+<meta property="og:url" content="http://shikanon.com/2018/机器学习/DSP-及-RTB-基本原理及理论应用介绍/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="这是一份关于精准广告投放技术的演示稿，从基本概念、到原理实现到具体的市面上的大厂框架进行了详细的剖析。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片1.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片2.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片3.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片4.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片5.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片6.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片7.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片8.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片9.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片10.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片11.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片12.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片13.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片14.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片15.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片16.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片17.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片18.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片19.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片20.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片21.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片22.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片23.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片24.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片25.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片26.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片27.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片28.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片29.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片30.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片31.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片32.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片33.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片34.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片35.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片36.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片37.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片38.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片39.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片40.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片41.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片42.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片43.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片44.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片45.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片46.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片47.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片48.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片49.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片50.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片51.JPG">
+<meta property="og:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片52.JPG">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.971Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DSP 及 RTB 基本概念、原理、理论及应用介绍">
+<meta name="twitter:description" content="这是一份关于精准广告投放技术的演示稿，从基本概念、到原理实现到具体的市面上的大厂框架进行了详细的剖析。">
+<meta name="twitter:image" content="http://shikanon.com/img/Display-advertising-with-Real-Time-Bidding/幻灯片1.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>DSP 及 RTB 基本概念、原理、理论及应用介绍 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2018/机器学习/DSP-及-RTB-基本原理及理论应用介绍/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">DSP 及 RTB 基本概念、原理、理论及应用介绍</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T23:18:48+08:00">
+                2018-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/" itemprop="url" rel="index">
+                    <span itemprop="name">演讲稿展示</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  25 min
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 这是一份关于精准广告投放技术的演示稿，从基本概念、到原理实现到具体的市面上的大厂框架进行了详细的剖析。</p>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片1.JPG" alt=""></p>
+<blockquote>
+<p>IR researchers, for example, are facing the challenge of deﬁning the relevancy of underlying audiences given a campaign goal, and consequently, developing techniques to ﬁnd and ﬁlter them out in the real time bid request data. For data miners, a fundamental task is identifying repeated patterns over the large-scale streaming data of bid requests, winning bids and ad. For machine learners, an emerging problem is telling a machine to react to a data stream, i.e., learning to bid cleverly on behalf of advertisers and brands to maximise conversions while keeping costs to a minimum </p>
+<p>Behavioral targeting（行为定位广告） comprises a range of technologies and techniques used by online website brands, publishers and advertisers aimed at increasing the effectiveness of marketing and advertising using user web-browsing behavior information. </p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片2.JPG" alt=""></p>
+<blockquote>
+<p>RTB的定义<br>RTB通过透明公平的拍卖机制，把对的广告展示给对的用户，整个竞价过程发生在广告展示前的一瞬间。<br>在RTB环境中，不论是对广告主还是对开发者而言，拍卖都被认为是一种公平而透明的方式。它能自动在正确的时间，将合适的广告以拍卖双方达成一致的合理价格推送给正确的受众。</p>
+<p>拍卖的定义<br>拍卖是一个过程，即：潜在的竞价者对某一商品提交自己的出价，然后由拍卖方从所有出价中选出最高价，该出价者将成为获得商品的中标者。<br>广告交易平台和供应方平台（SSP）与多个需求方平台（DSP）对接，利用拍卖，尤其是次高价投标拍卖（Second-price auction）机制，实时抛售广告展示机会，实现市场的供需平衡。</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片3.JPG" alt=""></p>
+<blockquote>
+<p>第一种，也是最基础的一种交易方式被称为PDB，即Private Direct Buy（私有直接购买），这种方式简单讲，是一对一（1v1）的购买方式。这种购买方式，与我们传统的广告采买方式基本上没有区别，即广告主找媒体确定好广告位置和价格，然后按照排期规定的时间进行广告投放。在传统方式中，广告排期（spot plan）是这个交易过程的关键，而在PDB中，也完全如此。 PDB这种方式，是广告主最容易接受的方式。首先，与传统采买方式一致意味着广告位资源是预先保证的，一旦排期确定，PO（purchase order）下达，广告位资源就肯定不可能易主。再者，不改变传统的广告采买过程意味着内部的组织和工作流程都不需要发生什么变化，因此也就没有“政治”问题（你懂的）。更何况，在此之上还能实现程序化的好处，有百利而无一害，何乐不为。 PDB方式支持传统的CPD（Cost Per Day）的广告采买方式，也支持CPM（Cost Per Milli，即广告被千次曝光所需的成本）和CPC（Cost Per Click）的方式。</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片4.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片5.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片6.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片7.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片8.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片9.JPG" alt=""></p>
+<blockquote>
+<p>Data exchanges(DX),also called Data Management Platforms(DMP), serve DSP, SSP and ADX by providing user historical data (usually in real-time) for better matching.</p>
+<p>Supply side platforms (SSP) serve publishers by registering their inventories (impressions) from multiple ad networks and accepting bids and placing ads automatically; </p>
+<p>Demand side platforms (DSP) serve advertisers or ad agencies by bidding for their campaigns in multiple ad networks automatically; </p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片10.JPG" alt=""></p>
+<blockquote>
+<ol>
+<li>When a user visits a webpage, an impression is created on publisher’s website. While the page loads, 1. An ad request is sent to an ad exchange through an ad network or a SSP; 2. The ad exchange queries DSPs for advertisers’ bids; 3. The DSP can contact data exchanges for the 3rd party user data; 4. If the advertiser decides to bid, the bid is generated and submitted (for example, the user is interested in travel, a travel related advertiser, e.g. booking.com, could expect the user to convert to their campaign and may be willing to bid higher); 5. The winner is selected at ad exchanges (largely based on the second price auction), then selected at SSP if the SSP sends the bid request to multiple ad exchanges; 6. The winning notice is sent to the advertiser; 7. Following the reversed path, the winner’s ad (creative, i.e., the text, picture,or video that the advertiser wants to show to users)is displayed on the webpage for the speciﬁc user; 8. The tracker collects the user’s feedback, determining whether the user clicked the ad and whether the ad led to any conversion.</li>
+</ol>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片11.JPG" alt=""></p>
+<blockquote>
+<p>Different visitors behave differently on your website. The traffic you get on your website is composed of visitors with different intentions: some are on your website for purchasing your products, some are there for joining your organization (finding careers page), some are there for simply researching, and others are probably there by mistake and have not even tiny interest in what you are selling. Most websites and landing pages on the Internet are same for all these different kinds of visitors. That is why we see websites crammed with multiple call-to-actions (buy now, sign up for newsletter, free trial, like us on Facebook, and what not). These websites try appealing to all sorts of visitors, but finally, end up appealing nobody.</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片12.JPG" alt=""></p>
+<blockquote>
+<p>追踪用户行为：DSP公司通常会在广告主的网站上埋点（即放上一个1×1的不可见像素），这样当互联网用户第一次访问广告主的网站时，就会得到DSP公司的一个cookie，这样DSP公司就可以追踪到这个网民的在广告主网站上的行为了(这些数据也叫action data)。DSP公司还会和第三方的网站合作（例如：新浪，腾讯），在他们的网站上也埋点，或者向DMP购买网民行为数据，这样就可以追踪到网民在这些网站上的行为了(这些数据也叫mapping data)。这里值得一提的是，DSP公司对某一个用户记录的cookie和第三方网站或DMP或exchange记录的cookie是不一样的，这里需要一个叫Cookie Mapping的过程，这不是本文重点，以下假设DSP已经做好了Cookie Mapping，每个用户有一个唯一的id标识。</p>
+<p>受众选择（audience selection）: m6d对每一个campaign(即每一个广告主的每个推广活动), 训练一个audience selection model, 该模型以在广告主的网站上发生转化行为（转化行为可以是注册成为用户，点击某个特定页面，购买产品。每个广告主对转化的定义不一样）的用户为正例，没有发生转化行为的用户为负例（是的，正负例很不均匀，通常要做采样和结果修正）。得到模型后，对所有的用户预估对这个campaign的转化概率p(c | u),即该用户u有多大的概率会在广告主的网站上发生转化行为（c表示conversion），去掉大多数转化概率非常小的用户，将目标用户根据转化概率高低分到不同的segments中。这样我们对每个campaign就找到了很多的目标用户，而且这些用户根据他们的质量高低，被分别放在不同的segments中。</p>
+<p>通知exchange: DSP将这些目标用户的cookie告诉exchange，这样当有这些cookie的请求来的时候，exchange才会来向DSP的服务器发送请求。</p>
+<p>Segment管理： 通常DSP公司会有账户管理员（运营人员），他们人工来对每个campaign的做一些设定。他们根据每个campaign所属的行业特点，经济状况，决定开启哪些segments，关掉哪些segments。例如：对没钱的小公司的campaign, 那些用户转化概率小一些的segment就不要投广告了。他们还需要对每个segment设定一个基础出价（base price）。账户管理员可以拿到每个segment的平均预估转化概率，来辅助他们设定基础出价。这一步也是人工影响投放策略最主要的地方。</p>
+<p>进行实时竞价：当exchange把请求发过来的时候，DSP会拿到以下信息：当前广告位的信息，当前用户的cookie和基本信息。DSP需要在100ms内，根据对当前用户的理解，并且考虑当前广告位，根据自己的bidding算法，来要决定是否要买这次展现，投放哪个campaign的广告，出价是多少（bidding），并向exchange返回出价信息？如果超过时间DSP没有响应，则exchange默认DSP放弃这次竞价。</p>
+<p>展现广告：如果赢得了展现机会，则DSP返回创意，用户就会在该广告位看到该创意。</p>
+<p>追踪转化：因为DSP在广告主的网站上埋了点，就能知道用户是否在这次展现之后进行了转化行为。根据这些数据统计转化率，每个转化平均成本等指标，汇总成报告给广告主。</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片13.JPG" alt=""></p>
+<blockquote>
+<p>A user is typically identiﬁed by an HTTP cookie.<br>A cookie, in the form of a small piece of data, is sent from a website and stored in the user’s Web browser the ﬁrst time the user browses a website.<br>In the context of display advertising, each service provider  would act as a single domain tobuilduptheirownuserIDsystemsacrossanumberoftheirclientwebsites </p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片14.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片15.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片16.JPG" alt=""></p>
+<blockquote>
+<p>SSP强制发送一个重定向请求，该重定向请求带上新网站的cookie ID<br>cookie-sync发生在竞价之后而不是之前的原因主要是考虑到时延和用户体验。如果用户user123 需要访问10个DSP， 等待所有的DSP为自己创建cookie并将SSP cookie ID 和 DSP cookie ID的映射保存到DSP自己的数据库中，然后在开始广告竞价，这将显著地延缓整个竞价过程。</p>
+<p>in step (1), the browser makes a request from the pixel tag to ad.bidder.com and includes in this request any tracking cookies set by ad.bidder.com. If the user is new to ad.bidder.com, it sets its ad.bidder.com cookie. In step (2), the tracker from ad.bidder. com retrieves its tracking ID from the cookie and, instead of returning the required 1x1 pixel, redirects the browser to ad.exchange.com using http 302 redirect and encoding the tracking ID into the URL as a parameter. (3) The browser then makes a request to ad.exchange.com, which includes thefullURLad.bidder.comredirectedtoaswellas ad.exchange.com’sown trackingcookie(ifoneexists). (4)ad.exchange.comreturnstherequired1x1 pixel and can now link its own ID associated with the user to ad.bidder. com’s ID and create a record in its match table. </p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片17.JPG" alt=""></p>
+<blockquote>
+<p>广义二阶定价<br>次价密封投标拍卖：出最高价者所得，但支付价格是第二个开价人做开的价格。<br>优点：传统的竞价的最优出价都取决于他对其他人出价的预期，所以常常不会展示自己对拍卖物的真实评价。</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片18.JPG" alt=""></p>
+<blockquote>
+<p>占优策略的定义：在不考虑其他竞标者如何竞价的情况下，占优策略是对竞价者更有利的策略。</p>
+<p>降低出价的定义：指竞价者对商品的出价低于他们认为真正合理的估值。在程序化交易中，这个商品就是指广告展示机会。</p>
+<p>哈佛大学工商管理专业副教授Benjamin Edelman在题为《Internet Advertising and the Generalized Second Price Auction: Selling Billions of Dollars Worth of Keywords》中的研究报告中指出，“讲真话”来源于传统的次高价投标拍卖以及在搜索广告中被广泛使用的VGC拍卖。</p>
+<p>哥伦比亚大学商科助理教授Santiago Balseiro在《Competition and Yield Optimization in Ad Exchange》中表示，在次高价投标拍卖中，“讲真话”对于广告主而言可能并不是一个占优策略。</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片19.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片20.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片21.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片22.JPG" alt=""></p>
+<blockquote>
+<p>竞价愿景预测(bid landscape forecasting)是指对于给定的一个广告计划,预测出不同价格能够竞价到的流量的分布。<br>广告定向特征通常有url, 媒体, 广告位置，用户信息，地理位置信息等</p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片23.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片24.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片25.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片26.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片27.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片28.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片29.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片30.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片31.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片32.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片33.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片34.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片35.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片36.JPG" alt=""></p>
+<blockquote>
+<p>百度DSP开发手册：<a href="https://cloud.baidu.com/doc/DSP/Pricing.html#.E8.AE.A1.E8.B4.B9.E8.A7.84.E5.88.99-1" target="_blank" rel="noopener">https://cloud.baidu.com/doc/DSP/Pricing.html#.E8.AE.A1.E8.B4.B9.E8.A7.84.E5.88.99-1</a></p>
+</blockquote>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片37.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片38.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片39.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片40.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片41.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片42.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片43.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片44.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片45.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片46.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片47.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片48.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片49.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片50.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片51.JPG" alt=""></p>
+<p><img src="/img/Display-advertising-with-Real-Time-Bidding/幻灯片52.JPG" alt=""></p>
+<h2 id="文献"><a href="#文献" class="headerlink" title="文献"></a>文献</h2><h4 id="Books-Monographs"><a href="#Books-Monographs" class="headerlink" title="Books/Monographs"></a>Books/Monographs</h4><ul>
+<li><a href="https://arxiv.org/abs/1610.03013" target="_blank" rel="noopener">Display Advertising with Real-Time Bidding (RTB) and Behavioural Targeting</a> by Jun Wang, Weinan Zhang and Shuai Yuan. ArXiv 2016.</li>
+</ul>
+<h4 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a>Tutorials</h4><ul>
+<li><a href="http://www.optimalrtb.com/cikm16/" target="_blank" rel="noopener">Learning, Prediction and Optimisation in RTB Display Advertising</a> by Weinan Zhang and Jian Xu. CIKM 2016.</li>
+<li><a href="http://tutorial.computational-advertising.org/" target="_blank" rel="noopener">Real-Time Bidding based Display Advertising: Mechanisms and Algorithms</a> by Jun Wang, Shuai Yuan and Weinan Zhang. ECIR 2016.</li>
+<li><a href="http://tutorial-wsdm-2015.computational-advertising.org/" target="_blank" rel="noopener">Real-Time Bidding: A New Frontier of Computational Advertising Research</a> by Shuai Yuan and Jun Wang. WSDM 2015.</li>
+<li><a href="http://wnzhang.net/slides/rtb-frontier-2015.pdf" target="_blank" rel="noopener">Research Frontier of Real-Time Bidding based Display Advertising</a> by Weinan Zhang. Beijing 2015.</li>
+</ul>
+<h4 id="Review-Papers"><a href="#Review-Papers" class="headerlink" title="Review Papers"></a>Review Papers</h4><ul>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-survey.pdf" target="_blank" rel="noopener">A Survey on Real Time Bidding Advertising</a> by Yong Yuan. Service Operations and Logistics 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-analysis.pdf" target="_blank" rel="noopener">Real-time Bidding for Online Advertising: Measurement and Analysis</a> by Shuai Yuan, Jun Wang, Xiaoxue Zhao. ADKDD 2013.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/adx.pdf" target="_blank" rel="noopener">Ad Exchanges: Research Issues</a> by S. Muthukrishnan. Internet and network economics 2009.</li>
+</ul>
+<h4 id="Demand-Side-Platform-DSP-Techniques"><a href="#Demand-Side-Platform-DSP-Techniques" class="headerlink" title="Demand-Side Platform (DSP) Techniques"></a>Demand-Side Platform (DSP) Techniques</h4><h5 id="CTR-CVR-Estimation"><a href="#CTR-CVR-Estimation" class="headerlink" title="CTR/CVR Estimation"></a>CTR/CVR Estimation</h5><ul>
+<li><a href="https://arxiv.org/pdf/1802.00255.pdf" target="_blank" rel="noopener">A Nonparametric Delayed Feedback Model for Conversion Rate Prediction</a> by Yuya Yoshikawa and Yusaku Imai. ArXiv 2018.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rfm-www.pdf" target="_blank" rel="noopener">Robust Factorization Machines for User Response Prediction</a> by Surabhi Punjabi and Priyanka Bhatt. WWW 2018.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fwfm-www.pdf" target="_blank" rel="noopener">Field-weighted Factorization Machines for Click-Through Rate Prediction in Display Advertising</a> by Junwei Pan et al. WWW 2018.</li>
+<li><a href="https://arxiv.org/pdf/1708.05123.pdf" target="_blank" rel="noopener">Deep &amp; Cross Network for Ad Click Predictions</a> by Ruoxi Wang et al. ADKDD &amp; TargetAd 2017.</li>
+<li><a href="https://drive.google.com/file/d/0BwF-hgLDpCD6UTlYLXBZX1BwWHc/view" target="_blank" rel="noopener">Ranking and Calibrating Click-Attributed Purchases in Performance Display Advertising</a> by Sougata Chaudhuri et al. ADKDD 2017.</li>
+<li><a href="https://drive.google.com/file/d/0BwF-hgLDpCD6eENMRFo2dzF4NEk/view" target="_blank" rel="noopener">A Practical Framework of Conversion Rate Prediction for Online Display Advertising</a> by Quan Lu et al. ADKDD 2017.</li>
+<li><a href="https://arxiv.org/pdf/1711.01377.pdf" target="_blank" rel="noopener">An Ensemble-Based Approach to Click-Through Rate Prediction for Promoted Listings at Etsy</a> by Kamelia Aryafar et al. ADKDD 2017.</li>
+<li><a href="https://arxiv.org/pdf/1706.06978.pdf" target="_blank" rel="noopener">Deep Interest Network for Click-Through Rate Prediction</a> by Guorui Zhou et al. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="noopener">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a> by Huifeng Guo et al. IJCAI 2017</li>
+<li><a href="https://arxiv.org/pdf/1704.05194.pdf" target="_blank" rel="noopener">Learning Piece-wise Linear Models from Large Scale Data for Ad Click Prediction</a>  by Kun Gai, Xiaoqiang Zhu, Han Li, et al. Arxiv 2017.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/softmax-ensemble.pdf" target="_blank" rel="noopener">SEM: A Softmax-based Ensemble Model for CTR Estimation in Real-Time Bidding Advertising</a> by Wen-Yuan Zhu et al. BigComp 2017.</li>
+<li><a href="https://arxiv.org/pdf/1702.00855v1.pdf" target="_blank" rel="noopener">Neural Feature Embedding for User Response Prediction in Real-Time Bidding (RTB)</a> by Enno Shioji, Masayuki Arai. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1701.04099.pdf" target="_blank" rel="noopener">Field-aware Factorization Machines in a Real-world Online Advertising System</a> by Yuchin Juan, Damien Lefortier, Olivier Chapelle. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1611.00144.pdf" target="_blank" rel="noopener">Product-based Neural Networks for User Response Prediction</a> by Yanru Qu et al. ICDM 2016.</li>
+<li><a href="http://staff.ustc.edu.cn/~cheneh/paper_pdf/2016/Zhen-Pan-ICDM.pdf" target="_blank" rel="noopener">Sparse Factorization Machines for Click-through Rate Prediction</a> by Zhen Pan et al. ICDM 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/deep-ctr-display.pdf" target="_blank" rel="noopener">Deep CTR Prediction in Display Advertising</a> by Junxuan Chen et al. MM 2016.</li>
+<li><a href="http://wnzhang.net/papers/unbias-kdd.pdf" target="_blank" rel="noopener">Bid-aware Gradient Descent for Unbiased Learning with Censored Data in Display Advertising</a> by Weinan Zhang, Tianxiong Zhou, Jun Wang, Jian Xu. KDD 2016.</li>
+<li><a href="http://proceedings.mlr.press/v53/yang16.pdf" target="_blank" rel="noopener">Large Scale CVR Prediction through Dynamic Transfer Learning of Global and Local Features</a> by Hongxia Yang et al. BIGMINE 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fctf.pdf" target="_blank" rel="noopener">Predicting ad click-through rates via feature-based fully coupled interaction tensor factorization</a> by Lili Shan, Lei Lin, Chengjie Sun, Xiaolong Wang. Electronic Commerce Research and Applications 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/ctr-chapelle.pdf" target="_blank" rel="noopener">Simple and Scalable Response Prediction for Display Advertising</a> by Olivier Chapelle    Criteo, Eren Manavoglu, Romer Rosales. ACM TIST 2014.</li>
+<li><a href="https://arxiv.org/pdf/1603.03713.pdf" target="_blank" rel="noopener">Cost-sensitive Learning for Utility Optimization in Online Advertising Auctions</a> by Flavian Vasile, Damien Lefortier, Olivier Chapelle. Extension under-review of the paper presented at the Workshop on E-Commerce, NIPS 2015.</li>
+<li><a href="http://apex.sjtu.edu.cn/public/files/members/20161024/opt-ctr-bid.pdf" target="_blank" rel="noopener">User Response Learning for Directly Optimizing Campaign Performance in Display Advertising</a> by Kan Ren, Weinan Zhang, Yifei Rong, Haifeng Zhang, Yong Yu, Jun Wang. CIKM 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/cnn-ctr.pdf" target="_blank" rel="noopener">A Convolutional Click Prediction Model</a> by Qiang Liu, Feng Yu, Shu Wu, Liang Wang. CIKM 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fm-ftrl.pdf" target="_blank" rel="noopener">Factorization Machines with Follow-The-Regularized-Leader for CTR prediction in Display Advertising</a> by Anh-Phuong Ta. BigData 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/deep-ctr.pdf" target="_blank" rel="noopener">Deep Learning over Multi-field Categorical Data: A Case Study on User Response Prediction</a> by Weinan Zhang, Tianming Du, Jun Wang. ECIR 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/ctr-bid.pdf" target="_blank" rel="noopener">Offline Evaluation of Response Prediction in Online Advertising Auctions</a> by Olivier Chapelle. WWW 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fm-ctr.pdf" target="_blank" rel="noopener">Predicting Response in Mobile Advertising with Hierarchical Importance-Aware Factorization Machine</a> by Richard J. Oentaryo et al. WSDM 2014.</li>
+<li><a href="https://pdfs.semanticscholar.org/fc11/8ce8cf852ccd10cae0fcf031cb5c238f69c0.pdf" target="_blank" rel="noopener">Scalable Hierarchical Multitask Learning Algorithms for Conversion Optimization in Display Advertising</a> by Amr Ahmed et al. WSDM 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/cvr-est.pdf" target="_blank" rel="noopener">Estimating Conversion Rate in Display Advertising from Past Performance Data</a> by Kuang-chih Lee et al. KDD 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/transfer-ctr.pdf" target="_blank" rel="noopener">Scalable Hands-Free Transfer Learning for Online Advertising</a> by Brian Dalessandro et al. KDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/forget-click.pdf" target="_blank" rel="noopener">Evaluating and Optimizing Online Advertising: Forget the click, but there are good proxies</a> by Brian Dalessandro et al. SSRN 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/delayed-feedback.pdf" target="_blank" rel="noopener">Modeling Delayed Feedback in Display Advertising</a> by Olivier Chapelle. KDD 2014.</li>
+<li><a href="https://www.eecs.tufts.edu/~dsculley/papers/ad-click-prediction.pdf" target="_blank" rel="noopener">Ad Click Prediction: a View from the Trenches</a> by H. Brendan McMahan. KDD 2013.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fb-ad-ctr.pdf" target="_blank" rel="noopener">Practical Lessons from Predicting Clicks on Ads at Facebook</a> by Xinran He et al. ADKDD 2014.</li>
+</ul>
+<h5 id="Bid-Landscape"><a href="#Bid-Landscape" class="headerlink" title="Bid Landscape"></a>Bid Landscape</h5><ul>
+<li><a href="http://wnzhang.net/share/rtb-papers/win-price-pred.pdf" target="_blank" rel="noopener">Predicting Winning Price in Real Time Bidding with Censored Data</a> by Wush Chi-Hsuan Wu, Mi-Yen Yeh, Ming-Syan Chen. KDD 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/forecast-err.pdf" target="_blank" rel="noopener">Handling Forecast Errors While Bidding for Display Advertising</a> by Kevin J. Lang, Benjamin Moseley, Sergei Vassilvitskii. WWW 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/bid-lands.pdf" target="_blank" rel="noopener">Bid Landscape Forecasting in Online Ad Exchange Marketplace</a> by Ying Cui et al. KDD 2011.</li>
+<li><a href="http://apex.sjtu.edu.cn/public/files/members/20160929/functional-bid-lands.pdf" target="_blank" rel="noopener">Functional Bid Landscape Forecasting for Display Advertising</a> by Yuchen Wang et al. ECML-PKDD 2016.</li>
+</ul>
+<h5 id="Bidding-Strategies"><a href="#Bidding-Strategies" class="headerlink" title="Bidding Strategies"></a>Bidding Strategies</h5><ul>
+<li><a href="https://www.ijcai.org/proceedings/2018/0059.pdf" target="_blank" rel="noopener">Optimal Bidding Strategy for Brand Advertising</a> by Takanori Maehara et al. IJCAI 2018.</li>
+<li><a href="https://arxiv.org/abs/1803.02194" target="_blank" rel="noopener">Bidding Machine: Learning to Bid for Directly Optimizing Profits in Display Advertising</a> by Kan Ren et al. TKDE 2018.</li>
+<li><a href="https://arxiv.org/pdf/1802.08365.pdf" target="_blank" rel="noopener">Budget Constrained Bidding by Model-free Reinforcement Learning in Display Advertising</a> by Di Wu et al. ArXiv 2018.</li>
+<li><a href="https://arxiv.org/pdf/1802.09756.pdf" target="_blank" rel="noopener">Real-Time Bidding with Multi-Agent Reinforcement Learning in Display Advertising</a> by Junqi Jin et al. ArXiv 2018.</li>
+<li><a href="https://arxiv.org/pdf/1803.00259.pdf" target="_blank" rel="noopener">Deep Reinforcement Learning for Sponsored Search Real-time Bidding</a> by Jun Zhao et al. ArXiv 2018.</li>
+<li><a href="https://arxiv.org/pdf/1708.05565.pdf" target="_blank" rel="noopener">LADDER: A Human-Level Bidding Agent for Large-Scale Real-Time Online Auctions</a> by Yu Wang et al. ArXiv 2017.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-cmdp.pdf" target="_blank" rel="noopener">Improving Real-Time Bidding Using a Constrained Markov Decision Process</a> by Manxing Du et al. ADMA 2017.</li>
+<li><a href="https://arxiv.org/pdf/1707.06409.pdf" target="_blank" rel="noopener">Attribution Modeling Increases Efficiency of Bidding in Display Advertising</a> by Eustache Diemert et al. ADKDD 2017.</li>
+<li><a href="https://arxiv.org/pdf/1706.01614.pdf" target="_blank" rel="noopener">Profit Maximization for Online Advertising Demand-Side Platforms</a> by Paul Grigas et al. ArXiv 2017.</li>
+<li><a href="http://wnzhang.net/papers/rlb.pdf" target="_blank" rel="noopener">Real-Time Bidding by Reinforcement Learning in Display Advertising</a> by Han Cai et al. WSDM 2017.</li>
+<li><a href="http://wnzhang.net/papers/risk-bid.pdf" target="_blank" rel="noopener">Managing Risk of Bidding in Display Advertising</a> by Haifeng Zhang et al. WSDM 2017.</li>
+<li><a href="https://arxiv.org/pdf/1703.02091.pdf" target="_blank" rel="noopener">Optimized Cost per Click in Taobao Display Advertising</a> by Han Zhu et al. ArXiv 2017.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/two-pred-bid.pdf" target="_blank" rel="noopener">Combining Powers of Two Predictors in Optimizing Real-Time Bidding Strategy under Constrained Budget</a> by Chi-Chun Lin et al. CIKM 2016.</li>
+<li><a href="http://www.kdd.org/kdd2016/papers/files/adp0722-geyikA.pdf" target="_blank" rel="noopener">Joint Optimization of Multiple Performance Metrics in Online Video Advertising</a> by Sahin Cem Geyik et al. KDD 2016.</li>
+<li><a href="http://discovery.ucl.ac.uk/1496878/1/weinan-zhang-phd-2016.pdf" target="_blank" rel="noopener">Optimal Real-Time Bidding for Display Advertising</a> by Weinan Zhang. PhD Thesis 2016.</li>
+<li><a href="http://wnzhang.net/papers/unbias-kdd.pdf" target="_blank" rel="noopener">Bid-aware Gradient Descent for Unbiased Learning with Censored Data in Display Advertising</a> by Weinan Zhang, Tianxiong Zhou, Jun Wang, Jian Xu. KDD 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/lift-bidding.pdf" target="_blank" rel="noopener">Lift-Based Bidding in Ad Selection</a> by Jian Xu et al. AAAI 2016.</li>
+<li><a href="http://wnzhang.net/papers/fc-wsdm.pdf" target="_blank" rel="noopener">Feedback Control of Real-Time Display Advertising</a> by Weinan Zhang et al. WSDM 2016.</li>
+<li><a href="http://arxiv.org/abs/1511.08409" target="_blank" rel="noopener">Optimal Real-Time Bidding Strategies</a> by Joaquin Fernandez-Tapia, Olivier Guéant, Jean-Michel Lasry. ArXiv 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/bid-drawbridge.pdf" target="_blank" rel="noopener">Programmatic Buying Bidding Strategies with Win Rate and Winning Price Estimation in Real Time Mobile Advertising</a> by Xiang Li and Devin Guan. PAKDD 2014.</li>
+<li><a href="https://www.researchgate.net/publication/283579660_Statistical_modeling_of_Vickrey_auctions_and_applications_to_automated_bidding_strategies" target="_blank" rel="noopener">Statistical modeling of Vickrey auctions and applications to automated bidding strategies</a> by Joaquin Fernandez-Tapia. Working paper.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-arbitrage.pdf" target="_blank" rel="noopener">Statistical Arbitrage Mining for Display Advertising</a> by Weinan Zhang, Jun Wang. KDD 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/opt-prog-buy.pdf" target="_blank" rel="noopener">Real-Time Bidding rules of thumb: analytically optimizing the programmatic buying of ad-inventory</a> by Joaquin Fernandez-Tapia. SSRN 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/optimal-rtb.pdf" target="_blank" rel="noopener">Optimal Real-Time Bidding for Display Advertising</a> by Weinan Zhang, Shuai Yuan, Jun Wang. KDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/lin-bid.pdf" target="_blank" rel="noopener">Bid Optimizing and Inventory Scoring in Targeted Online Advertising</a> by Claudia Perlich et al. KDD 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-perf-bid.pdf" target="_blank" rel="noopener">Real-Time Bidding Algorithms for Performance-Based Display Ad Allocation</a> by Ye Chen et al. KDD 2011.</li>
+</ul>
+<h5 id="Budget-Pacing-amp-Frequency-Recency-Capping"><a href="#Budget-Pacing-amp-Frequency-Recency-Capping" class="headerlink" title="Budget Pacing &amp; Frequency/Recency Capping"></a>Budget Pacing &amp; Frequency/Recency Capping</h5><ul>
+<li><a href="https://www.researchgate.net/publication/309588181_Exploring_Optimal_Frequency_Caps_in_Real_Time_Bidding_Advertising" target="_blank" rel="noopener">Exploring Optimal Frequency Caps in Real Time Bidding Advertising</a> by Rui Qin et al. SocialCom 2016.</li>
+<li><a href="https://www.researchgate.net/publication/304294525_Research_on_the_frequency_capping_issue_in_RTB_advertising_A_computational_experiment_approach" target="_blank" rel="noopener">Research on the Frequency Capping Issue in RTB Advertising：A Computational Experiment Approach</a> by Rui Qin et al. CAC 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/turn-throatling.pdf" target="_blank" rel="noopener">From 0.5 Million to 2.5 Million: Efficiently Scaling up Real-Time Bidding</a> by Jianqian Shen et al. ICDM 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/throatling-pacing.pdf" target="_blank" rel="noopener">Smart Pacing for Effective Online Ad Campaign Optimization</a> by Jian Xu et al. KDD 2015.</li>
+<li><a href="https://www.researchgate.net/publication/283579658_An_analytical_solution_to_the_budget-pacing_problem_in_programmatic_advertising" target="_blank" rel="noopener">An analytical solution to the budget-pacing problem in programmatic advertising</a> by Joaquin Fernandez-Tapia. Working paper.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/adaptive-targeting.pdf" target="_blank" rel="noopener">Adaptive Targeting for Online Advertisement</a> by Andrey Pepelyshev, Yuri Staroselskiy, Anatoly Zhigljavsky. Machine Learning, Optimization, and Big Data 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/budget-smooth.pdf" target="_blank" rel="noopener">Real Time Bid Optimization with Smooth Budget Delivery in Online Advertising</a> by Kuang-Chih Lee, Ali Jalali, Ali Dasdan. ADKDD 2013.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/linkedin-pacing.pdf" target="_blank" rel="noopener">Budget Pacing for Targeted Online Advertisements at LinkedIn</a> by Deepak Agarwal et al. KDD 2014.</li>
+<li><a href="http://theory.epfl.ch/moranfe/Publications/WADS2011.pdf" target="_blank" rel="noopener">Frequency Capping in Online Advertising</a> by Niv Buchbinder et al. WADS 2011.</li>
+<li><a href="http://www.arpitaghosh.com/papers/fp632-ghosh.pdf" target="_blank" rel="noopener">Adaptive bidding for display advertising</a> by Ghosh, A., Rubinstein, B. I, Vassilvitskii, S., and Zinkevich, M.  2009</li>
+</ul>
+<h5 id="Fraud-Detection"><a href="#Fraud-Detection" class="headerlink" title="Fraud Detection"></a>Fraud Detection</h5><ul>
+<li><a href="http://www.it.uc3m.es/~rcuevas/papers/p120-callejo.pdf" target="_blank" rel="noopener">Independent Auditing of Online Display Advertising Campaigns</a> by     Patricia Callejo et al. HotNets 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/co-visit-fraud.pdf" target="_blank" rel="noopener">Using Co-Visitation Networks For Classifying Non-Intentional Traffic</a> by Ori Stitelman et al. Dstillery 2013.</li>
+<li><a href="http://0b4af6cdc2f0c5998459-c0245c5c937c5dedcca3f1764ecc9b2f.r43.cf2.rackcdn.com/12305-sec13-paper_springborn.pdf" target="_blank" rel="noopener">Impression Fraud in On-line Advertising via Pay-Per-View Networks</a> by Kevin Springborn, Paul Barford. USENIX Security Symposium 2013.</li>
+<li><a href="http://conferences.sigcomm.org/imc/2011/docs/p279.pdf" target="_blank" rel="noopener">Understanding Fraudulent Activities in Online Ad Exchanges</a> by Brett Stone-Grosset et al. IMC 2011.</li>
+</ul>
+<h5 id="Market-Segmentation"><a href="#Market-Segmentation" class="headerlink" title="Market Segmentation"></a>Market Segmentation</h5><ul>
+<li><a href="https://www.researchgate.net/publication/312173822_Optimizing_the_Segmentation_Granularity_for_RTB_Advertising_Markets_with_a_Two-stage_Resale_Model" target="_blank" rel="noopener">Optimizing the Segmentation Granularity for RTB Advertising Markets with a Two-stage Resale Model</a> By Rui Qin et al. SMC 2016.</li>
+<li><a href="https://www.researchgate.net/publication/309588977_Optimizing_Market_Segmentation_Granularity_in_RTB_Advertising_A_Computational_Experimental_Study" target="_blank" rel="noopener">Optimizing Market Segmentation Granularity in RTB Advertising: A Computational Experimental Study</a> by Rui Qin et al. SocialCom 2016.</li>
+<li><a href="https://www.researchgate.net/publication/300238564_Analyzing_the_Segmentation_Granularity_of_RTB_Advertising_Markets_A_Computational_Experiment_Approach" target="_blank" rel="noopener">Analyzing the Segmentation Granularity of RTB Advertising Markets：A Computational Experiment Approach</a> by Rui Qin et al. SMP 2015.</li>
+</ul>
+<h4 id="Supply-Side-Platform-SSP-Techniques"><a href="#Supply-Side-Platform-SSP-Techniques" class="headerlink" title="Supply-Side Platform (SSP) Techniques"></a>Supply-Side Platform (SSP) Techniques</h4><ul>
+<li><a href="http://jmlr.org/papers/volume17/14-499/14-499.pdf" target="_blank" rel="noopener">Learning Algorithms for Second-Price Auctions with Reserve</a> by Mehryar Mohri and Andres Munoz Medina. JMLR 2016.</li>
+<li><a href="http://www.kdd.org/kdd2016/papers/files/rpp1142-alcobendas-lisbonaA.pdf" target="_blank" rel="noopener">Optimal Reserve Prices in Upstream Auctions: Empirical Application on Online Video Advertising</a> by Miguel Angel Alcobendas, Sheide Chammas and Kuang-chih Lee. KDD 2016.</li>
+<li><a href="https://www.researchgate.net/publication/312173826_Optimal_Allocation_of_Ad_Inventory_in_Real-Time_Bidding_Advertising_Markets" target="_blank" rel="noopener">Optimal Allocation of Ad Inventory in Real-Time Bidding Advertising Markets</a> by Juanjuan Li et al. SMC 2016.</li>
+<li><a href="http://arxiv.org/pdf/1405.5189.pdf" target="_blank" rel="noopener">A Dynamic Pricing Model for Unifying Programmatic Guarantee and Real-Time Bidding in Display Advertising</a> by Bowei Chen, Shuai Yuan and Jun Wang. ADKDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/reserve-price.pdf" target="_blank" rel="noopener">An Empirical Study of Reserve Price Optimisation in Real-Time Bidding</a> by Shuai Yuan et al. KDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-info.pdf" target="_blank" rel="noopener">Information Disclosure in Real-Time Bidding Advertising Markets</a> by Juanjuan Li, Yong Yuan, Rui Qin. SOLI 2014.</li>
+</ul>
+<h4 id="Data-Management-Platform-DMP-Techniques"><a href="#Data-Management-Platform-DMP-Techniques" class="headerlink" title="Data Management Platform (DMP) Techniques"></a>Data Management Platform (DMP) Techniques</h4><ul>
+<li><a href="http://proceedings.mlr.press/v53/ma16.html" target="_blank" rel="noopener">A Sub-linear, Massive-scale Look-alike Audience Extension System</a><br>by Qiang Ma, Musen Wen, Zhen Xia, Datong Chen. KDD 2016 / PMLR 2016</li>
+<li><a href="http://www.kdd.org/kdd2016/papers/files/adf0483-liuA.pdf" target="_blank" rel="noopener">Audience Expansion for Online Social Network Advertising</a> by Haishan Liu et al. KDD 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/cf-ctr.pdf" target="_blank" rel="noopener">Implicit Look-alike Modelling in Display Ads: Transfer Collaborative Filtering to CTR </a> by Weinan Zhang, Lingxi Chen, Jun Wang. ECIR 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/sample-pred.pdf" target="_blank" rel="noopener">Pleasing the advertising oracle: Probabilistic prediction from sampled, aggregated ground truth</a> by Melinda Han Williams et al. ADKDD 2014.</li>
+<li><a href="http://static.googleusercontent.com/media/research.google.com/zh-CN//pubs/archive/40489.pdf" target="_blank" rel="noopener">Focused matrix factorization for audience selection in display advertising</a> by Kanagal B et al. ICDE 2013.</li>
+</ul>
+<h4 id="Conversion-Attribution"><a href="#Conversion-Attribution" class="headerlink" title="Conversion Attribution"></a>Conversion Attribution</h4><ul>
+<li><a href="https://arxiv.org/abs/1808.03737" target="_blank" rel="noopener">Learning Multi-touch Conversion Attribution with Dual-attention Mechanisms for Online Advertising</a> by Kan Ren, Yuchen Fang, Weinan Zhang, et al. CIKM 2018.</li>
+<li><a href="http://www.saying.ren/paper/ji-amta.pdf" target="_blank" rel="noopener">Additional Multi-Touch Attribution for Online Advertising</a> by Wendi Ji, et al. AAAI 2017.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/attr-survival.pdf" target="_blank" rel="noopener">Multi-Touch Attribution in Online Advertising with Survival Theory</a> by Ya Zhang, Yi Wei, and Jianbiao Ren. ICDM 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/mta-budget-allocation.pdf" target="_blank" rel="noopener">Multi-Touch Attribution Based Budget Allocation in Online Advertising</a> by Sahin Cem Geyik, Abhishek Saxena, Ali Dasdan. ADKDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/causual-conv-att.pdf" target="_blank" rel="noopener">Causally Motivated Attribution for Online Advertising</a>. by Brian Dalessandro et al. ADKDD 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/data-conv-att.pdf" target="_blank" rel="noopener">Data-driven Multi-touch Attribution Models</a>. by Xuhui Shao, Lexin Li. KDD 2011.</li>
+</ul>
+<h4 id="Ad-Exchanges-Mechanisms-and-Game-Theory"><a href="#Ad-Exchanges-Mechanisms-and-Game-Theory" class="headerlink" title="Ad Exchanges, Mechanisms and Game Theory"></a>Ad Exchanges, Mechanisms and Game Theory</h4><ul>
+<li><a href="http://dss.in.tum.de/files/bichler-research/2016_fadaei_bichler_value_bidders.pdf" target="_blank" rel="noopener">Truthfulness with Value-Maximizing Bidders: On the Limits of Approximation in Combinatorial Markets</a> by Salman Fadaei and Martin Bichler. EJOR 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/repeat-auction.pdf" target="_blank" rel="noopener">Repeated Auctions with Budgets in Ad Exchanges: Approximations and Design</a> by Santiago R. Balseiro, Omar Besbesy, Gabriel Y. Weintraub. Management Science 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/adx-mec.pdf" target="_blank" rel="noopener">Ad Exchange: Intention Driven Auction Mechanisms for Mediating Between Publishers and Advertisers</a> by Rina Azoulay, Esther David. WI/IAT 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/rtb-pricing-ext.pdf" target="_blank" rel="noopener">Pricing Externalities in Real-Time Bidding Markets</a> by Joseph Reisinger, Michael Driscoll. Machine Learning in Online Advertising.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/dsp-comp.pdf" target="_blank" rel="noopener">Competition between Demand-Side Intermediaries in Ad Exchanges</a> by Lampros C. Stavrogiannis. PhD Thesis 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/auc-mec-dsp.pdf" target="_blank" rel="noopener">Auction Mechanisms for Demand-Side Intermediaries in Online Advertising Exchanges</a> by Lampros C. Stavrogiannis, Enrico H. Gerding, Maria Polukarov. AMMAS 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/double-auc-adx.pdf" target="_blank" rel="noopener">Optimal Revenue-Sharing Double Auctions with Applications to Ad Exchanges</a> by Renato Gomes, Vahab Mirrokni. WWW 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/yield-opt-adx.pdf" target="_blank" rel="noopener">Competition and Yield Optimization in Ad Exchanges</a> by Santiago R. Balseiro. PhD Thesis 2013.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/select-callout.pdf" target="_blank" rel="noopener">Selective Call Out and Real Time Bidding</a> by Tanmoy Chakraborty. WINE 2010.</li>
+</ul>
+<h4 id="Privacy"><a href="#Privacy" class="headerlink" title="Privacy"></a>Privacy</h4><ul>
+<li><a href="http://wnzhang.net/share/rtb-papers/privacy.pdf" target="_blank" rel="noopener">Selling Off Privacy at Auction</a> by Lukasz Olejnik, Tran Minh-Dung, Claude Castelluccia. NDSS 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/user-tracking.pdf" target="_blank" rel="noopener">Network Analysis of Third Party Tracking: User Exposure to Tracking Cookies through Search</a> by Richard Gomer et al. WI 2013.</li>
+</ul>
+<h4 id="Systems"><a href="#Systems" class="headerlink" title="Systems"></a>Systems</h4><ul>
+<li><a href="http://arxiv.org/pdf/1602.07057.pdf" target="_blank" rel="noopener">Finding Needle in a Million Metrics: Anomaly Detection in a Large-scale Computational Advertising Platform</a> by Bowen Zhou, Shahriar Shariat. TargetAd 2016.</li>
+</ul>
+<h4 id="Datasets-and-Benchmarking"><a href="#Datasets-and-Benchmarking" class="headerlink" title="Datasets and Benchmarking"></a>Datasets and Benchmarking</h4><ul>
+<li><a href="http://apex.sjtu.edu.cn/datasets/7" target="_blank" rel="noopener">YOYI RTB datasets (with bidding information)</a> by Kan Ren and Yifei Rong et al. CIKM 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/ipinyou-dataset.pdf" target="_blank" rel="noopener">iPinYou Global RTB Bidding Algorithm Competition Dataset</a> by Hairen Liao et al. ADKDD 2014.</li>
+<li><a href="http://arxiv.org/abs/1407.7073" target="_blank" rel="noopener">Real-Time Bidding Benchmarking with iPinYou Dataset</a> by Weinan Zhang et al. ArXiv 2014.</li>
+<li><a href="http://www.cs.cornell.edu/~adith/Criteo/NIPS16_Benchmark.pdf" target="_blank" rel="noopener">Criteo Dataset for Product Recommendation / Counterfactual Learning</a> by Damien Lefortier et al. What If workshop NIPS 2016.</li>
+<li><a href="http://labs.criteo.com/2013/12/conversion-logs-dataset/" target="_blank" rel="noopener">Criteo Conversion Logs Dataset</a> by Criteo Labs.</li>
+<li><a href="http://labs.criteo.com/downloads/download-terabyte-click-logs/" target="_blank" rel="noopener">Criteo Terabyte Click Logs</a> by Criteo Labs.</li>
+<li><a href="https://www.kaggle.com/c/avazu-ctr-prediction/data" target="_blank" rel="noopener">Avazu Click Prediction</a> by Avazu.</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2018/机器学习/DSP-及-RTB-基本原理及理论应用介绍/" title="DSP 及 RTB 基本概念、原理、理论及应用介绍">http://shikanon.com/2018/机器学习/DSP-及-RTB-基本原理及理论应用介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/入门教程/" rel="tag"># 入门教程</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/技术分享/" rel="tag"># 技术分享</a>
+          
+            <a href="/tags/RTB/" rel="tag"># RTB</a>
+          
+            <a href="/tags/DSP/" rel="tag"># DSP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/运维/FastDFS安装/" rel="next" title="FastDFS安装">
+                <i class="fa fa-chevron-left"></i> FastDFS安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/编程语言/性能测试-Python3-利用asynico协程系统构建生产消费模型/" rel="prev" title="性能测试: Python3 利用asynico协程系统构建生产消费模型">
+                性能测试: Python3 利用asynico协程系统构建生产消费模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文献"><span class="nav-number">2.</span> <span class="nav-text">文献</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Books-Monographs"><span class="nav-number">2.0.1.</span> <span class="nav-text">Books/Monographs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Tutorials"><span class="nav-number">2.0.2.</span> <span class="nav-text">Tutorials</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Review-Papers"><span class="nav-number">2.0.3.</span> <span class="nav-text">Review Papers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Demand-Side-Platform-DSP-Techniques"><span class="nav-number">2.0.4.</span> <span class="nav-text">Demand-Side Platform (DSP) Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CTR-CVR-Estimation"><span class="nav-number">2.0.4.1.</span> <span class="nav-text">CTR/CVR Estimation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bid-Landscape"><span class="nav-number">2.0.4.2.</span> <span class="nav-text">Bid Landscape</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Bidding-Strategies"><span class="nav-number">2.0.4.3.</span> <span class="nav-text">Bidding Strategies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Budget-Pacing-amp-Frequency-Recency-Capping"><span class="nav-number">2.0.4.4.</span> <span class="nav-text">Budget Pacing &amp; Frequency/Recency Capping</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Fraud-Detection"><span class="nav-number">2.0.4.5.</span> <span class="nav-text">Fraud Detection</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Market-Segmentation"><span class="nav-number">2.0.4.6.</span> <span class="nav-text">Market Segmentation</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Supply-Side-Platform-SSP-Techniques"><span class="nav-number">2.0.5.</span> <span class="nav-text">Supply-Side Platform (SSP) Techniques</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-Management-Platform-DMP-Techniques"><span class="nav-number">2.0.6.</span> <span class="nav-text">Data Management Platform (DMP) Techniques</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Conversion-Attribution"><span class="nav-number">2.0.7.</span> <span class="nav-text">Conversion Attribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ad-Exchanges-Mechanisms-and-Game-Theory"><span class="nav-number">2.0.8.</span> <span class="nav-text">Ad Exchanges, Mechanisms and Game Theory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Privacy"><span class="nav-number">2.0.9.</span> <span class="nav-text">Privacy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Systems"><span class="nav-number">2.0.10.</span> <span class="nav-text">Systems</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Datasets-and-Benchmarking"><span class="nav-number">2.0.11.</span> <span class="nav-text">Datasets and Benchmarking</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

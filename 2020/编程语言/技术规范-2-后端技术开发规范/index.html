@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="技术规范,前端,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="团队里面梳理的前端技术规范，主要是Go和Python。">
+<meta name="keywords" content="技术规范,前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="技术规范(2): 后端技术开发规范">
+<meta property="og:url" content="http://shikanon.com/2020/编程语言/技术规范-2-后端技术开发规范/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="团队里面梳理的前端技术规范，主要是Go和Python。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-13T10:06:58.898Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="技术规范(2): 后端技术开发规范">
+<meta name="twitter:description" content="团队里面梳理的前端技术规范，主要是Go和Python。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>技术规范(2): 后端技术开发规范 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2020/编程语言/技术规范-2-后端技术开发规范/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">技术规范(2): 后端技术开发规范</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-13T17:50:56+08:00">
+                2020-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/技术手册/" itemprop="url" rel="index">
+                    <span itemprop="name">技术手册</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  团队里面梳理的前端技术规范，主要是Go和Python。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Python-开发规范"><a href="#Python-开发规范" class="headerlink" title="Python 开发规范"></a>Python 开发规范</h2><blockquote>
+<p>优美胜于丑陋<br>明了胜于晦涩<br>简洁胜于复杂<br>复杂胜于凌乱<br>扁平胜于嵌套<br>间隔胜于紧凑<br>可读性很重要<br>即便假借特例的实用性之名，也不可违背这些规则</p>
+</blockquote>
+<p>上面是 Python 之禅，很好地体现了 Python 语言所传达的编程理念。</p>
+<h3 id="PEP8-标准"><a href="#PEP8-标准" class="headerlink" title="PEP8 标准"></a>PEP8 标准</h3><p>PEP8 规范：<br><a href="https://www.python.org/dev/peps/pep-0008/" target="_blank" rel="noopener">https://www.python.org/dev/peps/pep-0008/</a></p>
+<p><strong>标准：</strong></p>
+<ol>
+<li><p>缩进：每一级缩进使用4个空格。</p>
+</li>
+<li><p>续行应该与其包裹元素对齐，要么使用圆括号、方括号和花括号内的隐式行连接来垂直对齐，要么使用挂行缩进对齐3。当使用挂行缩进时，应该考虑到第一行不应该有参数，以及使用缩进以区分自己是续行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 与左括号对齐</span></span><br><span class="line">foo = long_function_name(var_one, var_two,</span><br><span class="line">                         var_three, var_four)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用更多的缩进来与其他行区分</span></span><br><span class="line"><span class="comment"># 挂行缩进应该再换一行</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">long_function_name</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        var_one, var_two, var_three,</span></span></span><br><span class="line"><span class="function"><span class="params">        var_four)</span>:</span></span><br><span class="line">    print(var_one)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在多行结构中的大括号/中括号/小括号的右括号可以与内容对齐单独起一行作为最后一行的第一个字符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my_list = [</span><br><span class="line">    <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,</span><br><span class="line">    <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>,</span><br><span class="line">    ]</span><br><span class="line">result = some_function_that_takes_arguments(</span><br><span class="line">    <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>,</span><br><span class="line">    <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>,</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>所有行限制的最大字符数为79。</p>
+</li>
+<li><p>顶层函数和类的定义，前后用两个空行隔开。类里的方法定义用一个空行隔开。</p>
+</li>
+<li><p>import导入通常在分开的行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">推荐: import os</span><br><span class="line">     import sys</span><br><span class="line"></span><br><span class="line">不推荐:  import sys, os</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>import顺序:<br>标准库导入<br>相关第三方库导入<br>本地应用/库特定导入<br>（在每类导入之间加入空行分割）</p>
+</li>
+<li><p>像 <code>__all__</code> , <code>__author__</code> , <code>__version__</code> 等这样的模块级“呆名“（也就是名字里有两个前缀下划线和两个后缀下划线），应该放在文档字符串的后面，以及除 <code>from __future__</code> 之外的<code>import</code>表达式前面。Python要求将来在模块中的导入，必须出现在除文档字符串之外的其他代码之前。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""This is the example module.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">This module does stuff.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> barry_as_FLUFL</span><br><span class="line"></span><br><span class="line">__all__ = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]</span><br><span class="line">__version__ = <span class="string">'0.1'</span></span><br><span class="line">__author__ = <span class="string">'Cardinal Biggles'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>避免使用无关的空格，避免在尾部添加空格。因为尾部的空格通常都看不见，会产生混乱。</p>
+</li>
+<li><p>总是在二元运算符两边加一个空格。</p>
+</li>
+<li><p>如果使用具有不同优先级的运算符，请考虑在具有最低优先级的运算符周围添加空格。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i = i + <span class="number">1</span></span><br><span class="line">submitted += <span class="number">1</span></span><br><span class="line">x = x*<span class="number">2</span> - <span class="number">1</span></span><br><span class="line">hypot2 = x*x + y*y</span><br><span class="line">c = (a+b) * (a-b)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>与代码相矛盾的注释比没有注释还糟，当代码更改时，优先更新对应的注释。</p>
+</li>
+<li>块注释通常适用于跟随它们的某些（或全部）代码，并缩进到与代码相同的级别。块注释的每一行开头使用一个#和一个空格（除非块注释内部缩进文本）。块注释内部的段落通过只有一个#的空行分隔。</li>
+</ol>
+<ol>
+<li><p>要为所有的公共模块，函数，类以及方法编写文档说明。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def complex(real=0.0, imag=0.0):</span><br><span class="line">    &quot;&quot;&quot;Form a complex number.</span><br><span class="line"></span><br><span class="line">    Keyword arguments:</span><br><span class="line">    real -- the real part (default 0.0)</span><br><span class="line">    imag -- the imaginary part (default 0.0)</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命名规范</p>
+</li>
+</ol>
+<p>（1）模块应该用简短全小写的名字，如果为了提升可读性，下划线也是可以用的。Python包名也应该使用简短全小写的名字，但不建议用下划线。<br>（2）类名一般使用首字母大写的约定。<br>在接口被文档化并且主要被用于调用的情况下，可以使用函数的命名风格代替。<br><em>注意，对于内置的变量命名有一个单独的约定：大部分内置变量是单个单词（或者两个单词连接在一起），首字母大写的命名法只用于异常名或者内部的常量。</em><br>（3）因为异常一般都是类，所有类的命名方法在这里也适用。然而，你需要在异常名后面加上“Error”后缀。<br>（4）函数名应该小写，如果想提高可读性可以用下划线分隔。<br>（5）全局变量名和函数命名规则一样，值得注意的是通过 <code>from M import *</code> 导入的模块应该使用all机制去防止内部的接口对外暴露，或者使用在全局变量前加下划线的方式。<br>（6）如果函数的参数名和已有的关键词冲突，在最后加单一下划线比缩写或随意拼写更好。<br>（7）常量通常定义在模块级，通过下划线分隔的全大写字母命名。例如： <code>MAX_OVERFLOW</code> 和 <code>TOTAL</code>。</p>
+<ol>
+<li>从Exception继承异常，而不是BaseException。直接继承BaseException的异常适用于几乎不用来捕捉的异常。</li>
+<li><p>当捕获到异常时，如果可以的话写上具体的异常名，而不是只用一个except，如果只有一个except: 块将会捕获到<code>SystemExit</code>和<code>KeyboardInterrupt</code>异常，这样会很难通过ctrl+C中断程序，而且会掩盖掉其他问题。如果你想捕获所有指示程序出错的异常，使用 <code>except Exception</code>。<br>正确的是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">import</span> platform_specific_module</span><br><span class="line"><span class="keyword">except</span> ImportError:</span><br><span class="line">    platform_specific_module = <span class="keyword">None</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无论何时获取和释放资源，都应该通过单独的函数或方法调用上下文管理器，比如使用with 表达式来确保这个资源使用完后被清理干。</p>
+</li>
+<li>返回的语句保持一致。函数中的返回语句都应该返回一个表达式，或者都不返回。如果一个返回语句需要返回一个表达式，那么在没有值可以返回的情况下，需要用 return None 显式指明。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x &gt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> math.sqrt(x)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bar</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">return</span> math.sqrt(x)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>具体的可以使用Autopep8工具协助排版。</p>
+<p>安装autopep8：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install autopep8</span><br></pre></td></tr></table></figure></p>
+<p>用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">autopep8 [参数] [Python文件]</span><br><span class="line">核心参数:</span><br><span class="line">  <span class="_">-d</span>, --diff            <span class="built_in">print</span> the diff <span class="keyword">for</span> the fixed <span class="built_in">source</span></span><br><span class="line">  -i, --in-place        make changes to files <span class="keyword">in</span> place</span><br><span class="line">  --global-config filename</span><br><span class="line">                        path to a global pep8 config file; <span class="keyword">if</span> this file does</span><br><span class="line">                        not exist <span class="keyword">then</span> this is ignored (default:</span><br><span class="line">                        ~/.config/pep8)</span><br><span class="line">  --ignore-local-config</span><br><span class="line">                        don<span class="string">'t look for and apply local config files; if not</span></span><br><span class="line"><span class="string">                        passed, defaults are updated with any config files in</span></span><br><span class="line"><span class="string">                        the project'</span>s root directory</span><br><span class="line">  -r, --recursive       run recursively over directories; must be used with</span><br><span class="line">                        --in-place or --diff</span><br><span class="line">  -j n, --jobs n        number of parallel <span class="built_in">jobs</span>; match CPU count <span class="keyword">if</span> value is</span><br><span class="line">                        less than 1</span><br><span class="line">  -p n, --pep8-passes n</span><br><span class="line">                        maximum number of additional pep8 passes (default:</span><br><span class="line">                        infinite)</span><br><span class="line">  <span class="_">-a</span>, --aggressive      <span class="built_in">enable</span> non-whitespace changes; multiple <span class="_">-a</span> result <span class="keyword">in</span></span><br><span class="line">                        more aggressive changes</span><br><span class="line">  --experimental        <span class="built_in">enable</span> experimental fixes</span><br><span class="line">  --exclude globs       exclude file/directory names that match these comma-</span><br><span class="line">                        separated globs</span><br><span class="line">  --list-fixes          list codes <span class="keyword">for</span> fixes; used by --ignore and --select</span><br><span class="line">  --ignore errors       <span class="keyword">do</span> not fix these errors/warnings (default:</span><br><span class="line">                        E226,E24,W50,W690)</span><br><span class="line">  --select errors       fix only these errors/warnings (e.g. E4,W)</span><br><span class="line">  --max-line-length n   <span class="built_in">set</span> maximum allowed line length (default: 79)</span><br><span class="line">  --line-range line line, --range line line</span><br><span class="line">                        only fix errors found within this inclusive range of</span><br><span class="line">                        line numbers (e.g. 1 99); line numbers are indexed at</span><br><span class="line">                        1</span><br><span class="line">  --hang-closing        hang-closing option passed to pycodestyle</span><br><span class="line">  --exit-code           change to behavior of <span class="built_in">exit</span> code. default behavior of</span><br><span class="line">                        <span class="built_in">return</span> value, 0 is no differences, 1 is error exit.</span><br><span class="line">                        <span class="built_in">return</span> 2 when add this option. 2 is exists</span><br><span class="line">                        differences.</span><br></pre></td></tr></table></figure></p>
+<p><code>--in-place</code> 会直接将结果保存到源文件中，如果不包含<code>--in-place</code>选项，则会将autopep8格式化以后的代码直接输出到控制台。</p>
+<h2 id="Go-开发规范"><a href="#Go-开发规范" class="headerlink" title="Go 开发规范"></a>Go 开发规范</h2><h3 id="Go-语言规范"><a href="#Go-语言规范" class="headerlink" title="Go 语言规范"></a>Go 语言规范</h3><p>Go 代码审核规范官方地址：<br><a href="https://github.com/golang/go/wiki/CodeReviewComments" target="_blank" rel="noopener">https://github.com/golang/go/wiki/CodeReviewComments</a></p>
+<ol>
+<li>所有代码在发布前均使用gofmt进行修正。</li>
+<li>所有的注释都应该是一个完整的句子。句子应该以主语开头，句号结尾。</li>
+<li><p>声明空的数组分片，避免分配内存空间。因为有些时候，可能你从没向这个数组分片里面append元素</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 推荐这样</span></span><br><span class="line"><span class="keyword">var</span> t []<span class="keyword">string</span></span><br><span class="line"><span class="comment">// 而不是这样</span></span><br><span class="line">t := []<span class="keyword">string</span>&#123;&#125;</span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>大多数使用 Context 的函数都应该接受 Context 作为函数的第一个参数。<br>比如这样：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">F</span><span class="params">(ctx context.Context, /* other arguments */)</span></span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不要将 Context 成员添加到某个 struct 类型中；而是将 ctx 参数添加到该类型的方法上。一个例外情况是当前方法签名必须与标准库或第三方库中的接口方法匹配。不要在函数签名中创建自定义 Context 类型或使用除了 Context 以外的接口。</p>
+</li>
+<li><p>为避免意外的别名，从另一个包复制 struct 时要小心。例如，bytes.Buffer 类型包含一个 []byte 的 slice，并且作为短字符串的优化，slice 可以引用一个短字节数组。如果复制一个 Buffer，副本中的 slice 可能会对原始数组进行别名操作，从而导致后续方法调用产生令人惊讶的效果。通常，如果 T 类型的方法与其指针类型 *T 相关联，请不要复制 T 类型的值。</p>
+</li>
+<li><p>不要使用包math/rand来生成密钥，即使是一次性密钥。在没有种子（seed）的情况下，生成器是完全可以被预测的。使用time.Nanoseconds()作为种子值，熵只有几位。请使用crypto/rand的 Reader 作为替代，如果你倾向于使用文本，请输出成十六进制或 base64 编码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"crypto/rand"</span></span><br><span class="line">    <span class="comment">// "encoding/base64"</span></span><br><span class="line">    <span class="comment">// "encoding/hex"</span></span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Key</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    buf := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="number">16</span>)</span><br><span class="line">    _, err := rand.Read(buf)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)  <span class="comment">// out of randomness, should never happen</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"%x"</span>, buf)</span><br><span class="line">    <span class="comment">// or hex.EncodeToString(buf)</span></span><br><span class="line">    <span class="comment">// or base64.StdEncoding.EncodeToString(buf)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Go提供两种注释风格，C的块注释风格<code>/**/</code>，C++的行注释风格<code>//</code>。包注释必须出现在 package 声明的临近位置，无空行。所有的顶级导出的名称都应该有 doc 注释，重要的未导出类型或函数声明也应如此。每个public函数都应该有注释，注释句子应该以该函数名开头，如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Compile parses a regular expression and returns, if successful,</span></span><br><span class="line"><span class="comment">// a Regexp that can be used to match against text.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Compile</span><span class="params">(str <span class="keyword">string</span>)</span> <span class="params">(*Regexp, error)</span></span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>尽量不要使用panic处理错误。函数应该设计成多返回值，其中包括返回相应的error类型。</p>
+</li>
+<li><p>错误信息字符串不应大写（除非以专有名词或首字母缩略词开头）或以标点符号结尾，因为它们通常是在其他上下文后打印的。即使用<code>fmt.Errorf(&quot;something bad&quot;)</code>而不要使用<code>fmt.Errorf(&quot;Something bad&quot;)</code>，因此<code>log.Printf(&quot;Reading %s: %v&quot;, filename, err)</code>的格式中将不会出现额外的大写字母。否则这将不适用于日志记录，因为它是隐式的面向行，而不是在其他消息中组合。</p>
+</li>
+<li><p>添加新包时，请包含预期用法的示例：可运行的示例，或是演示完整调用链的简单测试。Example函数一般放在包下的<code>_test.go</code>文件中，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package stringutil_test</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">    &quot;github.com/golang/example/stringutil&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func ExampleReverse() &#123;</span><br><span class="line">    fmt.Println(stringutil.Reverse(&quot;hello&quot;))</span><br><span class="line">    // Output: olleh</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这种写法的好处是使用 <code>go test -v</code>，如果和注释种的结果一致只会返回<code>PASS</code>，如果不一定打印。</p>
+<ol>
+<li><p>当你生成 goroutines 时，要清楚它们何时或是否会退出。请尽量让并发代码足够简单，从而更容易地确认 goroutine 的生命周期。</p>
+</li>
+<li><p>不要使用 <code>_</code> 变量丢弃 error 如果函数返回 error，请检查它以确保函数成功。处理 error，返回 error，或者在真正特殊的情况下使用 panic。</p>
+</li>
+<li><p>包导入按组进行组织，组与组之间有空行。标准库包始终位于第一组中。</p>
+</li>
+<li><p>部分包由于循环依赖，不能作为测试包的一部分进行测试时，可以以<code>.</code>形式导入它们：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> foo_test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"bar/testutil"</span> <span class="comment">// also imports "foo"</span></span><br><span class="line">    . <span class="string">"foo"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将正常的代码路径保持在最小的缩进处，优先处理错误并缩进，如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="comment">// error handling</span></span><br><span class="line">    <span class="keyword">return</span> <span class="comment">// or continue, etc.</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// normal code</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>名称中的单词是首字母或首字母缩略词需要具有相同的大小写规则，例如，“URL” 应显示为 “URL” 或 “url” （如 “urlPony” 或 “URLPony” ），而不是 “Url”。</p>
+</li>
+<li><p>Go 接口通常属于使用 interface 类型值的包，而不是实现这些值的包。实现包应返回具体（通常是指针或结构）类型。<br>案例：这里有一个生产者的包和消费者的包，他们之间有一个Thinger做接口交互。消费者包代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> consumer  <span class="comment">// consumer.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Thinger <span class="keyword">interface</span> &#123; Thing() <span class="keyword">bool</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Foo</span><span class="params">(t Thinger)</span> <span class="title">string</span></span> &#123; … &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>正确的生产者应该这样实现：<br><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> producer</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Thinger <span class="keyword">struct</span>&#123; … &#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t Thinger)</span> <span class="title">Thing</span><span class="params">()</span> <span class="title">bool</span></span> &#123; … &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewThinger</span><span class="params">()</span> <span class="title">Thinger</span></span> &#123; <span class="keyword">return</span> Thinger&#123; … &#125; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 而不是在这里再声明一个接口，这样是没必要的</span></span><br><span class="line"><span class="comment">// type Thinger interface &#123; Thing() bool &#125;</span></span><br><span class="line"><span class="comment">// type defaultThinger struct&#123; … &#125;</span></span><br><span class="line"><span class="comment">// func (t defaultThinger) Thing() bool &#123; … &#125;</span></span><br><span class="line"><span class="comment">// func NewThinger() Thinger &#123; return defaultThinger&#123; … &#125; &#125;</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>返回参数直接写类型就可以了，但如果函数返回两个或三个相同类型的参数，或者如果从上下文中不清楚返回结果的含义，那么在某些上下文中添加命名可能很有用。<br>比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 应该这样</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n *Node)</span> <span class="title">Parent1</span><span class="params">()</span> *<span class="title">Node</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(n *Node)</span> <span class="title">Parent2</span><span class="params">()</span> <span class="params">(*Node, error)</span></span></span><br><span class="line"><span class="function">// 不要这样</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(n *Node)</span> <span class="title">Parent1</span><span class="params">()</span> <span class="params">(node *Node)</span></span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(n *Node)</span> <span class="title">Parent2</span><span class="params">()</span> <span class="params">(node *Node, err error)</span></span></span><br><span class="line"><span class="function">// 多值的时候，应该这样</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(f *Foo)</span> <span class="title">Location</span><span class="params">()</span> <span class="params">(lat, long <span class="keyword">float64</span>, err error)</span></span></span><br><span class="line"><span class="function">// 不要这样</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(f *Foo)</span> <span class="title">Location</span><span class="params">()</span> <span class="params">(<span class="keyword">float64</span>, <span class="keyword">float64</span>, error)</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>包中名称的所有引用都将使用包名完成，因此您可以从标识符中省略该名称。例如，如果有一个 chubby 包，你不应该定义类型名称为 ChubbyFile ，否则使用者将写为 chubby.ChubbyFile。而是应该命名类型名称为 File，使用时将写为 chubby.File。</p>
+</li>
+<li><p>方法接收者的名称应该反映其身份；通常，其类型的一个或两个字母缩写就足够了（例如“client”的“c”或“cl”）。不要使用通用名称，例如“me”，“this”或“self”，这是面向对象语言的典型标识符，它们更强调方法而不是函数。名称不必像方法论证那样具有描述性，因为它的作用是显而易见的，不起任何记录目的。名称可以非常短，因为它几乎出现在每种类型的每个方法的每一行上。</p>
+</li>
+<li><p>接收器什么时候使用值或者指针：<br>（1）小的不变结构或基本类型可以用值接收器。这样可以提高效率。<br>（2）在你不确定是使用值还是指针作为接收器时，请用指针接收器。<br>（3）如果该方法需要改变接收器的值，则接收器必须是指针。<br>（4）如果接收器是 map，func或 chan，则不要使用指向它们的指针。如果接收器是 slice 并且该方法不重新切片或不重新分配切片，则不要使用指向它的指针。</p>
+</li>
+</ol>
+<h3 id="Go-语言规范工具"><a href="#Go-语言规范工具" class="headerlink" title="Go 语言规范工具"></a>Go 语言规范工具</h3><p>go 的官方工具链做得很好，可以直接使用<code>gofmt</code>和<code>golint</code>检查代码规范。</p>
+<p>安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/golang/lint</span><br><span class="line">go install github.com/golang/lint</span><br></pre></td></tr></table></figure></p>
+<p>用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">golint &lt;文件/文件目录/包名&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2020/编程语言/技术规范-2-后端技术开发规范/" title="技术规范(2): 后端技术开发规范">http://shikanon.com/2020/编程语言/技术规范-2-后端技术开发规范/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术规范/" rel="tag"># 技术规范</a>
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/编程语言/技术规范-1-前端技术开发规范/" rel="next" title="技术规范(1): 前端技术开发规范">
+                <i class="fa fa-chevron-left"></i> 技术规范(1): 前端技术开发规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/架构/Kubernetes容器开放接口-CRI/" rel="prev" title="Kubernetes容器开放接口系列:容器运行时接口(CRI)">
+                Kubernetes容器开放接口系列:容器运行时接口(CRI) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-开发规范"><span class="nav-number">1.</span> <span class="nav-text">Python 开发规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PEP8-标准"><span class="nav-number">1.1.</span> <span class="nav-text">PEP8 标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具"><span class="nav-number">1.2.</span> <span class="nav-text">工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-开发规范"><span class="nav-number">2.</span> <span class="nav-text">Go 开发规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-语言规范"><span class="nav-number">2.1.</span> <span class="nav-text">Go 语言规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-语言规范工具"><span class="nav-number">2.2.</span> <span class="nav-text">Go 语言规范工具</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

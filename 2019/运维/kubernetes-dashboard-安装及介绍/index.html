@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="运维,kubernetes,dashboard,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通过Dashboard，用户可以查看集群中应用的运行情况，同时也能够基于Dashboard创建或修改部署、任务、服务等Kubernetes的资源，通过部署向导，用户能够对部署进行扩缩容，进行滚动更新、重启Pod和部署新应用。">
+<meta name="keywords" content="运维,kubernetes,dashboard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubernetes dashboard 安装及介绍">
+<meta property="og:url" content="http://shikanon.com/2019/运维/kubernetes-dashboard-安装及介绍/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="通过Dashboard，用户可以查看集群中应用的运行情况，同时也能够基于Dashboard创建或修改部署、任务、服务等Kubernetes的资源，通过部署向导，用户能够对部署进行扩缩容，进行滚动更新、重启Pod和部署新应用。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.stack.imgur.com/5dy2F.png">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.976Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kubernetes dashboard 安装及介绍">
+<meta name="twitter:description" content="通过Dashboard，用户可以查看集群中应用的运行情况，同时也能够基于Dashboard创建或修改部署、任务、服务等Kubernetes的资源，通过部署向导，用户能够对部署进行扩缩容，进行滚动更新、重启Pod和部署新应用。">
+<meta name="twitter:image" content="https://i.stack.imgur.com/5dy2F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>kubernetes dashboard 安装及介绍 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2019/运维/kubernetes-dashboard-安装及介绍/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">kubernetes dashboard 安装及介绍</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-27T23:49:27+08:00">
+                2019-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/" itemprop="url" rel="index">
+                    <span itemprop="name">容器技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11 min
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 通过Dashboard，用户可以查看集群中应用的运行情况，同时也能够基于Dashboard创建或修改部署、任务、服务等Kubernetes的资源，通过部署向导，用户能够对部署进行扩缩容，进行滚动更新、重启Pod和部署新应用。</p>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h2 id="安装-dashboard-UI"><a href="#安装-dashboard-UI" class="headerlink" title="安装 dashboard UI"></a>安装 dashboard UI</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+<p>查看是否安装成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc,pod --all-namespaces</span><br><span class="line"></span><br><span class="line">NAMESPACE     NAME                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">kube-system   service/kubernetes-dashboard   ClusterIP   10.110.187.255   &lt;none&gt;        443/TCP         86m</span><br><span class="line"></span><br><span class="line">NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE</span><br><span class="line">...</span><br><span class="line">kube-system   pod/kubernetes-dashboard-57df4db6b-jjqhf   1/1     Running   8          86m</span><br></pre></td></tr></table></figure></p>
+<p><em>注:如果出现image pull错误，可以用私有仓库</em><br>先查看images:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat kubernetes-dashboard.yaml | grep image</span><br><span class="line">        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1</span><br></pre></td></tr></table></figure></p>
+<p>然后将”k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1” 替换为 “mirrorgooglecontainers/kubernetes-dashboard-amd64:v1.10.1”，用docker下载下来然后上传私有仓库，具体可参考（<a href="https://mp.weixin.qq.com/s/cV74onbtzTubrrhOl_Qi8w）。" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/cV74onbtzTubrrhOl_Qi8w）。</a></p>
+<table>
+<thead>
+<tr>
+<th>Argument name</th>
+<th>Default value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>insecure-port</td>
+<td>9090</td>
+<td>The port to listen to for incoming HTTP requests.</td>
+</tr>
+<tr>
+<td>port</td>
+<td>8443</td>
+<td>The secure port to listen to for incoming HTTPS requests.</td>
+</tr>
+<tr>
+<td>insecure-bind-address</td>
+<td>127.0.0.1</td>
+<td>The IP address on which to serve the –port (set to 0.0.0.0 for all interfaces).</td>
+</tr>
+<tr>
+<td>bind-address</td>
+<td>0.0.0.0</td>
+<td>The IP address on which to serve the –secure-port (set to 0.0.0.0 for all interfaces).</td>
+</tr>
+<tr>
+<td>default-cert-dir</td>
+<td>/certs</td>
+<td>Directory path containing ‘–tls-cert-file’ and ‘–tls-key-file’ files. Used also when auto-generating certificates flag is set. Relative to the container, not the host.</td>
+</tr>
+<tr>
+<td>tls-cert-file</td>
+<td>-</td>
+<td>File containing the default x509 Certificate for HTTPS.</td>
+</tr>
+<tr>
+<td>tls-key-file</td>
+<td>-</td>
+<td>File containing the default x509 private key matching –tls-cert-file.</td>
+</tr>
+<tr>
+<td>apiserver-host</td>
+<td>-</td>
+<td>The address of the Kubernetes Apiserver to connect to in the format of protocol://address:port, e.g., <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a>. If not specified, the assumption is that the binary runs inside a Kubernetes cluster and local discovery is attempted.</td>
+</tr>
+<tr>
+<td>api-log-level</td>
+<td>DEFAULT</td>
+<td>Set or disable API request logging.<br>DEFAULT sanitizes potentially sensitive URLS<br>DEBUG outputs all request output (even if sensitive)<br>NONE disables all request logging</td>
+</tr>
+<tr>
+<td>heapster-host</td>
+<td>-</td>
+<td>The address of the Heapster to connect to in the format of protocol://address:port, e.g., <a href="http://localhost:8082" target="_blank" rel="noopener">http://localhost:8082</a>. If not specified, the assumption is that the binary runs inside a Kubernetes cluster and service proxy will be used.</td>
+</tr>
+<tr>
+<td>kubeconfig</td>
+<td>-</td>
+<td>Path to kubeconfig file with authorization and master location information.</td>
+</tr>
+<tr>
+<td>token-ttl</td>
+<td>15 minutes</td>
+<td>Expiration time (in seconds) of JWE tokens generated by dashboard. Default: 15 min. 0 - never expires.</td>
+</tr>
+<tr>
+<td>authentication-mode</td>
+<td>token</td>
+<td>Enables authentication options that will be reflected on login screen. Supported values: token, basic. Note that basic option should only be used if apiserver has ‘–authorization-mode=ABAC’ and ‘–basic-auth-file’ flags set.</td>
+</tr>
+<tr>
+<td>metric-client-check-period</td>
+<td>30 seconds</td>
+<td>Time in seconds that defines how often configured metric client health check should be run.</td>
+</tr>
+<tr>
+<td>auto-generate-certificates</td>
+<td>false</td>
+<td>When set to true, Dashboard will automatically generate certificates used to serve HTTPS.</td>
+</tr>
+<tr>
+<td>enable-insecure-login</td>
+<td>false</td>
+<td>When enabled, Dashboard login view will also be shown when Dashboard is not served over HTTPS. Still, it requires frontend to be accessed over HTTPS (i.e. secure nginx proxy).</td>
+</tr>
+<tr>
+<td>system-banner</td>
+<td>-</td>
+<td>When non-empty displays message to Dashboard users. Accepts simple HTML tags.</td>
+</tr>
+<tr>
+<td>system-banner-severity</td>
+<td>INFO</td>
+<td>Severity of system banner. Should be one of ‘INFO,WARNING,ERROR’.</td>
+</tr>
+<tr>
+<td>disable-settings-authorizer</td>
+<td>false</td>
+<td>When enabled, Dashboard settings page will not require user to be logged in and authorized to access settings page.</td>
+</tr>
+<tr>
+<td>enable-skip-login</td>
+<td>false</td>
+<td>When enabled, the skip button on the login page will be shown.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="通过kube-proxy访问"><a href="#通过kube-proxy访问" class="headerlink" title="通过kube-proxy访问"></a>通过kube-proxy访问</h2><p>kubectl proxy – 为Kubernetes API server启动代理服务器:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Options:</span><br><span class="line">      --accept-hosts=&apos;^localhost$,^127\.0\.0\.1$,^\[::1\]$&apos;: Regular expression for hosts that the proxy should accept.</span><br><span class="line">      --accept-paths=&apos;^.*&apos;: Regular expression for paths that the proxy should accept.</span><br><span class="line">      --address=&apos;127.0.0.1&apos;: The IP address on which to serve on.</span><br><span class="line">      --api-prefix=&apos;/&apos;: Prefix to serve the proxied API under.</span><br><span class="line">      --disable-filter=false: If true, disable request filtering in the proxy. This is dangerous, and can leave you</span><br><span class="line">vulnerable to XSRF attacks, when used with an accessible port.</span><br><span class="line">      --keepalive=0s: keepalive specifies the keep-alive period for an active network connection. Set to 0 to disable</span><br><span class="line">keepalive.</span><br><span class="line">  -p, --port=8001: The port on which to run the proxy. Set to 0 to pick a random port.</span><br><span class="line">      --reject-methods=&apos;^$&apos;: Regular expression for HTTP methods that the proxy should reject (example</span><br><span class="line">--reject-methods=&apos;POST,PUT,PATCH&apos;). </span><br><span class="line">      --reject-paths=&apos;^/api/.*/pods/.*/exec,^/api/.*/pods/.*/attach&apos;: Regular expression for paths that the proxy should</span><br><span class="line">reject. Paths specified here will be rejected even accepted by --accept-paths.</span><br><span class="line">  -u, --unix-socket=&apos;&apos;: Unix socket on which to run the proxy.</span><br><span class="line">  -w, --www=&apos;&apos;: Also serve static files from the given directory under the specified prefix.</span><br><span class="line">  -P, --www-prefix=&apos;/static/&apos;: Prefix to serve static files under, if static file directory is specified.</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">  kubectl proxy [--port=PORT] [--www=static-dir] [--www-prefix=prefix] [--api-prefix=prefix] [options]</span><br></pre></td></tr></table></figure></p>
+<p>因为为了在不同服务器上可以访问到，因此要设置<code>--accept-hosts</code>和<code>--address</code>两个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl proxy --address=&apos;0.0.0.0&apos; --port=8001 --accept-hosts=&apos;^localhost$,^192\.168\.1\.122$&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="构建登陆访问权限"><a href="#构建登陆访问权限" class="headerlink" title="构建登陆访问权限"></a>构建登陆访问权限</h2><p>打开地址<code>http://192.168.1.122:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/</code>:<br><img src="https://i.stack.imgur.com/5dy2F.png" alt=""></p>
+<p>可以在浏览器访问，官方提供了两种认证方式，一种是kubeconfig，一种是令牌token。</p>
+<h3 id="token令牌登陆"><a href="#token令牌登陆" class="headerlink" title="token令牌登陆"></a>token令牌登陆</h3><p>k8s各服务有自己的token：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret -n kube-system</span><br><span class="line"></span><br><span class="line">NAME                                             TYPE                                  DATA   AGE</span><br><span class="line">attachdetach-controller-token-8kh8n              kubernetes.io/service-account-token   3      21h</span><br><span class="line">bootstrap-signer-token-htm5l                     kubernetes.io/service-account-token   3      21h</span><br><span class="line">bootstrap-token-ngcxcv                           bootstrap.kubernetes.io/token         7      21h</span><br><span class="line">calico-node-token-4wkts                          kubernetes.io/service-account-token   3      20h</span><br><span class="line">certificate-controller-token-dzvlt               kubernetes.io/service-account-token   3      21h</span><br><span class="line">clusterrole-aggregation-controller-token-qpvfv   kubernetes.io/service-account-token   3      21h</span><br><span class="line">coredns-token-hdk66                              kubernetes.io/service-account-token   3      21h</span><br><span class="line">cronjob-controller-token-tmvgn                   kubernetes.io/service-account-token   3      21h</span><br><span class="line">daemon-set-controller-token-wxfbl                kubernetes.io/service-account-token   3      21h</span><br><span class="line">default-token-67lzs                              kubernetes.io/service-account-token   3      21h</span><br><span class="line">deployment-controller-token-ps2sn                kubernetes.io/service-account-token   3      21h</span><br><span class="line">disruption-controller-token-qhncp                kubernetes.io/service-account-token   3      21h</span><br><span class="line">endpoint-controller-token-mq29n                  kubernetes.io/service-account-token   3      21h</span><br><span class="line">expand-controller-token-qv82t                    kubernetes.io/service-account-token   3      21h</span><br><span class="line">generic-garbage-collector-token-4bklk            kubernetes.io/service-account-token   3      21h</span><br><span class="line">horizontal-pod-autoscaler-token-4nn7k            kubernetes.io/service-account-token   3      21h</span><br><span class="line">job-controller-token-hmjcx                       kubernetes.io/service-account-token   3      21h</span><br><span class="line">kube-proxy-token-phvpr                           kubernetes.io/service-account-token   3      21h</span><br><span class="line">kubernetes-dashboard-certs                       Opaque                                0      143m</span><br><span class="line">kubernetes-dashboard-csrf                        Opaque                                1      143m</span><br><span class="line">kubernetes-dashboard-key-holder                  Opaque                                2      76m</span><br><span class="line">kubernetes-dashboard-token-tpvvp                 kubernetes.io/service-account-token   3      143m</span><br><span class="line">namespace-controller-token-9jm46                 kubernetes.io/service-account-token   3      21h</span><br><span class="line">node-controller-token-lvw87                      kubernetes.io/service-account-token   3      21h</span><br><span class="line">persistent-volume-binder-token-sn2zf             kubernetes.io/service-account-token   3      21h</span><br><span class="line">pod-garbage-collector-token-gmwb6                kubernetes.io/service-account-token   3      21h</span><br><span class="line">pv-protection-controller-token-r566m             kubernetes.io/service-account-token   3      21h</span><br><span class="line">pvc-protection-controller-token-sh8x9            kubernetes.io/service-account-token   3      21h</span><br><span class="line">replicaset-controller-token-bd724                kubernetes.io/service-account-token   3      21h</span><br><span class="line">replication-controller-token-h7bt6               kubernetes.io/service-account-token   3      21h</span><br><span class="line">resourcequota-controller-token-qrj5l             kubernetes.io/service-account-token   3      21h</span><br><span class="line">service-account-controller-token-5brbw           kubernetes.io/service-account-token   3      21h</span><br><span class="line">service-controller-token-ln82n                   kubernetes.io/service-account-token   3      21h</span><br><span class="line">statefulset-controller-token-b9jlj               kubernetes.io/service-account-token   3      21h</span><br><span class="line">token-cleaner-token-9lzqb                        kubernetes.io/service-account-token   3      21h</span><br><span class="line">ttl-controller-token-58rdc                       kubernetes.io/service-account-token   3      21h</span><br></pre></td></tr></table></figure></p>
+<p>我们通过<code>kubectl describe secret</code>可以看到具体服务的token：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe secret deployment-controller-token-ps2sn -n kube-system</span><br><span class="line">Name:         deployment-controller-token-ps2sn</span><br><span class="line">Namespace:    kube-system</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name: deployment-controller</span><br><span class="line">              kubernetes.io/service-account.uid: e3dff2a1-2095-11e9-b54b-5254003008ab</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkZXBsb3ltZW50LWNvbnRyb2xsZXItdG9rZW4tcHMyc24iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGVwbG95bWVudC1jb250cm9sbGVyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiZTNkZmYyYTEtMjA5NS0xMWU5LWI1NGItNTI1NDAwMzAwOGFiIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRlcGxveW1lbnQtY29udHJvbGxlciJ9.d_GQotLp38_5GOMCHy2sn9zvgTThnSo4cUN5PkRbKyLtT16zl1MtFadOogLc7iVllNgDGAzHHAbo73m35gi1j0H_o0A742wZq4gLS-06r4UPfhpU9IoGhYZusYOY-RvBkjm7PZbKhudxwStdP44HhwaqdoX2wMwZgT8mrVd74VEs988zPEaM-QAKYLhYgOEAlEFvXnFfzm2dRD9LtK7m1JrlmevmtONfucEPpJiVuAhYBYq31KZ6YOya0Py8tInd8S-9_pmBmNVCYE2MzyFLWJ5uJhmdefqNWwTgKaKHWOsczqDecnRaSuF97Qje7udwVeVjNTeCwUzOZAfPlHLe-Q</span><br></pre></td></tr></table></figure></p>
+<p>但每个服务的token都权限都不同，不一定符合我们的需求，因此我们需要建立自己的ClusterRole，并赋予权限。</p>
+<p>创建user-shikanon.yaml文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: user-shikanon</span><br><span class="line">  namespace: kube-system</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: user-shikanon</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cluster-admin</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: user-shikanon</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure></p>
+<p>启动服务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl create -f user-shikanon.yaml</span><br><span class="line"></span><br><span class="line">serviceaccount/user-shikanon created</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io/user-shikanon created</span><br></pre></td></tr></table></figure>
+<p>查看user-shikanon服务的token：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@master ~]# kubectl describe secret user-shikanon --namespace=kube-system</span><br><span class="line">Name:         user-shikanon-token-6t5rd</span><br><span class="line">Namespace:    kube-system</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name: user-shikanon</span><br><span class="line">              kubernetes.io/service-account.uid: f290b948-2149-11e9-a469-5254003008ab</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJ1c2VyLXNoaWthbm9uLXRva2VuLTZ0NXJkIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6InVzZXItc2hpa2Fub24iLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmMjkwYjk0OC0yMTQ5LTExZTktYTQ2OS01MjU0MDAzMDA4YWIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06dXNlci1zaGlrYW5vbiJ9.Ap6MY85X38mVGXqEe7T8UW-RHNXWWJZ06eKKXMKutRJUKDNcfKKV0Y1o_CsWLfSNjqNjRCoTYs4x73vHwo6LkrXrzKoyh7VZytcMxpwV7FiLAMU0OFia179WROAIEpvZ1AsK94X2NM3zBS4I3pVNK_OLM4wuOBLcX9bkFscBRufs3SvgtA64t8_vq4udgoQdERdnK3EiPBgpZEjnGQIK_o-kgGKviXhS892r2QD9y_YlrFyY6Gu4xPRew_k2jPpFpZNyjYp3pKWw6DnGKBN39M7T5igLnSXJEQGp1mXgYrgWBL-IQeWtRTVcpBIeRFa5AoPMfPcv5x4AsWHK_rF1_A</span><br></pre></td></tr></table></figure></p>
+<h3 id="kubeconfig登陆"><a href="#kubeconfig登陆" class="headerlink" title="kubeconfig登陆"></a>kubeconfig登陆</h3><p>在.kube/config找到kubeconfig文件，或者重新创建一个kubeconfig文件，在config文件末尾加上一个token字段即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">clusters:</span><br><span class="line">- cluster:</span><br><span class="line">    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN5RENDQWJDZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRFNU1ERXlOVEV4TXpneU1Wb1hEVEk1TURFeU1qRXhNemd5TVZvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTERlCnVEYkNXSTVnMUhjaithdFVDdmlEK3dlM054VnVkV28rVWMvbWJFV3lyemM3WFp1RGdJZHNqNXRpV3hmMWNDVGYKeW9qU21OcC9ldmtUa2YxSGIzSmJOYjhFNG5oSE1TdzMwQkpNd1JxbTZaMVdQRnArNkRUdlZzT25CVnlDY1FRNwo0MEJWTnpyOTdXMTlkRi9JYXp4ODBqblRVT3NJNFczMXE3QkEvZ2E0anZVRnZQbnY3TVU5dm1XeCt4NWRJVmoyCjRDY1NzV0hBNVpiNm1RU050WlNtTWIxYnFZa0NHVGdPbWkrWDhDQzVaZmRtU1BmWmRUdlhOMlJVdzdmVXRZdlMKYTJuL3JwZFFzZ0s0NEthQXRHSmhta1dFci9hbkpVa1FlTEpMdjRpYVZXVnpHWEV0SkRqZkY1T0x6YVlvd2JpbApwT3hjMUIyTzk2TWV4NzljOHVVQ0F3RUFBYU1qTUNFd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFHcC92MURIUlV1ODBiSjVKQy81eHRJVEVCelYKeVZZd1d2NUpsNDRkMFhVdlJqV2FOUXF5TUYwRVJYYXBjMWdSVjV1WitROWxUN3JPcVgvWlozNHFoSS9tdmhNRgpyRUh6NW9yK09waS9HNFYwK20xYysxOE9ya3h2ZHJjcFVYa1ArVW5kM09lV0VrUjNHREhxcU5YVHlEcWZybWR2Cmh2NTNwQ0F2NkFOKzRJUWJxd3RsWU5GZWhHN09IdEl4ZDdGSFJHcGZKTTFlUXJ3M09sYzhreDVkSkltS0tPYXgKZm9uVzBkOXdOTmVhVlVDMmh4cFFWVFlJbjBXamUxcGtVTEdUaTVqcjZZL2tBZ0hhU1BKNTR5TFhzbzhMTHBvVApGMEN0TnRWOG8zczQ2Z0ZvMW1uQUQxYXh1WjlnTTNUZTcrSkNnRVlhTlgxak1SMVFwWFpraysydGYzRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=</span><br><span class="line">    server: https://192.168.1.120:6443</span><br><span class="line">  name: kubernetes</span><br><span class="line">contexts:</span><br><span class="line">- context:</span><br><span class="line">    cluster: kubernetes</span><br><span class="line">    user: kubernetes-admin</span><br><span class="line">  name: kubernetes-admin@kubernetes</span><br><span class="line">current-context: kubernetes-admin@kubernetes</span><br><span class="line">kind: Config</span><br><span class="line">preferences: &#123;&#125;</span><br><span class="line">users:</span><br><span class="line">- name: kubernetes-admin</span><br><span class="line">  user:</span><br><span class="line">    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM4akNDQWRxZ0F3SUJBZ0lJVHB1b3ZjbElYdVV3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB4T1RBeE1qVXhNVE00TWpGYUZ3MHlNREF4TWpVeE1UTTRNakphTURReApGekFWQmdOVkJBb1REbk41YzNSbGJUcHRZWE4wWlhKek1Sa3dGd1lEVlFRREV4QnJkV0psY201bGRHVnpMV0ZrCmJXbHVNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQTBPMlZMVDhENlIwVFMyRFoKb0tOZGlBcVJ3amVkWlo4Y29FdVBneTZpNlVReU9qQUt4OVZaeVJ6bWIyTWU1aFpHSXdLVGcyNW92YWw3ZWY4RApwc2FqYUhOa2NZSVd6S0Y0Yks0ZGtndlRudE5yUGxpazA5WFQxWTAwZUF0ZmpySjMrZWwzcEd1eGFPWENzZVQ3CjVLR0pINkdWWllpeGhMekF4bnpGd3lpdlFFcDVjVFl1RVhvZUZnOXBTekRhRFV5M2orUnBqRWhEdjdraVZpWGQKTE5yVGg0ZFB2ZWZhd21KTE8yYk9qUkI5MDB4dkpLMkF2NmtiV0M0U2wzQnF1SjhyVERoM21IeDQzOXVSNnpDZgpsNkYrbC9qRVBBRFJQQzVrTEJhUzVMT3JmcFlBM244MWNKYVRVeWROeGtIbDkzVTZiSnNQNXhPblBrOFpxUC9iClNhaWVrd0lEQVFBQm95Y3dKVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdFd1lEVlIwbEJBd3dDZ1lJS3dZQkJRVUgKQXdJd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFJRVl0MjBQVDJnWm1UMmx3amYyYjIvdGc0OUJMNFJObTl4dgp1RkVmK3F1SklqcHJpMFV0TVJUZE5lV2ZiZTJvZWMrbm1SNk5CSGhUMnlhYVMrQjJ5SUZvOVVWckZENXdYVUsrCnVVN0NCRk55cHZRTzlHVXJYaGFYa1lKUkJNQ21XM2d6T1RqdXVFaGNMd0lHZGRWdlI4Wkh5M245Y084czAzU2sKUmtuMlZmL0hjQnRvbnRUWENGTXpidFA0UnZnYXlMN2c5NGpsN25OQ1hBVEU1K1h5OHZKcm5NSXhUbVQwTnVFNgpBVG43RG1Hb2V0Q2kySnJqZFpqcUR5N3FqbjhOZGQ1Qmh4OWkvWThyTXVWTC9GTWIrRVk4SzM3U2IxTmM1U21rCkNtUjNGakZZYjJUVDRZeHdtMWFPM0Rvd0lOWDVDdkd4aTNHS0F4QjJydGZQSUpLOEhydz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=</span><br><span class="line">    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBME8yVkxUOEQ2UjBUUzJEWm9LTmRpQXFSd2plZFpaOGNvRXVQZ3k2aTZVUXlPakFLCng5Vlp5UnptYjJNZTVoWkdJd0tUZzI1b3ZhbDdlZjhEcHNhamFITmtjWUlXektGNGJLNGRrZ3ZUbnROclBsaWsKMDlYVDFZMDBlQXRmanJKMytlbDNwR3V4YU9YQ3NlVDc1S0dKSDZHVlpZaXhoTHpBeG56Rnd5aXZRRXA1Y1RZdQpFWG9lRmc5cFN6RGFEVXkzaitScGpFaER2N2tpVmlYZExOclRoNGRQdmVmYXdtSkxPMmJPalJCOTAweHZKSzJBCnY2a2JXQzRTbDNCcXVKOHJURGgzbUh4NDM5dVI2ekNmbDZGK2wvakVQQURSUEM1a0xCYVM1TE9yZnBZQTNuODEKY0phVFV5ZE54a0hsOTNVNmJKc1A1eE9uUGs4WnFQL2JTYWlla3dJREFRQUJBb0lCQURDdE9kVloyaXBreU1zRwpISTR0b2F3QmNtWkNtTnhGVHVFVjJiRGhtN2tuVjJCeE13SE45bVpCNG5wUEtMTEl1N3lLYkIzeUNsc3Q4b1BBCjQzUG0wY21USVBMRk1WU3B4aW5rQXlXMHRiQktaN0VWN0FraXg0RDRyaUhOM0l5ZGpoQmUwYTR3SFJ4b2M0MEkKNFpzcCs0MndFdU9lRG1YenFDSldqYWpqZ0xsRWRQUWtiM1RmQkx0amNOakdEclVKS1VLcmJLa3gzb2NlUmVNNgpRcG1oVUJSYk1LSGZzVWdLUEFkaDdtTTJYUDlGTG1rNmMyWlBWZWE2dld2eFpMd2kxSzJXZUpJblVicXYyYy9wCkFaQ0VUdmNKTEttSTFmMFRxeGY1WXlVK29FZXlJQUJta2RvMkhWMHcwUEF4OGw5V1U1T2dacVVQS1lPVHVlL2YKMWsva2ttRUNnWUVBNlJYYVE4Y1hjUTJIeDR1dE5abUJJbXlObDM5eVNGeG94bEJaNWgvY3VWdk1ncS9nbjFXRApWaVIwajJ0Uk41QzdPZzU0Mnh1dXNwR1RqWWxyRDhDM1YwN0ZpM0E3NTkxMUpOMzRsVnpPdHhLem94dk12RmFsCmV0bVNmUnBETUdIL08xN3NsTnowdi9DVDNUNENKbzA2Q3hpZHNKVW01UGc4NG5MSmI3eGl6M0VDZ1lFQTVYZkIKRGU0UVhJeTZEMXhQdWcvbjJGYklVaDErRElvdVNuWFRIRGtKejB5blViQ0UwdGZ1RC9qUmhmTHcwSUIyMjBmOAplRzA1a0RFS1I0TVoyVXFSdUpaZWUybUdLZis5eVFSaTRzbVNPT0x3ZDFkbjBBNlJKQUppR1ROUWhDQmF3UmpKCm9kckZVNUtmejR1QTZGcE8vS2w2M0h5N1RtelFOMUd0MTFoUGxFTUNnWUI4dmdjNzh0Y20xL2pzNEdIb3A2aW0KeGJYWmVJbXZGRlcybk5ZZ0JMbGFNamozVUMxRTJMMGJZeE5HbGthM0dDdzdXL2R1UEJoNDFOUkZFV0JNNC9TNwpNeHNpRHdUZ2lITGpNakNScjBPcVVzWDA2ekhkTWZvS0Qxc0l2UDlzYTJYdlhsUDdMMjJGTTduTzFCck9peEtmClVhTkRGKy9pNXIrZTZaUEl5dWVPNFFLQmdFVEFvTU0vdFA5RjJ1bUhTd3dBZ0FLOTNiOWN2c3ViQzB1Y0NlakcKM2oyU1JmK2YxK3drYmx1eXZYUlkyZlpleHoza1Q2ejFiTzNiQTYxeGhta29nb2kvNVFjdEV0bTZtbTZFTmV5bApZSDVTNEtHaE9xV0g5OHpHT2dZNjdjRG93TWhpV09kNTJPMjFYTlNlZzcwYWNkZ2FING00aFpaMTI5ejNTQkxoCmp0WnBBb0dBWEtRQjJBRk52cnRnWEg2MHFCRWJPaG9kZ2ZXRVA2QmtrNUpZSzY1U2o1ZFRaTmZlOG9JU3FKbFAKR0dlQnZMV1dVVUhScmMyUFpEcFpZTDJ4NGRvYndoWDJkYWJOWEFsQTFZczZJZmM2OG9oaWxpdm1PbktGRXBBMAo5RDJ6VXBqa0NzS3EybDFVSW9WczJSbTZ1dDJKcXB1WWs4SHJ3Z1BpYWtsclJtZ3FYbUU9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==</span><br><span class="line">    token: eyJhbGciOiJSUzI1NiIsIm</span><br></pre></td></tr></table></figure>
+<h2 id="RBAC权限控制"><a href="#RBAC权限控制" class="headerlink" title="RBAC权限控制"></a>RBAC权限控制</h2><h3 id="Role-和-ClusterRole类型的权限控制"><a href="#Role-和-ClusterRole类型的权限控制" class="headerlink" title="Role 和 ClusterRole类型的权限控制"></a>Role 和 ClusterRole类型的权限控制</h3><p>Role 只能用于授予对单个命名空间中的资源访问权限，在 RBAC API 中，Role 表示一组规则权限，权限只会增加(累加权限)，不存在一个资源一开始就有很多权限而通过 RBAC 对其进行减少的操作。Role 可以定义在一个 namespace 中，如果想要跨 namespace 则可以创建 ClusterRole， ClusterRole 是集群级别的。</p>
+<p>Role:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kind: Role</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  namespace: default</span><br><span class="line">  name: pod-reader</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&quot;&quot;] # &quot;&quot; indicates the core API group</span><br><span class="line">  resources: [&quot;pods&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>ClusterRole:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kind: ClusterRole</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  # &quot;namespace&quot; omitted since ClusterRoles are not namespaced</span><br><span class="line">  name: secret-reader</span><br><span class="line">rules:</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;secrets&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;, &quot;watch&quot;, &quot;list&quot;]</span><br></pre></td></tr></table></figure></p>
+<h3 id="RoleBinding-和-ClusterRoleBinding-类型的权限控制"><a href="#RoleBinding-和-ClusterRoleBinding-类型的权限控制" class="headerlink" title="RoleBinding 和 ClusterRoleBinding 类型的权限控制"></a>RoleBinding 和 ClusterRoleBinding 类型的权限控制</h3><p>RoloBinding 可以将角色中定义的权限授予用户或用户组，RoleBinding 包含一组权限列表(subjects)，权限列表中包含有不同形式的待授予权限资源类型(users, groups, or service accounts)；RoloBinding 同样包含对被 Bind 的 Role 引用；RoleBinding 适用于某个命名空间内授权，而 ClusterRoleBinding 适用于集群范围内的授权。</p>
+<p>RoleBinding:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># This role binding allows &quot;dave&quot; to read secrets in the &quot;development&quot; namespace.</span><br><span class="line">kind: RoleBinding</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: read-secrets</span><br><span class="line">  namespace: development # This only grants permissions within the &quot;development&quot; namespace.</span><br><span class="line">subjects:</span><br><span class="line">- kind: User</span><br><span class="line">  name: dave</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: secret-reader</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br></pre></td></tr></table></figure></p>
+<p>ClusterRoleBinding:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># This cluster role binding allows anyone in the &quot;manager&quot; group to read secrets in any namespace.</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1</span><br><span class="line">metadata:</span><br><span class="line">  name: read-secrets-global</span><br><span class="line">subjects:</span><br><span class="line">- kind: Group</span><br><span class="line">  name: manager</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">roleRef:</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: secret-reader</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2019/运维/kubernetes-dashboard-安装及介绍/" title="kubernetes dashboard 安装及介绍">http://shikanon.com/2019/运维/kubernetes-dashboard-安装及介绍/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+            <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
+          
+            <a href="/tags/dashboard/" rel="tag"># dashboard</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/运维/kubernetes部署-基于kubeadm的国内镜像源安装/" rel="next" title="kubernetes部署:基于kubeadm的国内镜像源安装">
+                <i class="fa fa-chevron-left"></i> kubernetes部署:基于kubeadm的国内镜像源安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/运维/Helm包管理-入门/" rel="prev" title="Helm包管理-入门">
+                Helm包管理-入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-dashboard-UI"><span class="nav-number">1.</span> <span class="nav-text">安装 dashboard UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过kube-proxy访问"><span class="nav-number">2.</span> <span class="nav-text">通过kube-proxy访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建登陆访问权限"><span class="nav-number">3.</span> <span class="nav-text">构建登陆访问权限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#token令牌登陆"><span class="nav-number">3.1.</span> <span class="nav-text">token令牌登陆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kubeconfig登陆"><span class="nav-number">3.2.</span> <span class="nav-text">kubeconfig登陆</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RBAC权限控制"><span class="nav-number">4.</span> <span class="nav-text">RBAC权限控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Role-和-ClusterRole类型的权限控制"><span class="nav-number">4.1.</span> <span class="nav-text">Role 和 ClusterRole类型的权限控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RoleBinding-和-ClusterRoleBinding-类型的权限控制"><span class="nav-number">4.2.</span> <span class="nav-text">RoleBinding 和 ClusterRoleBinding 类型的权限控制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

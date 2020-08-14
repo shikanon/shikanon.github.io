@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,算法,注意力机制,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="注意力机制逐渐在NLP中得地位变得越来越重要，上有Google的&quot;Attention is All You Need&quot;论文,下有 Tranformer、BERT等强大的NLP表征模型，attention 在 NLP 的地位就像卷积层在图像识别一样变得不可缺少的一部分。在这里，总结下注意力机制，并回顾下最近的一些相关的研究进展。">
+<meta name="keywords" content="深度学习,算法,注意力机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注意力机制及其理解">
+<meta property="og:url" content="http://shikanon.com/2019/机器学习/注意力机制及其意义/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="注意力机制逐渐在NLP中得地位变得越来越重要，上有Google的&quot;Attention is All You Need&quot;论文,下有 Tranformer、BERT等强大的NLP表征模型，attention 在 NLP 的地位就像卷积层在图像识别一样变得不可缺少的一部分。在这里，总结下注意力机制，并回顾下最近的一些相关的研究进展。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/attention.svg">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/QKV视图.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/QKV_1.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/层次注意力模型.jpeg">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/循环注意力机制.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/QKV_2.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/循环神经网络符号.jpg">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/全局注意力机制.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/局部注意力机制.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/局部注意力参数详解.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/self-attention-predict.svg">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/多头自注意力模型.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/多头自注意力模型2.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/Transformer.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/seq2seq和transformer对比.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/Transformer的注意力机制.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/Normalization.png">
+<meta property="og:image" content="http://shikanon.com/img/注意力机制/BERT模型.png">
+<meta property="og:updated_time" content="2019-11-11T01:11:52.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注意力机制及其理解">
+<meta name="twitter:description" content="注意力机制逐渐在NLP中得地位变得越来越重要，上有Google的&quot;Attention is All You Need&quot;论文,下有 Tranformer、BERT等强大的NLP表征模型，attention 在 NLP 的地位就像卷积层在图像识别一样变得不可缺少的一部分。在这里，总结下注意力机制，并回顾下最近的一些相关的研究进展。">
+<meta name="twitter:image" content="http://shikanon.com/img/注意力机制/attention.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>注意力机制及其理解 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2019/机器学习/注意力机制及其意义/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">注意力机制及其理解</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-26T13:13:35+08:00">
+                2019-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  注意力机制逐渐在NLP中得地位变得越来越重要，上有Google的"Attention is All You Need"论文,下有 Tranformer、BERT等强大的NLP表征模型，attention 在 NLP 的地位就像卷积层在图像识别一样变得不可缺少的一部分。在这里，总结下注意力机制，并回顾下最近的一些相关的研究进展。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="注意力机制"><a href="#注意力机制" class="headerlink" title="注意力机制"></a>注意力机制</h1><h2 id="什么是注意力机制"><a href="#什么是注意力机制" class="headerlink" title="什么是注意力机制"></a>什么是注意力机制</h2><p>注意力机制就是对输入权重分配的关注，最开始使用到注意力机制是在<code>编码器-解码器</code>(encoder-decoder)中, 注意力机制通过对编码器所有时间步的隐藏状态做加权平均来得到下一层的输入变量：</p>
+<p><img src="/img/注意力机制/attention.svg" alt="编码器—解码器上的注意力机制"></p>
+<p>注意力机制的通用表达式可以写为：</p>
+<p>$$\boldsymbol{O} = \text{softmax}(\boldsymbol{Q}\boldsymbol{K}^\top)\boldsymbol{V}$$</p>
+<p>注意力机制广义上可以理解成一个由查询项矩阵 $\boldsymbol{Q}$ 和所对应的键项 $\boldsymbol{K}$ 和 需加权平均的值项 $\boldsymbol{V}$ 所构成的一层感知机(<code>softmax</code>求和)。</p>
+<p>这里我们可以从两个视角来看：</p>
+<ul>
+<li>从工程学上理解<br>从工程学上简单理解，我们可以把注意力机制理解成从数据库(内存槽)<code>Q</code>中通过键<code>K</code>和值<code>V</code>得到输出<code>O</code>，由于<code>V</code>是输入，所以可以理解注意力机制的核心就是如何构建数据库<code>Q</code>和键值<code>K</code>的方法。</li>
+</ul>
+<p><img src="/img/注意力机制/QKV视图.png" alt="QKV内存类比图"></p>
+<ul>
+<li>从算法上理解<br>从算法上来理解，我们可以把注意力机制和池化做类比，即<strong>将<code>卷积神经网络</code>中的池化看成一种特殊的平均加权的<code>注意力机制</code>，或者说注意力机制是一种具有对输入分配偏好的通用池化方法(含参数的池化方法)。</strong></li>
+</ul>
+<h2 id="从构建查询项看注意力机制"><a href="#从构建查询项看注意力机制" class="headerlink" title="从构建查询项看注意力机制"></a>从构建查询项看注意力机制</h2><h3 id="最早的Attention的提出"><a href="#最早的Attention的提出" class="headerlink" title="最早的Attention的提出"></a>最早的Attention的提出</h3><p>在最早提出注意力机制的论文《Neural Machine Translation by Jointly Learning to Align and Translate》中，其主要是用来作翻译模型，解决翻译核对齐问题（论文采用了seq2seq+attention）。文中<code>QK</code>的计算表示：</p>
+
+$$\boldsymbol{c}_{t'} = \sum_{t=1}^T\alpha_{t' t}\boldsymbol{h}_t$$
+$$\alpha_{t' t} = \text{softmax}(\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t))$$
+$$\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t) = \boldsymbol{v}^\top \tanh(\boldsymbol{W}_s \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_h \boldsymbol{h}_t)$$
+
+<p>$\boldsymbol{c}_{t’}$表示输出变量，$\boldsymbol{h}_t$为隐藏层，$\alpha_{t' t}$表示一个权重的概率分布，即<code>QK</code>得softmax值，这里得查询项矩阵<code>Q</code>采用了一个$\tanh(\boldsymbol{W}_s \boldsymbol{s} + \boldsymbol{W}_h \boldsymbol{h})$，所以$\sigma$其本质在是一个单层的感知机。由于这种注意力机制由Bahdanau在seq2seq中正式提出，也叫循环注意力机制，更加$\sigma$函数即其参数不同我们可以把注意力机制分成多种形式。</p>
+<h3 id="最基础形态的注意力机制"><a href="#最基础形态的注意力机制" class="headerlink" title="最基础形态的注意力机制"></a>最基础形态的注意力机制</h3><p><img src="/img/注意力机制/QKV_1.png" alt="QKV_1"></p>
+<p>从上面我们将注意力机制抽象出来即：</p>
+
+$$\boldsymbol{c}_{t} = \sum_{t=1}^T\sigma(\boldsymbol{q},\boldsymbol{k}_t)\boldsymbol{h}_t$$
+
+<p><code>q</code> 为查询项， <code>k</code> 为键值项， <code>h</code>为隐含层输入变量，$\sigma$ 为变换函数，<code>c</code>表示模型输出的context vetor。<br>呃，趣味点的话也可以理解，输入的<code>h</code>，通过其对应键值<code>k</code>查询<code>q</code>，通过$\sigma$输出<code>c</code></p>
+<h3 id="层次注意力-Hierarchical-Attention-Networks"><a href="#层次注意力-Hierarchical-Attention-Networks" class="headerlink" title="层次注意力(Hierarchical Attention Networks)"></a>层次注意力(Hierarchical Attention Networks)</h3><p>层次注意力由 Zichao Yang 提出，主要用于解决多层次问题，比如在文本分类中，我们可以把词作为一层，把段落作为一层，这样就有了多层，而且下面一层会对上一层有影响，因此建立了一种堆叠的层次注意力模型：</p>
+<p><img src="/img/注意力机制/层次注意力模型.jpeg" alt="层次注意力"></p>
+<p>层次注意力机制就是堆叠了多个注意力模型，形成多层次注意力，其公式表达可以写成：</p>
+
+$$
+\boldsymbol{c}_{t}^{(\boldsymbol{i+1})} = \sum_{t=1}^T\sigma^{(\boldsymbol{i})}(\boldsymbol{q}^{(\boldsymbol{i})},\boldsymbol{k}_t^{(\boldsymbol{i})})\boldsymbol{h}_t^{(\boldsymbol{i})},\\
+\boldsymbol{h}_{t}^{(\boldsymbol{i})} = \boldsymbol{v}_{t}^{(\boldsymbol{i+1})}\boldsymbol{c}_{i}^{(\boldsymbol{t})}$$
+$$\boldsymbol{h}_{0} = \boldsymbol{W}_{t}^{(0)}\boldsymbol{X}$$
+
+<p><code>q</code> 为查询项， <code>k</code> 为键值项， <code>h</code>为隐含层输入变量，$\sigma$ 为变换函数，<code>c</code>表示模型输出的context vetor，<code>i</code>表示层级。</p>
+<p>什么意思呢？<br>首先，可以看到上层的注意力是以下层的输出作为输入，一层一层堆叠上去。</p>
+<h3 id="循环注意力"><a href="#循环注意力" class="headerlink" title="循环注意力"></a>循环注意力</h3><p><img src="/img/注意力机制/循环注意力机制.png" alt="循环注意力"></p>
+<p>前面讲到，其实所谓的循环注意力模型就是最早提出的seq2seq的翻译模型：</p>
+
+$$
+\begin{align}
+\boldsymbol{o}_{i} &= f(\boldsymbol{s}_{i}) \\
+\boldsymbol{s}_{i} &= a(\boldsymbol{s}_{i-1},\boldsymbol{o}_{i-1},\boldsymbol{s}_{i}) \\
+\boldsymbol{c}_{t'} &= \sum_{t=1}^T\alpha_{t' t}\boldsymbol{h}_t \\
+\alpha_{t' t} &= \frac{\exp(e_{t' t})}{ \sum_{k=1}^T \exp(e_{t' k}) },\quad t=1,\ldots,T \\
+e_{t' t} &= \sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t) \\
+\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_t) &= \boldsymbol{V}^\top \tanh(\boldsymbol{W}_s \boldsymbol{s}_{t' - 1} + \boldsymbol{W}_h \boldsymbol{h}_t) \\
+\end{align}
+$$
+
+<p>其中<br><img src="/img/注意力机制/QKV_2.png" alt="QKV_1"></p>
+<p>他的核心思想是将下一个输出的状态$\boldsymbol{s}_{t-1}$一起输入$\sigma$函数。<br>$\alpha_{t’ t}$就是注意力模型中的权重项，<code>O</code>表示输出，<code>s</code>表示解码器中的隐藏层变量,<code>c</code>表示context vetor, <code>h</code>表示编码器中的隐藏层变量。</p>
+<p><img src="/img/注意力机制/循环神经网络符号.jpg" alt="循环注意力"></p>
+<h3 id="全局注意力模型（Gobal-Attention）"><a href="#全局注意力模型（Gobal-Attention）" class="headerlink" title="全局注意力模型（Gobal Attention）"></a>全局注意力模型（Gobal Attention）</h3><p>全局注意力模型是由Minh-Thang Luong在2015年的《Effective Approaches to Attention-based Neural Machine Translation》中提出：</p>
+<p><img src="/img/注意力机制/全局注意力机制.png" alt="全局注意力模型"></p>
+<p>这个全局注意力模型是在循环注意力模型上左的改进，加个一层<code>Global align weights</code>（见上图），原循环注意力模型的键值项<code>K</code>是直接采用$\boldsymbol{h}_t$。其公式：</p>
+
+$$
+\begin{align}
+\alpha_t(s) &= \text{align}(\boldsymbol{h}_t, \bar{\boldsymbol{h}_s}) \\
+&= \frac{
+    \text{exp}(\text{score}(\boldsymbol{h}_t, \bar{\boldsymbol{h}_s}))}
+    {
+    \sum_{\boldsymbol{s'}} \text{exp}(\text{score}(\boldsymbol{h}_t, \bar{\boldsymbol{h}_{s'}}))
+    }
+\end{align}
+$$
+
+$\boldsymbol{h}_{t}$ 表示当前目标时刻 <code>t</code> 的编码器的隐藏变量，$\bar{\boldsymbol{h}_s}$表示所有的原时刻的编码器的隐藏变量<br><code>score</code>表示一种打分方式，其中论文中给出的是三种：<br>
+$$
+\text{score}(\boldsymbol{h}_t, \bar{\boldsymbol{h}_s)}  = 
+\begin{cases}
+    \boldsymbol{h}_t^T \bar{\boldsymbol{h}_s}, &\text{dot}\\
+    \boldsymbol{h}_t^T \boldsymbol{W}_a \bar{\boldsymbol{h}_s}, &\text{general}\\
+    \boldsymbol{v}_a^T \text{tanh}(\boldsymbol{W}_a[\boldsymbol{h}_t;\bar{\boldsymbol{h}_s}]),&\text{concat}
+\end{cases}
+$$
+
+<p><code>dot</code>表示点乘/点积，<code>concat</code>表示联接，即将两个变量连接起来，<code>general</code>是一般形式，中间加权重参数。</p>
+<p><em>注： While our global attention approach is similar in spirit to the model proposed by Bahdanau et al. (2015), there are several key differences which reﬂect how we have both simpliﬁed and generalized from the original model.</em></p>
+<h3 id="局部注意力模型（Local-Attention）"><a href="#局部注意力模型（Local-Attention）" class="headerlink" title="局部注意力模型（Local Attention）"></a>局部注意力模型（Local Attention）</h3><p>局部注意力模型其实是和全局注意力模型在同一篇论文提出的，局部注意力模型在全局注意力模型的基础上增加了<code>aligned position</code>帮助定位，使查询项<code>Q</code>和键值项<code>K</code>能专注部分信息：</p>
+<p><img src="/img/注意力机制/局部注意力机制.png" alt="局部注意力机制"></p>
+<p>位置<code>aligned position</code>的公式:</p>
+
+$$p_t = S \cdot \text{sigmod}(\boldsymbol{v}_p^T \text{tanh}(\boldsymbol{W}_p\boldsymbol{h}_t)),  \\p_t \in [0, S]$$
+
+<p><code>S</code>表示原句的长度，<code>W</code>和<code>v</code>为预测参数。</p>
+<p>键值和查询项的权重:<br>
+$$\alpha_t(s) = \text{align}(\boldsymbol{h}_t, \bar{\boldsymbol{h}_s})\text{exp}(- \frac{(s-p_t)^2}{2\sigma^2})$$
+</p>
+<p>$p_t$的范围是【0，S】，<code>s</code>为$p_t$窗体中间的正数,$\sigma=\frac{D}{2}$:</p>
+<p><img src="/img/注意力机制/局部注意力参数详解.png" alt="局部注意力机制"></p>
+<h3 id="自注意力-Self-Attention"><a href="#自注意力-Self-Attention" class="headerlink" title="自注意力(Self Attention)"></a>自注意力(Self Attention)</h3><p>1、从n个输入直接输出n个输出，没有序列，每个<strong>输入</strong>对应着一个<code>K</code>,<code>V</code>,<code>Q</code>；<br>2、可以并行运算</p>
+<p><img src="/img/注意力机制/self-attention-predict.svg" alt="self attention"></p>
+<h3 id="多头注意力模型-Multi-Head-Attention"><a href="#多头注意力模型-Multi-Head-Attention" class="headerlink" title="多头注意力模型(Multi-Head Attention)"></a>多头注意力模型(Multi-Head Attention)</h3><p><img src="/img/注意力机制/多头自注意力模型.png" alt="多头自注意力模型"><br><img src="/img/注意力机制/多头自注意力模型2.png" alt="多头自注意力模型"></p>
+<p>多头自注意力模型<br>其公式：<br>
+$$
+\text{MultiHead}(Q,K,V) = \text{Concat}(\text{head1},...,\text{head}_h)\boldsymbol{W}^O
+$$
+$$
+\text{head}_i = \text{Attention}(\boldsymbol{Q}\boldsymbol{W}_i^Q,\boldsymbol{K}\boldsymbol{W}_i^K,\boldsymbol{V}\boldsymbol{W}_i^V)
+$$
+$$
+\text{Attention}(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = \text{softmax}(\frac{\boldsymbol{Q}\boldsymbol{K}^T}{\sqrt{d_k}})\boldsymbol{V}
+$$
+</p>
+<h2 id="注意力模型的应用"><a href="#注意力模型的应用" class="headerlink" title="注意力模型的应用"></a>注意力模型的应用</h2><h3 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h3><p>Transformer模型是 Google 团队在2017年《Attention is All You Need》中提出，Transformer模型在后面成为构成 BERT 的基石之一，那么我们来看看是怎么通过自注意力模型构建Transformer的：<br><img src="/img/注意力机制/Transformer.png" alt="Transformer模型"></p>
+<p>Transformer从结构上来说依然是个<code>Encoder-Decoder</code>模型，但是，它和传统的<code>seq2seq</code>主要有三点不同：</p>
+<ul>
+<li>使用位置编码，也就是Positional Encoding代替序列信息。</li>
+<li>使用Transformer Block来实现注意力机制</li>
+<li>采用多头自注意力，可以并行运算</li>
+</ul>
+<p><img src="/img/注意力机制/seq2seq和transformer对比.png" alt="seq2seq和transformer对比"><br><img src="/img/注意力机制/Transformer的注意力机制.png" alt="Transformer模型"></p>
+<h4 id="位置编码-Positional-Encoding"><a href="#位置编码-Positional-Encoding" class="headerlink" title="位置编码(Positional Encoding)"></a>位置编码(Positional Encoding)</h4><p>公式：<br>
+$$
+\boldsymbol{P}_{i,2j} = \text{sin}(\frac{i}{10000^{2j/d}})
+$$
+$$
+\boldsymbol{P}_{i,2j+1} = \text{sin}(\frac{i}{10000^{2j/d}})
+$$
+$$
+\boldsymbol{H} = \boldsymbol{X} + \boldsymbol{P}, \\
+\boldsymbol{X} \in \Bbb{R}, \boldsymbol{P} \in \Bbb{R}
+$$
+</p>
+<h4 id="Position-wise-FFN"><a href="#Position-wise-FFN" class="headerlink" title="Position-wise FFN"></a>Position-wise FFN</h4><ul>
+<li>input(batch, seq len, fea size) 转换成 (batch*seq len, fea siz)</li>
+<li>使用了两层MLP</li>
+<li>最后的输出在转化为3-D</li>
+<li>等于使用了一个$1\times1$的卷积层</li>
+<li>Layer Normalizaiton</li>
+</ul>
+<h3 id="Layer-Normalization"><a href="#Layer-Normalization" class="headerlink" title="Layer Normalization"></a>Layer Normalization</h3><p>Layer Normalization最早由 Jimmy Lei Ba 在2016年《Layer Normalization》一文中提出。</p>
+<p><img src="/img/注意力机制/Normalization.png" alt="Normalization"></p>
+<p>shape:[N, C, H, W]<br>N 代表batch长度，C代表通道数，H代表每层的隐藏单元数，W代表每层的权重；</p>
+<ul>
+<li>BatchNorm是在batch上，对NHW做归一化；</li>
+<li>LayerNorm在channel方向上，对CHW归一化；</li>
+<li>InstanceNorm在单个通道像素上，对HW做归一化；</li>
+<li>GroupNorm，有点类似LayerNorm,将channel分组，然后再做归一化；</li>
+</ul>
+<h3 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h3><p>BERT，全称 Bidirectional Encoder Representations from Transformers，是由</p>
+<p><img src="/img/注意力机制/BERT模型.png" alt="BERT模型"></p>
+<p>BERT特点：</p>
+<ul>
+<li>使用 <code>Transformer Block</code> 代替 RNN，通过堆叠<code>Transformer Block</code>将模型变深；</li>
+<li>使用随机 Mark 的方式训练;</li>
+<li>使用双向编码的形式；</li>
+</ul>
+<p>后面我们通过实现BERT来回归整个Attention系列:<br><a href="https://www.shikanon.com/2019/机器学习/BERT代码实现及解读/" target="_blank" rel="noopener">BERT代码实现及解读</a></p>
+<p hidden><br>### 推荐系统中的注意力机制<br><br>Jun Xiao, et al. Attentional Factorization Machines: Learning the Weight of Feature Interactions via Attention Networks. 2017<br></p>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="https://github.com/d2l-ai/d2l-zh" target="_blank" rel="noopener">https://github.com/d2l-ai/d2l-zh</a></li>
+<li>Neural Machine Translation by Jointly Learning to Align and Translate. Dzmitry Bahdanau, Kyunghyun Cho, and Yoshua Bengio. ICLR, 2015.</li>
+<li>Hierarchical attention networks for document classification. Zichao Yang et al. ACL, 2016.</li>
+<li>Effective approaches to attention-based neural machine translation. Minh-Thang Luong, Hieu Pham, and Christopher D Manning. EMNLP, 2015.</li>
+<li>Long Short-Term Memory-Networks for Machine Reading. Jianpeng Cheng, Li Dong and Mirella Lapata. EMNLP, 2016.</li>
+<li>Attention Is All You Need. Ashish Vaswani, et al. NIPS, 2017.</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2019/机器学习/注意力机制及其意义/" title="注意力机制及其理解">http://shikanon.com/2019/机器学习/注意力机制及其意义/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/注意力机制/" rel="tag"># 注意力机制</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/机器学习/weekly-kaggle-练习册/" rel="next" title="weekly kaggle 练习题解读(House Prices)">
+                <i class="fa fa-chevron-left"></i> weekly kaggle 练习题解读(House Prices)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/机器学习/BERT代码实现及解读/" rel="prev" title="BERT代码实现及解读">
+                BERT代码实现及解读 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#注意力机制"><span class="nav-number">1.</span> <span class="nav-text">注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是注意力机制"><span class="nav-number">1.1.</span> <span class="nav-text">什么是注意力机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从构建查询项看注意力机制"><span class="nav-number">1.2.</span> <span class="nav-text">从构建查询项看注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最早的Attention的提出"><span class="nav-number">1.2.1.</span> <span class="nav-text">最早的Attention的提出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最基础形态的注意力机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">最基础形态的注意力机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层次注意力-Hierarchical-Attention-Networks"><span class="nav-number">1.2.3.</span> <span class="nav-text">层次注意力(Hierarchical Attention Networks)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#循环注意力"><span class="nav-number">1.2.4.</span> <span class="nav-text">循环注意力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局注意力模型（Gobal-Attention）"><span class="nav-number">1.2.5.</span> <span class="nav-text">全局注意力模型（Gobal Attention）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部注意力模型（Local-Attention）"><span class="nav-number">1.2.6.</span> <span class="nav-text">局部注意力模型（Local Attention）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自注意力-Self-Attention"><span class="nav-number">1.2.7.</span> <span class="nav-text">自注意力(Self Attention)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多头注意力模型-Multi-Head-Attention"><span class="nav-number">1.2.8.</span> <span class="nav-text">多头注意力模型(Multi-Head Attention)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力模型的应用"><span class="nav-number">1.3.</span> <span class="nav-text">注意力模型的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformer"><span class="nav-number">1.3.1.</span> <span class="nav-text">Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#位置编码-Positional-Encoding"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">位置编码(Positional Encoding)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Position-wise-FFN"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Position-wise FFN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Layer-Normalization"><span class="nav-number">1.3.2.</span> <span class="nav-text">Layer Normalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT"><span class="nav-number">1.3.3.</span> <span class="nav-text">BERT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.4.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

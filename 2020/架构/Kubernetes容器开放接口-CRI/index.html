@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="cri,Kubernetes,接口,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Kubernetes提供了多种容器开放接口用于对接不同的后端来提供资源，如提供计算资源的容器运行时接口（Container Runtime Interface, CRI），提供网络资源的容器网络接口(Container Network Interface, CNI)，提供提供存储资源的容器存储接口（Container Storage Interface, CSI）。">
+<meta name="keywords" content="cri,Kubernetes,接口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes容器开放接口系列:容器运行时接口(CRI)">
+<meta property="og:url" content="http://shikanon.com/2020/架构/Kubernetes容器开放接口-CRI/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="Kubernetes提供了多种容器开放接口用于对接不同的后端来提供资源，如提供计算资源的容器运行时接口（Container Runtime Interface, CRI），提供网络资源的容器网络接口(Container Network Interface, CNI)，提供提供存储资源的容器存储接口（Container Storage Interface, CSI）。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/kubernets容器开发接口/cri-simple-architecture.png">
+<meta property="og:image" content="http://shikanon.com/img/kubernets容器开发接口/kubelet-architecture.png">
+<meta property="og:image" content="http://shikanon.com/img/kubernets容器开发接口/kubelet-process.png">
+<meta property="og:image" content="http://shikanon.com/img/kubernets容器开发接口/cri-container-lifecycle.png">
+<meta property="og:image" content="http://shikanon.com/img/kubernets容器开发接口/cri-streaming.png">
+<meta property="og:updated_time" content="2020-02-29T19:32:18.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes容器开放接口系列:容器运行时接口(CRI)">
+<meta name="twitter:description" content="Kubernetes提供了多种容器开放接口用于对接不同的后端来提供资源，如提供计算资源的容器运行时接口（Container Runtime Interface, CRI），提供网络资源的容器网络接口(Container Network Interface, CNI)，提供提供存储资源的容器存储接口（Container Storage Interface, CSI）。">
+<meta name="twitter:image" content="http://shikanon.com/img/kubernets容器开发接口/cri-simple-architecture.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>Kubernetes容器开放接口系列:容器运行时接口(CRI) | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2020/架构/Kubernetes容器开放接口-CRI/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Kubernetes容器开放接口系列:容器运行时接口(CRI)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-21T19:02:25+08:00">
+                2020-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/" itemprop="url" rel="index">
+                    <span itemprop="name">容器技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  Kubernetes提供了多种容器开放接口用于对接不同的后端来提供资源，如提供计算资源的容器运行时接口（Container Runtime Interface, CRI），提供网络资源的容器网络接口(Container Network Interface, CNI)，提供提供存储资源的容器存储接口（Container Storage Interface, CSI）。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="CRI-简介"><a href="#CRI-简介" class="headerlink" title="CRI 简介"></a>CRI 简介</h2><p>在 Kubernetes1.5 之前 Docker 作为第一个容器运行时，Kubelet 通过内嵌 dockershim 操作容器API，但随着越来越多的容器运行时的希望加入kubelet，社区开始有人提出通过<a href="https://github.com/kubernetes/kubernetes/issues/13768" target="_blank" rel="noopener">加入一个client/server接口来抽象容器运行时</a>。在 v1.6.0 后， Kubernetes 开始默认启用 CRI(容器运行时接口)，下图是容器运行时在 kubernets 中得作用。</p>
+<p><img src="/img/kubernets容器开发接口/cri-simple-architecture.png" alt="CRI"></p>
+<center>图1. kubernets操作数据流图</center>
+
+
+<h2 id="CRI-架构介绍"><a href="#CRI-架构介绍" class="headerlink" title="CRI 架构介绍"></a>CRI 架构介绍</h2><p><em>以下主要介绍Kubernetes1.18版的CRI</em></p>
+<p>CRI 为 kubelet 提供一套抽象的容器调度的接口，CRI 主要承接 kubelet 对容器的操作。CRI 得通信协议是 gRPC，当时主要考虑到性能问题。加入 CRI 后 kubelet 得架构如下图所示。</p>
+<p><img src="/img/kubernets容器开发接口/kubelet-architecture.png" alt="kubelet 架构"></p>
+<center>图2. kubelet 架构</center>
+
+<p>Kubelet 现在主要包含两个运行时的模块，一个是 dockershim, 一个是 remote。dockershim 是原来的提供Docker的运行时接口(PS: docker果然还是一等公民🤭:)。<a href="https://github.com/kubernetes/kubernetes/tree/release-1.18/pkg/kubelet/remote" target="_blank" rel="noopener">remote</a>包对应的就是 CRI 接口，采用gRPC，通过 RemoteRuntime 和 CRI RuntimeService相连：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">// createAndStartFakeRemoteRuntime creates and starts fakeremote.RemoteRuntime.</span><br><span class="line">// It returns the RemoteRuntime, endpoint on success.</span><br><span class="line">// Users should call fakeRuntime.Stop() to cleanup the server.</span><br><span class="line">func createAndStartFakeRemoteRuntime(t *testing.T) (*fakeremote.RemoteRuntime, string) &#123;</span><br><span class="line">	endpoint, err := fakeremote.GenerateEndpoint()</span><br><span class="line">	require.NoError(t, err)</span><br><span class="line"></span><br><span class="line">	fakeRuntime := fakeremote.NewFakeRemoteRuntime()</span><br><span class="line">	fakeRuntime.Start(endpoint)</span><br><span class="line"></span><br><span class="line">	return fakeRuntime, endpoint</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func createRemoteRuntimeService(endpoint string, t *testing.T) internalapi.RuntimeService &#123;</span><br><span class="line">	runtimeService, err := NewRemoteRuntimeService(endpoint, defaultConnectionTimeout)</span><br><span class="line">	require.NoError(t, err)</span><br><span class="line"></span><br><span class="line">	return runtimeService</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestVersion(t *testing.T) &#123;</span><br><span class="line">	fakeRuntime, endpoint := createAndStartFakeRemoteRuntime(t)</span><br><span class="line">	defer fakeRuntime.Stop()</span><br><span class="line"></span><br><span class="line">	r := createRemoteRuntimeService(endpoint, t)</span><br><span class="line">	version, err := r.Version(apitest.FakeVersion)</span><br><span class="line">	assert.NoError(t, err)</span><br><span class="line">	assert.Equal(t, apitest.FakeVersion, version.Version)</span><br><span class="line">	assert.Equal(t, apitest.FakeRuntimeName, version.RuntimeName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="CRI-容器运行时的三类行为"><a href="#CRI-容器运行时的三类行为" class="headerlink" title="CRI 容器运行时的三类行为"></a>CRI 容器运行时的三类行为</h3><p>CRI 容器运行时主要描述了三种服务的行为 Sandbox、Container、Image：<br><img src="/img/kubernets容器开发接口/kubelet-process.png" alt=""></p>
+<center>图3. CRI容器运行时流程</center>
+
+<p>Sandbox:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// PodSandboxManager contains methods for operating on PodSandboxes. The methods</span><br><span class="line">// are thread-safe.</span><br><span class="line">type PodSandboxManager interface &#123;</span><br><span class="line">	// RunPodSandbox creates and starts a pod-level sandbox. Runtimes should ensure</span><br><span class="line">	// the sandbox is in ready state.</span><br><span class="line">	RunPodSandbox(config *runtimeapi.PodSandboxConfig, runtimeHandler string) (string, error)</span><br><span class="line">	// StopPodSandbox stops the sandbox. If there are any running containers in the</span><br><span class="line">	// sandbox, they should be force terminated.</span><br><span class="line">	StopPodSandbox(podSandboxID string) error</span><br><span class="line">	// RemovePodSandbox removes the sandbox. If there are running containers in the</span><br><span class="line">	// sandbox, they should be forcibly removed.</span><br><span class="line">	RemovePodSandbox(podSandboxID string) error</span><br><span class="line">	// PodSandboxStatus returns the Status of the PodSandbox.</span><br><span class="line">	PodSandboxStatus(podSandboxID string) (*runtimeapi.PodSandboxStatus, error)</span><br><span class="line">	// ListPodSandbox returns a list of Sandbox.</span><br><span class="line">	ListPodSandbox(filter *runtimeapi.PodSandboxFilter) ([]*runtimeapi.PodSandbox, error)</span><br><span class="line">	// PortForward prepares a streaming endpoint to forward ports from a PodSandbox, and returns the address.</span><br><span class="line">	PortForward(*runtimeapi.PortForwardRequest) (*runtimeapi.PortForwardResponse, error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Container:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// ContainerManager contains methods to manipulate containers managed by a</span><br><span class="line">// container runtime. The methods are thread-safe.</span><br><span class="line">type ContainerManager interface &#123;</span><br><span class="line">	// CreateContainer creates a new container in specified PodSandbox.</span><br><span class="line">	CreateContainer(podSandboxID string, config *runtimeapi.ContainerConfig, sandboxConfig *runtimeapi.PodSandboxConfig) (string, error)</span><br><span class="line">	// StartContainer starts the container.</span><br><span class="line">	StartContainer(containerID string) error</span><br><span class="line">	// StopContainer stops a running container with a grace period (i.e., timeout).</span><br><span class="line">	StopContainer(containerID string, timeout int64) error</span><br><span class="line">	// RemoveContainer removes the container.</span><br><span class="line">	RemoveContainer(containerID string) error</span><br><span class="line">	// ListContainers lists all containers by filters.</span><br><span class="line">	ListContainers(filter *runtimeapi.ContainerFilter) ([]*runtimeapi.Container, error)</span><br><span class="line">	// ContainerStatus returns the status of the container.</span><br><span class="line">	ContainerStatus(containerID string) (*runtimeapi.ContainerStatus, error)</span><br><span class="line">	// UpdateContainerResources updates the cgroup resources for the container.</span><br><span class="line">	UpdateContainerResources(containerID string, resources *runtimeapi.LinuxContainerResources) error</span><br><span class="line">	// ExecSync executes a command in the container, and returns the stdout output.</span><br><span class="line">	// If command exits with a non-zero exit code, an error is returned.</span><br><span class="line">	ExecSync(containerID string, cmd []string, timeout time.Duration) (stdout []byte, stderr []byte, err error)</span><br><span class="line">	// Exec prepares a streaming endpoint to execute a command in the container, and returns the address.</span><br><span class="line">	Exec(*runtimeapi.ExecRequest) (*runtimeapi.ExecResponse, error)</span><br><span class="line">	// Attach prepares a streaming endpoint to attach to a running container, and returns the address.</span><br><span class="line">	Attach(req *runtimeapi.AttachRequest) (*runtimeapi.AttachResponse, error)</span><br><span class="line">	// ReopenContainerLog asks runtime to reopen the stdout/stderr log file</span><br><span class="line">	// for the container. If it returns error, new container log file MUST NOT</span><br><span class="line">	// be created.</span><br><span class="line">	ReopenContainerLog(ContainerID string) error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Image:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// ImageManagerService interface should be implemented by a container image</span><br><span class="line">// manager.</span><br><span class="line">// The methods should be thread-safe.</span><br><span class="line">type ImageManagerService interface &#123;</span><br><span class="line">	// ListImages lists the existing images.</span><br><span class="line">	ListImages(filter *runtimeapi.ImageFilter) ([]*runtimeapi.Image, error)</span><br><span class="line">	// ImageStatus returns the status of the image.</span><br><span class="line">	ImageStatus(image *runtimeapi.ImageSpec) (*runtimeapi.Image, error)</span><br><span class="line">	// PullImage pulls an image with the authentication config.</span><br><span class="line">	PullImage(image *runtimeapi.ImageSpec, auth *runtimeapi.AuthConfig, podSandboxConfig *runtimeapi.PodSandboxConfig) (string, error)</span><br><span class="line">	// RemoveImage removes the image.</span><br><span class="line">	RemoveImage(image *runtimeapi.ImageSpec) error</span><br><span class="line">	// ImageFsInfo returns information of the filesystem that is used to store images.</span><br><span class="line">	ImageFsInfo() ([]*runtimeapi.FilesystemUsage, error)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="CRI-容器生命周期操作流程"><a href="#CRI-容器生命周期操作流程" class="headerlink" title="CRI 容器生命周期操作流程"></a>CRI 容器生命周期操作流程</h3><p>kubelet创建一个Pod主要可以拆解成：</p>
+<ol>
+<li>调用<code>RunPodSandox</code>创建一个pod沙盒</li>
+<li>调用<code>CreateContainer</code>创建一个容器</li>
+<li>调用<code>StartContainer</code>启动一个容器</li>
+</ol>
+<p><img src="/img/kubernets容器开发接口/cri-container-lifecycle.png" alt=""></p>
+<center>图4. 容器生命周期操作流程</center>
+
+<h3 id="CRI-Streaming接口"><a href="#CRI-Streaming接口" class="headerlink" title="CRI Streaming接口"></a>CRI Streaming接口</h3><p>streaming接口主要是用于执行 <code>exec</code> 命令，<code>exec</code> 命令主要用于 attach 容器进行交互，通过流式接口的可以节省资源，提高连接的可靠性。<br>kubelet 调用 <code>Exec()</code> 接口发给 RuntimeService ，RuntimeService 返回一个 url 给到 apiserver， 让 apiserver 跟 Stream Server 直接建立连接，获取流式数据。 由于绕过了kubelet，因此Stream Server 也提高连接的可靠性<br>CRI 中 <code>Exec()</code> 接口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// ContainerManager contains methods to manipulate containers managed by a</span><br><span class="line">// container runtime. The methods are thread-safe.</span><br><span class="line">type ContainerManager interface &#123;</span><br><span class="line">    ...</span><br><span class="line">	// Exec prepares a streaming endpoint to execute a command in the container, and returns the address.</span><br><span class="line">	Exec(*runtimeapi.ExecRequest) (*runtimeapi.ExecResponse, error)</span><br><span class="line">	// Attach prepares a streaming endpoint to attach to a running container, and returns the address.</span><br><span class="line">	Attach(req *runtimeapi.AttachRequest) (*runtimeapi.AttachResponse, error)</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/kubernets容器开发接口/cri-streaming.png" alt=""></p>
+<center>图5. streaming数据流</center>
+
+
+
+
+<h2 id="CRI-proto接口定义"><a href="#CRI-proto接口定义" class="headerlink" title="CRI proto接口定义"></a>CRI proto接口定义</h2><p>CRI 是一个为kubelet提供的一个广泛的容器运行时的无需编译的接口插件。 CRI 包含了一个 protocol buffers 和 gRPC API。kubernetes1.18的 CRI 代码路径：<a href="https://github.com/kubernetes/kubernetes/tree/release-1.18/staging/src/k8s.io/cri-api" target="_blank" rel="noopener"><code>kubernetes/staging/src/k8s.io/cri-api/</code></a>。<br>CRI中定义了容器和镜像的服务的接口，因为容器运行时与镜像的生命周期是彼此隔离的，因此需要定义两个服务 RuntimeService 和 ImageService。</p>
+<p>RuntimeService的proto接口定义文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">// Runtime service defines the public APIs for remote container runtimes</span><br><span class="line">service RuntimeService &#123;</span><br><span class="line">    // Version returns the runtime name, runtime version, and runtime API version.</span><br><span class="line">    rpc Version(VersionRequest) returns (VersionResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // RunPodSandbox creates and starts a pod-level sandbox. Runtimes must ensure</span><br><span class="line">    // the sandbox is in the ready state on success.</span><br><span class="line">    rpc RunPodSandbox(RunPodSandboxRequest) returns (RunPodSandboxResponse) &#123;&#125;</span><br><span class="line">    // StopPodSandbox stops any running process that is part of the sandbox and</span><br><span class="line">    // reclaims network resources (e.g., IP addresses) allocated to the sandbox.</span><br><span class="line">    // If there are any running containers in the sandbox, they must be forcibly</span><br><span class="line">    // terminated.</span><br><span class="line">    // This call is idempotent, and must not return an error if all relevant</span><br><span class="line">    // resources have already been reclaimed. kubelet will call StopPodSandbox</span><br><span class="line">    // at least once before calling RemovePodSandbox. It will also attempt to</span><br><span class="line">    // reclaim resources eagerly, as soon as a sandbox is not needed. Hence,</span><br><span class="line">    // multiple StopPodSandbox calls are expected.</span><br><span class="line">    rpc StopPodSandbox(StopPodSandboxRequest) returns (StopPodSandboxResponse) &#123;&#125;</span><br><span class="line">    // RemovePodSandbox removes the sandbox. If there are any running containers</span><br><span class="line">    // in the sandbox, they must be forcibly terminated and removed.</span><br><span class="line">    // This call is idempotent, and must not return an error if the sandbox has</span><br><span class="line">    // already been removed.</span><br><span class="line">    rpc RemovePodSandbox(RemovePodSandboxRequest) returns (RemovePodSandboxResponse) &#123;&#125;</span><br><span class="line">    // PodSandboxStatus returns the status of the PodSandbox. If the PodSandbox is not</span><br><span class="line">    // present, returns an error.</span><br><span class="line">    rpc PodSandboxStatus(PodSandboxStatusRequest) returns (PodSandboxStatusResponse) &#123;&#125;</span><br><span class="line">    // ListPodSandbox returns a list of PodSandboxes.</span><br><span class="line">    rpc ListPodSandbox(ListPodSandboxRequest) returns (ListPodSandboxResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // CreateContainer creates a new container in specified PodSandbox</span><br><span class="line">    rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse) &#123;&#125;</span><br><span class="line">    // StartContainer starts the container.</span><br><span class="line">    rpc StartContainer(StartContainerRequest) returns (StartContainerResponse) &#123;&#125;</span><br><span class="line">    // StopContainer stops a running container with a grace period (i.e., timeout).</span><br><span class="line">    // This call is idempotent, and must not return an error if the container has</span><br><span class="line">    // already been stopped.</span><br><span class="line">    // TODO: what must the runtime do after the grace period is reached?</span><br><span class="line">    rpc StopContainer(StopContainerRequest) returns (StopContainerResponse) &#123;&#125;</span><br><span class="line">    // RemoveContainer removes the container. If the container is running, the</span><br><span class="line">    // container must be forcibly removed.</span><br><span class="line">    // This call is idempotent, and must not return an error if the container has</span><br><span class="line">    // already been removed.</span><br><span class="line">    rpc RemoveContainer(RemoveContainerRequest) returns (RemoveContainerResponse) &#123;&#125;</span><br><span class="line">    // ListContainers lists all containers by filters.</span><br><span class="line">    rpc ListContainers(ListContainersRequest) returns (ListContainersResponse) &#123;&#125;</span><br><span class="line">    // ContainerStatus returns status of the container. If the container is not</span><br><span class="line">    // present, returns an error.</span><br><span class="line">    rpc ContainerStatus(ContainerStatusRequest) returns (ContainerStatusResponse) &#123;&#125;</span><br><span class="line">    // UpdateContainerResources updates ContainerConfig of the container.</span><br><span class="line">    rpc UpdateContainerResources(UpdateContainerResourcesRequest) returns (UpdateContainerResourcesResponse) &#123;&#125;</span><br><span class="line">    // ReopenContainerLog asks runtime to reopen the stdout/stderr log file</span><br><span class="line">    // for the container. This is often called after the log file has been</span><br><span class="line">    // rotated. If the container is not running, container runtime can choose</span><br><span class="line">    // to either create a new log file and return nil, or return an error.</span><br><span class="line">    // Once it returns error, new container log file MUST NOT be created.</span><br><span class="line">    rpc ReopenContainerLog(ReopenContainerLogRequest) returns (ReopenContainerLogResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // ExecSync runs a command in a container synchronously.</span><br><span class="line">    rpc ExecSync(ExecSyncRequest) returns (ExecSyncResponse) &#123;&#125;</span><br><span class="line">    // Exec prepares a streaming endpoint to execute a command in the container.</span><br><span class="line">    rpc Exec(ExecRequest) returns (ExecResponse) &#123;&#125;</span><br><span class="line">    // Attach prepares a streaming endpoint to attach to a running container.</span><br><span class="line">    rpc Attach(AttachRequest) returns (AttachResponse) &#123;&#125;</span><br><span class="line">    // PortForward prepares a streaming endpoint to forward ports from a PodSandbox.</span><br><span class="line">    rpc PortForward(PortForwardRequest) returns (PortForwardResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // ContainerStats returns stats of the container. If the container does not</span><br><span class="line">    // exist, the call returns an error.</span><br><span class="line">    rpc ContainerStats(ContainerStatsRequest) returns (ContainerStatsResponse) &#123;&#125;</span><br><span class="line">    // ListContainerStats returns stats of all running containers.</span><br><span class="line">    rpc ListContainerStats(ListContainerStatsRequest) returns (ListContainerStatsResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // UpdateRuntimeConfig updates the runtime configuration based on the given request.</span><br><span class="line">    rpc UpdateRuntimeConfig(UpdateRuntimeConfigRequest) returns (UpdateRuntimeConfigResponse) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    // Status returns the status of the runtime.</span><br><span class="line">    rpc Status(StatusRequest) returns (StatusResponse) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ImageService 的 proto 接口定义文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// ImageService defines the public APIs for managing images.</span><br><span class="line">service ImageService &#123;</span><br><span class="line">    // ListImages lists existing images.</span><br><span class="line">    rpc ListImages(ListImagesRequest) returns (ListImagesResponse) &#123;&#125;</span><br><span class="line">    // ImageStatus returns the status of the image. If the image is not</span><br><span class="line">    // present, returns a response with ImageStatusResponse.Image set to</span><br><span class="line">    // nil.</span><br><span class="line">    rpc ImageStatus(ImageStatusRequest) returns (ImageStatusResponse) &#123;&#125;</span><br><span class="line">    // PullImage pulls an image with authentication config.</span><br><span class="line">    rpc PullImage(PullImageRequest) returns (PullImageResponse) &#123;&#125;</span><br><span class="line">    // RemoveImage removes the image.</span><br><span class="line">    // This call is idempotent, and must not return an error if the image has</span><br><span class="line">    // already been removed.</span><br><span class="line">    rpc RemoveImage(RemoveImageRequest) returns (RemoveImageResponse) &#123;&#125;</span><br><span class="line">    // ImageFSInfo returns information of the filesystem that is used to store images.</span><br><span class="line">    rpc ImageFsInfo(ImageFsInfoRequest) returns (ImageFsInfoResponse) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="CRI工具介绍"><a href="#CRI工具介绍" class="headerlink" title="CRI工具介绍"></a>CRI工具介绍</h2><ul>
+<li>CRI命令工具:crictl，帮助用户和开发者调试容器问题</li>
+<li>CRI测试工具：critest，用于验证CRI接口的测试工具，验证是否满足Kubelet要求。</li>
+</ul>
+<p>crictl 安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VERSION=&quot;v1.17.0&quot;</span><br><span class="line">wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz</span><br><span class="line">sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin</span><br><span class="line">rm -f crictl-$VERSION-linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>critest 安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VERSION=&quot;v1.17.0&quot;</span><br><span class="line">wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/critest-$VERSION-linux-amd64.tar.gz</span><br><span class="line">sudo tar zxvf critest-$VERSION-linux-amd64.tar.gz -C /usr/local/bin</span><br><span class="line">rm -f critest-$VERSION-linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/" target="_blank" rel="noopener">Introducing Container Runtime Interface (CRI) in Kubernetes</a></li>
+<li><a href="https://edu.aliyun.com/lesson_1651_17239" target="_blank" rel="noopener">CNCF x Alibaba 云原生技术公开课</a></li>
+<li><a href="https://github.com/kubernetes-sigs/cri-tools" target="_blank" rel="noopener">cri-tools</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2020/架构/Kubernetes容器开放接口-CRI/" title="Kubernetes容器开放接口系列:容器运行时接口(CRI)">http://shikanon.com/2020/架构/Kubernetes容器开放接口-CRI/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cri/" rel="tag"># cri</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/接口/" rel="tag"># 接口</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/编程语言/技术规范-2-后端技术开发规范/" rel="next" title="技术规范(2): 后端技术开发规范">
+                <i class="fa fa-chevron-left"></i> 技术规范(2): 后端技术开发规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/架构/什么是云原生-聊聊云原生的前世今生/" rel="prev" title="什么是云原生?聊聊云原生的“前世今生”">
+                什么是云原生?聊聊云原生的“前世今生” <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI-简介"><span class="nav-number">1.</span> <span class="nav-text">CRI 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI-架构介绍"><span class="nav-number">2.</span> <span class="nav-text">CRI 架构介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI-容器运行时的三类行为"><span class="nav-number">2.1.</span> <span class="nav-text">CRI 容器运行时的三类行为</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI-容器生命周期操作流程"><span class="nav-number">2.2.</span> <span class="nav-text">CRI 容器生命周期操作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRI-Streaming接口"><span class="nav-number">2.3.</span> <span class="nav-text">CRI Streaming接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI-proto接口定义"><span class="nav-number">3.</span> <span class="nav-text">CRI proto接口定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRI工具介绍"><span class="nav-number">4.</span> <span class="nav-text">CRI工具介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

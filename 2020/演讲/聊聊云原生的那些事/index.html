@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="入门教程,云原生,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="云原生这个词已经频频霸占技术头条榜上，继深度学习、大数据、区块链技术之后又一跨界刷榜利器，那么云原生究竟讲得是什么呢？那么我来杂谈下云原生得那些事。">
+<meta name="keywords" content="入门教程,云原生">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊云原生的那些事">
+<meta property="og:url" content="http://shikanon.com/2020/演讲/聊聊云原生的那些事/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="云原生这个词已经频频霸占技术头条榜上，继深度学习、大数据、区块链技术之后又一跨界刷榜利器，那么云原生究竟讲得是什么呢？那么我来杂谈下云原生得那些事。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片2.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片3.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片4.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片5.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片6.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片7.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片8.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片10.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片11.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片12.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片13.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片14.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片15.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片16.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片17.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片18.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片19.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片20.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片21.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片22.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片23.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片24.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片25.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片26.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片27.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片28.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片29.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片30.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片31.JPG">
+<meta property="og:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片1.JPG">
+<meta property="og:updated_time" content="2020-03-20T03:39:25.929Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊云原生的那些事">
+<meta name="twitter:description" content="云原生这个词已经频频霸占技术头条榜上，继深度学习、大数据、区块链技术之后又一跨界刷榜利器，那么云原生究竟讲得是什么呢？那么我来杂谈下云原生得那些事。">
+<meta name="twitter:image" content="http://shikanon.com/img/聊聊云原生的那些事/幻灯片2.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>聊聊云原生的那些事 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2020/演讲/聊聊云原生的那些事/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">聊聊云原生的那些事</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-19T14:34:52+08:00">
+                2020-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/" itemprop="url" rel="index">
+                    <span itemprop="name">演讲稿展示</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/演讲稿展示/云原生/" itemprop="url" rel="index">
+                    <span itemprop="name">云原生</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  云原生这个词已经频频霸占技术头条榜上，继深度学习、大数据、区块链技术之后又一跨界刷榜利器，那么云原生究竟讲得是什么呢？那么我来杂谈下云原生得那些事。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大家好,今天和大家聊聊云原生,相信这个词大家应该或多或少都听过, 那么什么是云原生计算呢?云原生技术得技术栈有哪些呢?</p>
+<p>下面主要从以下三个主题来聊聊今天得话题, 什么是云原生, 云原生得发展史和云原生得生态圈。</p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片2.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片3.JPG" alt=""></p>
+<blockquote>
+<p>云原生的概念最早开始于2010年，在当时 Paul Fremantle 的一篇博客中被提及，他主要将其描述为一种和云一样的系统行为的应用的编写，比如分布式的、松散的、自服务的、持续部署与测试的。当时提出云原生是为了能构建一种符合云计算特性的标准来指导云计算应用的编写。<br>后来到2013年 Matt Stine在推特上迅速推广云原生概念，并在2015年《迁移到云原生架构》一书中定义了符合云原生架构的特征：12因素、微服务、自服务、基于API协作、扛脆弱性。而由于这本书的推广畅销，这也成了很多人对云原生的早</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片4.JPG" alt=""></p>
+<blockquote>
+<p>CNCF得定义总结一下就是:<br>（1）基于容器、服务网格、微服务、不可变基础设施和声明式API构建的可弹性扩展的应用；<br>（2）基于自动化技术构建具备高容错性、易管理和便于观察的松耦合系统；<br>（3）构建一个统一的开源云技术生态，能和云厂商提供的服务解耦，<br>可以看出这一阶段CNCF对云原生的定义加上服务网格和声明式API，同时为这一概念阐述更深一层的意义，也就是建立一个统一中立的开源云生态（至于是否中立嘛这里就不谈了:）。这对云原生的生态定位会是很重要的一点，也算CNCF最初成立的宗旨之一吧，打破云巨头的垄断。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片5.JPG" alt=""></p>
+<p>为什么用“解构”？</p>
+<p>解构，或译为“结构分解”，是后结构主义提出的一种批评方法。是解构主义者德里达的一个术语。“解构”概念源于海德格尔《存在与时间》中的“deconstruction”一词，原意为分解、消解、拆解、揭示等，德里达在这个基础上补充了“消除”、“反积淀”、“问题化”等意思。这里是打算用解构得思想给大家来分析下“云原生”得理解：</p>
+<blockquote>
+<p>Cloud Native，从词面上拆解其实就是 Cloud 和 Native，也就是云计算和土著的意思——云计算上的原生居民，即天生具备云计算的亲和力。<br>那怎么理解“云的原生居民”呢？<br>首先从云的角度来理解，云本质可以看作是一种提供稳定计算存储资源的对象，为了实现这点，像虚拟化、弹性扩展、高可用、高容错性、自恢复这些都是云的基本属性，云原生作为一种云计算，这是所具备的第一层含义。<br>第二层要从 Native 来看，云原生和传统的在云上跑的应用是不同。比如一些基于公有云搭建的应用，是基于传统的SOA架构来搭建的，然后再移植到云上去运行，那么他和云得整合是非常低得。为什么低呢？云作为一种分布式架构，其“土著居民”也应该是基于分布式架构设计出来得，而微服务或者Serverless这种将服务或函数拆分成一个个模块的松耦合系统天然就具备分布式设计得属性。这是Native的第一种表现。<br>其次云作为一种PaaS服务，这位“土著居民”从出生(设计)到成长(开发)，再到生活(部署)都应该是基于云的理念来实现的，那么就需要一套自动化的开发流程CI/CD来实现。这是Native的第二种表现。<br>而最后“土著居民”的特点希望做到能在所有的云端都是适应的，不管是各厂商的公有云 像AWS、Azure、阿里云，还是各企业自己搭建的私有云，云原生的应用都能做到无缝的运行和连接。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片6.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片7.JPG" alt=""></p>
+<p>云原生的发展历史可以分为三个时代, 虚拟机时代-&gt;容器时代-&gt;云原生时代。</p>
+<p><strong>虚拟机时代</strong>:<br>这要从2006年说起，这一年Avi Kivity宣告了Kernel-based Virtual Machine的诞生，也就是我们常说的KVM——基于内核的虚拟机，采用硬件虚拟化技术的全虚拟化解决方案。KVM以其精简的架构，清晰的定位获得Linux社区多数开发人员的支持并快速被合并入主干,2007年2月，KVM发布到内核2.6.20中。KVM从诞生开始就定位于基于硬件虚拟化支持的全虚拟化实现。它以内核模块的形式加载之后，就将Linux内核变成了一个Hypervisor，但硬件管理等还是通过Linux kernel来完成的，一个KVM客户机对应于一个Linux进程，每个vCPU则是这个进程下的一个线程，还有单独的处理IO的线程，也在一个线程组内。所以，宿主机上各个客户机是由宿主机内核像调度普通进程一样调度的，即可以通过Linux的各种进程调度的手段来实现不同客户机的权限限定、优先级等功能。<br>除了KVM，这一年由Google的工程师Paul Menage和Rohit Seth 在2006年发起一个叫进程容器（process containers）的项目，这就是后面容器时代的基石之一 —— Cgroups。在2007年时，因为在Linux内核中，容器（container）这个名词有许多不同的意义，为避免混乱，被重命名为Cgroups，并且被合并到2.6.24版的内核中去。随后，2008 年，通过将 Cgroups 的资源管理能力和 Linux Namespace 的视图隔离能力组合在一起，LXC 完整的容器技术出现在 Linux 内核中，并且可以在单个 Linux 内核上运行而无需任何补丁。<br>随后2010年7月，NASA和Rackspace共同发布了著名的开源项目Openstack，Openstack的开源标志着开源领域真正具有一个成熟的云计算解决方案。</p>
+<p><strong>容器时代</strong>：<br>容器时代的标志性事件就是 dotCloud 开源的一个基于 LXC 的高级容器引擎 Docker的问世。Docker产品的发布，让企业逐渐从笨重的虚拟机转换到轻量级的容器部署，随着docker的发布，市面上涌现出大量的容器解决方案大量轻量级的虚拟化解决方案，如Rocket、Windows Containers等。</p>
+<p><strong>云原生时代</strong>：<br>随着容器的成熟和云计算的发展，人们迫切需要一种在云上的最佳实践，云原生就被提出了。在2015年，Linux基金会成立了一个叫The Cloud Native Computing Foundation基金组织，也就是CNCF。随着大厂的加盟，像Google、AWS、微软、阿里巴巴、腾讯云、IBM等，CNCF逐渐成为云原生的最权威组织，并将云原生技术推广到世界各地。</p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片8.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片10.JPG" alt=""></p>
+<blockquote>
+<p>这里主要分成了几个技术板块，<br>应用定义及部署(App Definition and Development)<br>编排与管理(Orchestration &amp; Management)<br>运行环境(Runtime)<br>配置(Provisioning)<br>平台(Platform)<br>可观测性和分析(Observability and Analysis)<br>无服务(Serverless)<br>这几大板块基本把云原生技术所涉及领域都涵括进去了，下面详细介绍下各板块所涉及到的技术栈。<br>从系统层次来看，从上到下分别是：<br>应用层：应用定义及部署(App Definition and Development)、配置(Provisioning)、可观测性和分析(Observability and Analysis)、无服务(Serverless)<br>集群：编排与管理(Orchestration &amp; Management)<br>底层运行环境：运行环境(Runtime)</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片11.JPG" alt=""></p>
+<blockquote>
+<p>数据库(Database)：应用层的数据库，其中 PingCAP 公司推出的 TiDB 就是其中的佼佼者之一，其具有水平弹性扩展、分布式事务等特性让其和云原生应用理念天然的契合。<br>流式处理和消息队列(Streaming and Messaging)：常用的消息队列有kafka、NATS、RabbitMQ等，常用的应用系统中也用的比较多。流式处理有Spark streaming、storm、flink等，都是常用的大数据流式计算框架。<br>应用定义和镜像构建(App Definition and Image Build)：云原生的应用构建一般由于一堆 YAML 文件组成，为了能更灵活的生成和打包管理这些配置定义文件，我们需要一些工具，而 Helm 就是k8s应用比较多的一种应用程序 Chart 的创建、打包、发布以及创建的软件包管理工具。<br>持续集成与持续部署(Continuous Integration and Continuous Delivery)：持续集成和持续部署是一种基于敏捷开发提出的开发工具，由于敏捷开发中要求要以快步小走的方式进行迭代，为了节约测试、部署时间周期，必须需要一个能做到和代码管理进行结合的自动化测试和部署工具，而这就是持续集成和部署（简称CI/CD）。常用的CI/CD工具有Jenkins、Travis CI、gitlab runner等。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片12.JPG" alt=""></p>
+<p>TiDB算得上比较正宗的云原生数据库，其采用了计算和存储节点分离的方式，TiDB 具有水平扩展和高可用特点，这里简单大家介绍下 TiDB 的整体架构。TiDB 集群主要包括三个核心组件：TiDB Server，PD Server 和 TiKV Server。</p>
+<p>PD Server<br>Placement Driver (简称 PD) 是整个集群的管理模块，其主要工作有三个：一是存储集群的元信息（某个 Key 存储在哪个 TiKV 节点）；二是对 TiKV 集群进行调度和负载均衡（如数据的迁移、Raft group leader 的迁移等）；三是分配全局唯一且递增的事务 ID。<br>PD 通过 Raft 协议保证数据的安全性。Raft 的 leader server 负责处理所有操作，其余的 PD server 仅用于保证高可用。建议部署奇数个 PD 节点。</p>
+<p>TiKV Server<br>TiKV Server 负责存储数据，从外部看 TiKV 是一个分布式的提供事务的 Key-Value 存储引擎。存储数据的基本单位是 Region，每个 Region 负责存储一个 Key Range（从 StartKey 到 EndKey 的左闭右开区间）的数据，每个 TiKV 节点会负责多个 Region。TiKV 使用 Raft 协议做复制，保持数据的一致性和容灾。副本以 Region 为单位进行管理，不同节点上的多个 Region 构成一个 Raft Group，互为副本。数据在多个 TiKV 之间的负载均衡由 PD 调度，这里也是以 Region 为单位进行调度。</p>
+<p>TiSpark<br>TiSpark 作为 TiDB 中解决用户复杂 OLAP 需求的主要组件，将 Spark SQL 直接运行在 TiDB 存储层上，同时融合 TiKV 分布式集群的优势，并融入大数据社区生态。至此，TiDB 可以通过一套系统，同时支持 OLTP 与 OLAP，免除用户数据同步的烦恼。</p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片13.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片14.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片15.JPG" alt=""></p>
+<blockquote>
+<p>容器编排与调度(Orchestration and Scheduling)：容器的编排和管理可以说是云原生的基石，而 Kubernetes 可以说是这个领域的事实标准，作为 CNCF 基金会的首个毕业项目和金字招牌甚至很多人认为云原生就是 k8s 和其相关的一系列技术，虽然这样的说法是很不准确的，不过现在云原生技术确实和k8s绑定的越来越紧密，由此而衍生了一大批的工具生态。<br>一致性与服务发现(Coordination and Service Discovery)：各服务之间的协同以及服务发现是分布式计算中的核心，分布式架构作为云原生的基础特性之一可以说是不可或缺的功能组件，从大数据时代的老牌的Zookeeper到到Docker Swarm采用的Consul，再到k8s中集成的分布式键值数据库etcd和DNS服务发现CoreDNS都是其中的佼佼者。<br>远程调用服务(Remote Procedure Call)：广义上的远程调用一般分为两种，一种基于HTTP协议，一种基于RPC，而狭义的远程调用一般指的RPC。比较常用的RPC框架有 Google 开源的 gRPC和 Apache 旗下的 Thrift 框架，k8s是采用 gRPC 框架作为服务间调用。<br>服务代理(Service Proxy)：平常用的最多的服务代理应该就是nginx了，作为一个高性能支持正向和方向代理的服务器, nginx具备成熟和广泛的应用场景。envoy 则是一个新生的用go写的服务代理，像Istio、Ambassador的服务代理就是采用了envoy，因此在云原生应用中 envoy 也具备强大的生命力。<br>API网关(API Gateway)：API网格主要起到对所有的API的调用进行统一接入和管理、认证、授权等功能。ambassador、traefik、kong等都是优秀的微服务网关。<br>服务网格(Service Mesh)：服务网格是用于控制应用的不同部分之间如何共享数据，服务网格是内置于应用程序中的专用基础架构层，用于记录应用的不同部分是否能正常交互。服务网格可以更细粒度地为每个服务提供限流、管控、熔断、安全等功能。Istio 是最流行的 Service Mesh 之一，其以易用性、无侵入、功能强大赢得众多用户青睐，相信不久将来应该有可能会成为服务网格的事实标准。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片16.JPG" alt=""></p>
+<p>各种应用和工作负载逐渐运行在k8s之上，有个比喻特别好，就是k8s是云原生的操作系统，而运行在k8s之上的容器应用就像电脑的app一样</p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片17.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片18.JPG" alt=""></p>
+<blockquote>
+<p>云原生存储(Cloud Native Storage)：随着数据库、消息队列等中间件逐步在容器环境中得到应用，容器持久化存储的需求也逐步增多，随之而来的是建立一套基于云原生的存储系统，在k8s中对应的就是CSI——容器存储接口。持久化存储中用的比较多的是Ceph，作为一个分布式存储系统，Ceph提供较好的性能、可靠性和可扩展性。<br>容器运行时(Container Runtime)：容器运行时就是指容器的运行环境，比如最常用的Docker。除了docker,还有一个比较著名的开源容器运行时标准组织（Open Container Initiative），简称OCI。OCI由Linux基金会于2015年6月成立，旨在围绕容器格式和运行时制定一个开放的工业化标准，目前主要有两个标准文档：容器运行时标准 （runtime spec）和 容器镜像标准（image spec），Containerd就是一个满足OCI规范的核心容器运行时。<br>云原生网络(Cloud Native Network)：容器的网络方案，为容器集群提供一层虚拟化的网络，像k8s的CNI就是其中一个标准的网络接口，flannel是 CoreOS 公司主推的容器网络方案，现在现在比较主流的一种网络之一。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片19.JPG" alt=""></p>
+<blockquote>
+<p>Kubernetes的分层架构：<br>核心层：Kubernetes最核心的功能，对外提供API构建高层的应用，对内提供插件式应用执行环境<br>应用层：部署（无状态应用、有状态应用、批处理任务、集群应用等）和路由（服务发现、DNS解析等）<br>管理层：系统度量（如基础设施、容器和网络的度量），自动化（如自动扩展、动态Provision等）以及策略管理（RBAC、Quota、PSP、NetworkPolicy等）<br>接口层：kubectl命令行工具、客户端SDK以及集群联邦<br>生态系统：在接口层之上的庞大容器集群管理调度的生态系统，可以划分为两个范畴<br>Kubernetes外部：日志、监控、配置管理、CI、CD、Workflow、FaaS、OTS应用、ChatOps等<br>Kubernetes内部：CRI、CNI、CVI、镜像仓库、Cloud Provider、集群自身的配置和管理等</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片20.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片21.JPG" alt=""></p>
+<blockquote>
+<p>自动化与配置(Automation &amp; Configuration)：用于自动化部署和配置容器运行平台和环境，代表工具包括Ansible、Chef、Puppet、VMware、OpenStack。<br>容器注册(Container Registry)：容器注册是整个CNCF云原生中的重要部件，因为基于容器的运行环境中，所有的应用都需要借助容器镜像库来进行安装和部署。容器注册工具主要分公有工具和私有工具，公有的容器镜像库主要包括docker官方的registry，在私有镜像库最著名的是Harbor，目前市面上大量的容器平台目前都基于Harbor构建其镜像仓库。<br>安全与合规性(Security &amp; Compliance)：安全性和合规性基本是所有系统都会面临的东西，Notary和TUF是这个领域两个主要的项目，其中TUF是一个开源的安全标准，Notary是其中一个实现。<br>密钥管理(Key Management)：秘钥管理做权限管理和身份认证，比如雅虎发布的athenz，就是一个基于RBAC的权限管理和配置。SPIFFE通用安全身份框架提供了统一的工作负载身份解决方案。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片22.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片23.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片24.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片25.JPG" alt=""></p>
+<blockquote>
+<p>监控(Monitoring)：监控主要是对运行系统和应用的状态进行观测与预警，常用的监控有Prometheus、Zabbix等，Grafana通常会配合Prometheus做图形化的展示。<br>日志(Logging)：日志采集模块，如ELK(elastic/logstash/kibana)、fluentd等。<br>追踪(Tracing): 这里的tracing是指分布式链路追踪，因为在分布式系统中，各服务之间相互调用，一个地方出问题可以会导致很多其他服务上的组件出现连锁问题，因此在定位问题的时候十分困难，必须要建立分布式链路追踪来对错误和故障进行定位，分布式跟踪是对日志和监控指标的重要补充。OpenTracing 是一套分布式系统跟踪标准协议，为大家建立一套统一的标准来实现分布式跟踪信息的描述和传递。<br>混沌工程(Chaos Engineering)：混沌工程主要是解决在高复杂性的分布式系统之上建立起值得信任的生产部署体系，比如服务不可用时后备设置不当 ; 因超时设置不当导致反复重试 ; 下游依赖关系在接收到大量流量时出现中断 ; 发生单点故障时连锁引发后续问题等一系列混乱的难题，建立受控实验观察分布式系统。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片26.JPG" alt=""></p>
+<blockquote>
+<p>混沌工程类似于“故障演练”，不局限于测试，而更像是工程实践。为什么这么说，通常的测试用例会有“期望结果”和“实际结果”，通过将两个结果比较，或者对用户行为的预期，来判断测试通过或失败。而混沌试验类似于”探索性测试“，试验本身没有明确是输入和预期结果，通过对系统和服务的干预，来观察系统的”反应“。我们将混沌工程原则融入在试验过程中：在生产环境小规模模拟系统故障并定期自动化执行试验，通过试验结果与正常结果进行比对，观察系统”边界“。<br>引入混沌实践时需要了解混沌工程的五大原则。<br>1）建立稳定状态的假设<br>在做混沌工程实验的时候，首先得确定需要测试的指标已经做了高可用的工作，才能进行验证指标对业务的是否有影响。如果没有做好高可用工作，而引入混沌工程实验的话，对业务而言将会是一声灾难。<br>2）多样化现实世界事件<br>不能够凭空想像出一些事件来验证，而是引入那些真实存在的，频繁发生的，且影响重大的事件。对我们而言给这些事件做混沌实验才具有价值。如磁盘故障、网络延时、主机宕机等。<br>3）在生产环境运行实验<br>尽量在类生产环境中进行测试，生产环境的多样性是任何其它环境无法比拟的。混沌工程的价值就是保证生产上的业务连续不中断。<br>4）持续自动化运行实验<br>实施混沌工程实验一般最开始是人工手动操作，当我们对业务有足够的信心时，要把混沌实验做成持续自动化。在版本升级、不断迭代的过程中，持续不断自动化地做验证，最大程序保证业务的连续性验证。<br>5）最小化影响范围<br>做混沌工程的意义就是保证生产上的业务。在我们实施混沌实验时也必须保证对线上业务影响最小。在实施实验时，从小范围开始，不断扩大范围，避开高风险时段，如选择业务量最小的时候实施实验。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片27.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片28.JPG" alt=""></p>
+<blockquote>
+<p>工具(Tools)：一些工具集，，比如CNCF的landscape作为一个信息聚合网站可以用于查看各种新的软件工具、Dashbird可以用于serverless监控和故障排查工具。<br>安全(Security)：主要提供serverless的安全防护。<br>框架(Framework)：指直接用于构建、管理serverless应用的框架，比如Apex可以用于构建、发布和管理AWS Lambda，SAM 一个Python的开源serverless应用构建框架。<br>注册平台(Hosted Platfrom)：指提供第三方注册的厂商服务，比如AWS的Lambda、阿里云的函数计算服务、Google的cloud functions服务等。<br>可安装平台(Installable Platform)：这里就是用于自己搭建serverless平台的工具，比如著名的Knative，就是由谷歌开源的 serverless 架构方案。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片29.JPG" alt=""></p>
+<blockquote>
+<p>Serve在这里非常重要，它实际上是一种带有内置Istio的组件。Istio提供了许多功能 ，例如流量管理、智能路由、自动缩放和缩放到零等，这是一个非常酷的概念。但实际上，对于非服务器应用程序，开发者希望的是可以扩展到1000个数据包，并且当没有人访问时，将其恢复为0。<br>那么，让我们看看Knative Serve 是如何工作的。首先，在启动一个传统的microservice或function后，该服务指向并管理两个不同的事物：1）Route 2）Config。<br>Knative Serve为我们提供了快照，提供了智能的、可拓展的路由。<br>使用Istio流量管理功能，实际上可以通过Route管理所有流量，并将它们路由到新旧两个版本中的一个或多个中，我们可以这么假设，如所有流量的10％被路由到版本2，90％停留在版本1上。</p>
+</blockquote>
+<p><img src="/img/聊聊云原生的那些事/幻灯片30.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片31.JPG" alt=""></p>
+<p><img src="/img/聊聊云原生的那些事/幻灯片1.JPG" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2020/演讲/聊聊云原生的那些事/" title="聊聊云原生的那些事">http://shikanon.com/2020/演讲/聊聊云原生的那些事/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/入门教程/" rel="tag"># 入门教程</a>
+          
+            <a href="/tags/云原生/" rel="tag"># 云原生</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/架构/云原生生态技术栈/" rel="next" title="云原生生态中的技术栈">
+                <i class="fa fa-chevron-left"></i> 云原生生态中的技术栈
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/架构/一致性算法解读-raft-paxos/" rel="prev" title="经典共识算法解读: raft & paxos">
+                经典共识算法解读: raft & paxos <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

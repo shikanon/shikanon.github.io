@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="运维,Docker,容器,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="docker虽然是“轻量级”的虚拟化解决方案，但其磁盘空间管理仍然是一个非常重要同时值得关注的问题，毕竟节约一份空间就是为企业节约一项成本，作为一个秉承勤俭持家的好员工，必须对这块的成本进行开刀。">
+<meta name="keywords" content="运维,Docker,容器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker磁盘空间管理">
+<meta property="og:url" content="http://shikanon.com/2020/运维/docker磁盘空间管理/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="docker虽然是“轻量级”的虚拟化解决方案，但其磁盘空间管理仍然是一个非常重要同时值得关注的问题，毕竟节约一份空间就是为企业节约一项成本，作为一个秉承勤俭持家的好员工，必须对这块的成本进行开刀。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://shikanon.com/img/云原生/docker-image-layer.png">
+<meta property="og:updated_time" content="2020-03-28T03:28:03.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker磁盘空间管理">
+<meta name="twitter:description" content="docker虽然是“轻量级”的虚拟化解决方案，但其磁盘空间管理仍然是一个非常重要同时值得关注的问题，毕竟节约一份空间就是为企业节约一项成本，作为一个秉承勤俭持家的好员工，必须对这块的成本进行开刀。">
+<meta name="twitter:image" content="http://shikanon.com/img/云原生/docker-image-layer.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>docker磁盘空间管理 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2020/运维/docker磁盘空间管理/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">docker磁盘空间管理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-23T12:18:18+08:00">
+                2020-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术博文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/" itemprop="url" rel="index">
+                    <span itemprop="name">容器技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/容器技术/Dokcer/" itemprop="url" rel="index">
+                    <span itemprop="name">Dokcer</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  docker虽然是“轻量级”的虚拟化解决方案，但其磁盘空间管理仍然是一个非常重要同时值得关注的问题，毕竟节约一份空间就是为企业节约一项成本，作为一个秉承勤俭持家的好员工，必须对这块的成本进行开刀。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="docker-容器磁盘空间管理"><a href="#docker-容器磁盘空间管理" class="headerlink" title="docker 容器磁盘空间管理"></a>docker 容器磁盘空间管理</h2><p>docker 主要包括镜像、容器和数据卷三部分，对docker的磁盘空间管理也主要从着三块入手，在做docker磁盘空间分析之前我们需要简单了解下容器的“镜像层”的概念，一般容器的磁盘管理有一大半是镜像层相关：</p>
+<p><strong>什么是镜像层?</strong></p>
+<blockquote>
+<p>说到镜像的层，就要说说Docker镜像的存储组织方式<br>docker 镜像是采用分层的方式构建的，每个镜像都由一系列的 “镜像层” 组成。”镜像层”用来存储一组镜像相关的元数据信息，主要包括镜像的架构(如 amd64)、镜像默认配置信息、构建镜像的容器配置信息、包含所有镜像层信息的 rootfs。当需要修改容器镜像内的某个文件时，docker 利用 rootfs 中的 diff_id 计算出内容寻址的索引(chainID) 来获取 layer 相关信息，进而获取每一个镜像层的文件内容，容器对镜像的修改只对处于最上方的读写层进行变动，不覆写下层已有文件系统的内容，已有文件在只读层中的原始版本仍然存在，但会被读写层中的新版本所隐藏。在多个容器之间共享镜像，每个容器在启动的时候并不需要单独复制一份镜像文件，而是将所有镜像层以只读的方式挂载到一个挂载点，再在上面覆盖一个可读写的容器层。<strong>联合挂载技术</strong>可以在一个挂载点同时挂载多个文件系统，将挂载点的原目录与被挂载内容进行整合，使得最终可见的文件系统将会包含整合之后的各层的文件和目录。联合挂载包括可读写部分(read-write layer 以及 volumes)、init-layer、只读层(read-only layer) 这 3 部分结构。</p>
+</blockquote>
+<p><img src="/img/云原生/docker-image-layer.png" alt=""></p>
+<blockquote>
+<p>layer(镜像层) 是 docker 用来管理镜像层的一个中间概念，镜像是由镜像层组成的，而单个镜像层可能被多个镜像共享，所以 docker 将 layer 与 image 的概念分离。docker 镜像管理中的 layer 主要存放了镜像层的 diff_id、size、cache-id 和 parent 等内容。</p>
+</blockquote>
+<h2 id="dockers磁盘使用空间分析"><a href="#dockers磁盘使用空间分析" class="headerlink" title="dockers磁盘使用空间分析"></a>dockers磁盘使用空间分析</h2><h3 id="查看docker目录空间"><a href="#查看docker目录空间" class="headerlink" title="查看docker目录空间"></a>查看docker目录空间</h3><p>从docker目录看磁盘使用情况：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /var/lib/docker</span><br><span class="line">$ du -h --max-depth=1</span><br><span class="line">1.1G	./containers</span><br><span class="line">0	./plugins</span><br><span class="line">213G	./overlay2</span><br><span class="line">28M	./image</span><br><span class="line">798M	./volumes</span><br><span class="line">0	./trust</span><br><span class="line">116K	./network</span><br><span class="line">0	./swarm</span><br><span class="line">16K	./builder</span><br><span class="line">56K	./buildkit</span><br><span class="line">0	./tmp</span><br><span class="line">0	./runtimes</span><br><span class="line">215G	.</span><br></pre></td></tr></table></figure></p>
+<p>可以看出磁盘主要占用都在<code>overlay2</code>和<code>containers</code>这两个文件夹中，containers是容器运行时所产生的文件读写变更，overlay2是容器镜像的层的概念。</p>
+<p>进到<code>overlay2</code>继续排查:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ du -h --max-depth=1</span><br><span class="line">...</span><br><span class="line">196G	./a8f42e1ae9982a4b373d310a9ea1ee08b2d0c571c3757c07f909735c1632f0d7</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>发现其中一个目录就占用了近200多G，妥妥的大头，看看具体是哪个容器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">overlay = <span class="string">"a8f42e1ae9982a4b373d310a9ea1ee08b2d0c571c3757c07f909735c1632f0d7"</span></span><br><span class="line">names = [line.split(<span class="string">" "</span>)[<span class="number">-1</span>] <span class="keyword">for</span> line <span class="keyword">in</span> os.popen(<span class="string">"docker ps -a"</span>).read().split(<span class="string">"\n"</span>) <span class="keyword">if</span> line ]</span><br><span class="line">print([name <span class="keyword">for</span> name <span class="keyword">in</span> names[<span class="number">1</span>:] <span class="keyword">if</span> overlay <span class="keyword">in</span> os.popen(<span class="string">"docker inspect %s"</span>%name).read()])</span><br><span class="line"><span class="comment"># 返回结果: ['livego']</span></span><br></pre></td></tr></table></figure></p>
+<p>找到最大的元凶容器了，livego是之前做得一个直播应用，因为当时只是作为试验容器，没有选择外挂的形式，因此容器空间很大，现在已经没什么用了，可以直接删掉:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm <span class="_">-f</span> livego</span><br></pre></td></tr></table></figure></p>
+<h3 id="磁盘使用空间资源释放"><a href="#磁盘使用空间资源释放" class="headerlink" title="磁盘使用空间资源释放"></a>磁盘使用空间资源释放</h3><p>除了直接查看docker目录，还可以通过<code>docker system</code>命令查看各类资源使用状况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker system df</span><br><span class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</span><br><span class="line">Images              34                  21                  9.211GB             4.939GB (53%)</span><br><span class="line">Containers          50                  28                  13.24MB             12.01MB (90%)</span><br><span class="line">Local Volumes       11                  5                   836.2MB             754.5MB (90%)</span><br><span class="line">Build Cache         0                   0                   0B                  0B</span><br></pre></td></tr></table></figure>
+<p>最后一列表示可回收的比例，可以看到有部分镜像、容器和卷可以回收了，一般是这些资源没有被使用，我们可以逐个去查看:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$ docker system df -v</span><br><span class="line">Images space usage:</span><br><span class="line"></span><br><span class="line">REPOSITORY                                             TAG                     IMAGE ID            CREATED             SIZE                SHARED SIZE         UNIQUE SIZE         CONTAINERS</span><br><span class="line">iotorbhub_iotorbbec                                    latest                  9e80c675d506        13 days ago         1.023GB             802.9MB             220MB               1</span><br><span class="line">iotorbhub_iot-web                                      latest                  3e6100128e21        13 days ago         1.501GB             908.1MB             592.5MB             1</span><br><span class="line">nginx                                                  latest                  6678c7c2e56c        2 weeks ago         126.8MB             69.21MB             57.56MB             1</span><br><span class="line">golang                                                 1.13                    3a7408f53f79        3 weeks ago         802.9MB             802.9MB    </span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Containers space usage:</span><br><span class="line"></span><br><span class="line">CONTAINER ID        IMAGE                                  COMMAND                  LOCAL VOLUMES       SIZE                CREATED             STATUS                   NAMES</span><br><span class="line">2cb435f35f36        rancher/pause:3.1                      <span class="string">"/pause"</span>                 0                   0B                  38 seconds ago      Created                  k8s_POD_default-http-backend-67cf578<span class="built_in">fc</span>4-rhpkv_ingress-nginx_8d427371-c7c4-44fa-9b5e-745b4fea3dbc_13474</span><br><span class="line">a58df48bb9cc        jenkins                                <span class="string">"/bin/tini -- /usr/l…"</span>   1                   0B                  47 hours ago        Created                  loving_mclean</span><br><span class="line">be40bd464972        redis                                  <span class="string">"docker-entrypoint.s…"</span>   1                   0B                  11 days ago         Up 11 days               suspicious_spence</span><br><span class="line">a365e2d14c35        nginx                                  <span class="string">"nginx -g 'daemon of…"</span>   1                   2B                  13 days ago         Up 13 days               iotorbhub_nginx_1</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Local Volumes space usage:</span><br><span class="line"></span><br><span class="line">VOLUME NAME                                                        LINKS               SIZE</span><br><span class="line">33f5c1809964242a82a70a8e8fddaadc413b593be5c4310a5022a52c29917fd7   0                   174.1MB</span><br><span class="line">70451b6e13e2584f5174cca6d0b30e6e143015d8cbb16160eedfbb1d7b88684a   0                   25.27MB</span><br><span class="line">9544fd226986dd7d1921b63927072fbf8634847f524326c713505ab74874cde4   1                   120B</span><br><span class="line">9fef3da76c45dfcba85359ddf1684ac6c9347ba99ab61be05796f5151<span class="built_in">cd</span>43306   0                   41.43MB</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>也可以通过<code>docker system prune</code>的命令一键清理：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ docker system prune --help</span><br><span class="line"></span><br><span class="line">Usage:	docker system prune [OPTIONS]</span><br><span class="line"></span><br><span class="line">Remove unused data</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  <span class="_">-a</span>, --all             Remove all unused images not just dangling ones</span><br><span class="line">      --filter filter   Provide filter values (e.g. <span class="string">'label=&lt;key&gt;=&lt;value&gt;'</span>)</span><br><span class="line">  <span class="_">-f</span>, --force           Do not prompt <span class="keyword">for</span> confirmation</span><br><span class="line">      --volumes         Prune volumes</span><br></pre></td></tr></table></figure></p>
+<p>再看看：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker system df</span><br><span class="line">TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE</span><br><span class="line">Images              15                  15                  3.712GB             71.03MB (1%)</span><br><span class="line">Containers          28                  28                  1.234MB             0B (0%)</span><br><span class="line">Local Volumes       11                  3                   836.2MB             779.8MB (93%)</span><br><span class="line">Build Cache         0                   0                   0B                  0B</span><br></pre></td></tr></table></figure></p>
+<p>发现镜像和容器空间都被释放了。</p>
+<h2 id="docker-镜像精简"><a href="#docker-镜像精简" class="headerlink" title="docker 镜像精简"></a>docker 镜像精简</h2><p>除了对已有运行系统进行容器磁盘空间管理外，我们还可以在镜像的源头进行磁盘空间的管理工作：</p>
+<h3 id="选择小体积基础镜像"><a href="#选择小体积基础镜像" class="headerlink" title="选择小体积基础镜像"></a>选择小体积基础镜像</h3><p>docker 镜像精简最简单的方法就是用<code>alpine</code>作为底层基础镜像，像 alphine 镜像 只有 5MB，是非常小的。或者可以用带 -slim 标签的镜像，一般这类镜像是通过瘦身的，镜像的体积会比较小。</p>
+<h3 id="减少RUN、ADD、COPY会改变容器Layer的命令"><a href="#减少RUN、ADD、COPY会改变容器Layer的命令" class="headerlink" title="减少RUN、ADD、COPY会改变容器Layer的命令"></a>减少RUN、ADD、COPY会改变容器Layer的命令</h3><p>每个镜像都由一系列的 “镜像层” 组成，每次对文件的改动命令（RUN、ADD、COPY）都会被提交到一个版本，所以应该尽量减少这些命令的使用，比如多个RUN可以用<code>&amp;&amp;</code>合并。</p>
+<p>对于镜像层是否可以优化，我们可以通过<code>docker history</code>命令查看镜像各层的构建：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">history</span> shikanon.com/hyperkube:v1.16.6-rancher1</span><br><span class="line">IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT</span><br><span class="line">4c20a23643b7        2 months ago        /bin/sh -c <span class="comment">#(nop)  LABEL org.label-schema.vc…   0B                  </span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="comment">#(nop)  LABEL org.label-schema.vc…   0B                  </span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="comment">#(nop)  LABEL org.label-schema.sc…   0B                  </span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="comment">#(nop)  LABEL org.label-schema.bu…   0B                  </span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="built_in">echo</span> <span class="string">"deb http://deb.debian.org/d…   17.4MB              </span></span><br><span class="line"><span class="string">&lt;missing&gt;           2 months ago        /bin/sh -c sed -i -e 's!\bmain\b!main contri…   608MB               </span></span><br><span class="line"><span class="string">&lt;missing&gt;           2 months ago        /bin/sh -c #(nop) COPY file:0fce35cc22ae9eae…   152MB               </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c #(nop) COPY dir:2245a63ce7eafa5c8…   45.9MB              </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c echo b3a101b3-deba-49a1-afe2-d42d…   303MB               </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c DEBIAN_FRONTEND=noninteractive dp…   9.55kB              </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c echo "</span>dash dash/sh boolean <span class="literal">false</span><span class="string">"…   282B                </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c echo b3a101b3-deba-49a1-afe2-d42d…   1.49MB              </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c ln -s /hyperkube /apiserver  &amp;&amp; l…   140B                </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c #(nop)  CMD ["</span>/bin/sh<span class="string">"]              0B                  </span></span><br><span class="line"><span class="string">&lt;missing&gt;           13 months ago       /bin/sh -c #(nop) ADD file:813b8c3d7b7496f29…   42.3MB</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="利用FROM-AS-和-COPY-实现编译阶段和代码阶段分离"><a href="#利用FROM-AS-和-COPY-实现编译阶段和代码阶段分离" class="headerlink" title="利用FROM AS 和 COPY 实现编译阶段和代码阶段分离"></a>利用FROM AS 和 COPY 实现编译阶段和代码阶段分离</h3><p>Docker 17.05版本以后提供了<code>COPY --from</code>的语法，他提供了从镜像层中直接拷贝文件：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 编译阶段 命名为 builder</span></span><br><span class="line"><span class="keyword">FROM</span> golang:<span class="number">1.10</span>.<span class="number">3</span> as builder</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 编译的各类指令</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> . /app </span></span><br><span class="line"><span class="bash">RUN go build /app/main.go</span></span><br><span class="line"><span class="bash">... </span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash"><span class="comment"># 运行阶段</span></span></span><br><span class="line"><span class="bash"><span class="comment"># 多个 FROM 会以最后一条 FROM 为准，之前的 FROM 会被抛弃</span></span></span><br><span class="line"><span class="bash">FROM scratch</span></span><br><span class="line"><span class="bash"> </span></span><br><span class="line"><span class="bash"><span class="comment"># 从编译阶段的中拷贝编译结果到当前镜像中</span></span></span><br><span class="line"><span class="bash">COPY --from=builder /build/server /</span></span><br></pre></td></tr></table></figure>
+<p>COPY –from 不但可以从前置阶段中拷贝，还可以直接从一个已经存在的镜像中拷贝，例如：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> --from=quay.io/coreos/etcd:v3.3.9 /usr/<span class="built_in">local</span>/bin/etcd /usr/<span class="built_in">local</span>/bin/</span></span><br></pre></td></tr></table></figure></p>
+<p>这样最后运行的只有二进制而没有编译阶段的代码文件，容器体积会缩小很多。</p>
+<h3 id="借助distroless"><a href="#借助distroless" class="headerlink" title="借助distroless"></a>借助distroless</h3><p>借助镜像工具 distroless 减少镜像种不必要的依赖，<a href="https://github.com/GoogleContainerTools/distroless" target="_blank" rel="noopener">distroless</a> 是 google 开放的优化版容器镜像， “distroless”镜像仅包含了应用和运行时依赖。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2020/运维/docker磁盘空间管理/" title="docker磁盘空间管理">http://shikanon.com/2020/运维/docker磁盘空间管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/运维/" rel="tag"># 运维</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/容器/" rel="tag"># 容器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/架构/一致性算法解读-raft-paxos/" rel="next" title="经典共识算法解读: raft & paxos">
+                <i class="fa fa-chevron-left"></i> 经典共识算法解读: raft & paxos
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/运维/git小技巧/" rel="prev" title="git小技巧">
+                git小技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-容器磁盘空间管理"><span class="nav-number">1.</span> <span class="nav-text">docker 容器磁盘空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dockers磁盘使用空间分析"><span class="nav-number">2.</span> <span class="nav-text">dockers磁盘使用空间分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看docker目录空间"><span class="nav-number">2.1.</span> <span class="nav-text">查看docker目录空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#磁盘使用空间资源释放"><span class="nav-number">2.2.</span> <span class="nav-text">磁盘使用空间资源释放</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-镜像精简"><span class="nav-number">3.</span> <span class="nav-text">docker 镜像精简</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择小体积基础镜像"><span class="nav-number">3.1.</span> <span class="nav-text">选择小体积基础镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#减少RUN、ADD、COPY会改变容器Layer的命令"><span class="nav-number">3.2.</span> <span class="nav-text">减少RUN、ADD、COPY会改变容器Layer的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用FROM-AS-和-COPY-实现编译阶段和代码阶段分离"><span class="nav-number">3.3.</span> <span class="nav-text">利用FROM AS 和 COPY 实现编译阶段和代码阶段分离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#借助distroless"><span class="nav-number">3.4.</span> <span class="nav-text">借助distroless</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
