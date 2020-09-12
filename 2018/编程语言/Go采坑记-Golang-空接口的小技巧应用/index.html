@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -434,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  166
+                  164
                 </span>
               
 
@@ -476,9 +488,9 @@
 
       
         <p>最近在用golang写一个框架，希望可以比较灵活地构建一个方法，可以接受任意类型的输入，这样首先想到的是使用空接口interface{},因为在golang里面没有泛型。<br>空接口例子一：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">type download interface &#123;</span><br><span class="line">	Download(interface&#123;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type dl struct &#123;</span><br><span class="line">	t string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (d dl) Download(a interface&#123;&#125;) &#123;</span><br><span class="line">	switch a.(type) &#123;</span><br><span class="line">	case string:</span><br><span class="line">		v := a.(string)</span><br><span class="line">		log.Println(v)</span><br><span class="line">	case int:</span><br><span class="line">		v := a.(int)</span><br><span class="line">		log.Println(v * v)</span><br><span class="line">	default:</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> download <span class="keyword">interface</span> &#123;</span><br><span class="line">	Download(<span class="keyword">interface</span>&#123;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> dl <span class="keyword">struct</span> &#123;</span><br><span class="line">	t <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(d dl)</span> <span class="title">Download</span><span class="params">(a <span class="keyword">interface</span>&#123;&#125;)</span></span> &#123;</span><br><span class="line">	<span class="keyword">switch</span> a.(<span class="keyword">type</span>) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="keyword">string</span>:</span><br><span class="line">		v := a.(<span class="keyword">string</span>)</span><br><span class="line">		log.Println(v)</span><br><span class="line">	<span class="keyword">case</span> <span class="keyword">int</span>:</span><br><span class="line">		v := a.(<span class="keyword">int</span>)</span><br><span class="line">		log.Println(v * v)</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>空接口例子二：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">type pool struct &#123;</span><br><span class="line">	function interface&#123;&#125;</span><br><span class="line">	flag     string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (p *pool) RUN() &#123;</span><br><span class="line">	s := p.function.(download)</span><br><span class="line">	s.Download(&quot;a&quot;)</span><br><span class="line">	s.Download(1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	p := &amp;pool&#123;</span><br><span class="line">		function: &amp;dl&#123;&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	p.RUN()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">type<span class="built_in"> pool </span>struct &#123;</span><br><span class="line">	function interface&#123;&#125;</span><br><span class="line">	flag     string</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (p *pool) <span class="builtin-name">RUN</span>() &#123;</span><br><span class="line">	s := p.function.(download)</span><br><span class="line">	s.Download(<span class="string">"a"</span>)</span><br><span class="line">	s.Download(1)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	p := &amp;pool&#123;</span><br><span class="line">		function: &amp;dl&#123;&#125;,</span><br><span class="line">	&#125;</span><br><span class="line">	p.<span class="builtin-name">RUN</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -624,7 +636,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -635,7 +647,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -646,7 +658,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

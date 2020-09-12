@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  243
+                  240
                 </span>
               
 
@@ -465,7 +477,7 @@
 
       
         <p><code>hexo</code> 的部分<code>mathjax</code> 在渲染的时候由于被 markdown 自身的转义会出现渲染错误的情况，比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$$\alpha_&#123;t&apos; t&#125; = \text&#123;softmax&#125;(\sigma(\boldsymbol&#123;s&#125;_&#123;t&apos; - 1&#125;, \boldsymbol&#123;h&#125;_t))$$</span><br></pre></td></tr></table></figure>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="formula">$$<span class="tag">\<span class="name">alpha</span></span>_&#123;t' t&#125; = <span class="tag">\<span class="name">text</span><span class="string">&#123;softmax&#125;</span></span>(<span class="tag">\<span class="name">sigma</span></span>(<span class="tag">\<span class="name">boldsymbol</span><span class="string">&#123;s&#125;</span></span>_&#123;t' - 1&#125;, <span class="tag">\<span class="name">boldsymbol</span><span class="string">&#123;h&#125;</span></span>_t))$$</span></span><br></pre></td></tr></table></figure>
 <p>在hexo中会显示为：<br>$$\alpha<em>{t’ t} = \text{softmax}(\sigma(\boldsymbol{s}</em>{t’ - 1}, \boldsymbol{h}_t))$$</p>
 <p>这是由于hexo在处理转义造成的，<code>_</code>是斜体，但是在latex中，却有下标的意思，就会出现问题，<code>\\</code>的换行，在markdown中，<code>\\</code>会被转义为<code>\</code>,这样也会影响影响mathjax对公式中的<code>\\</code>进行渲染，<br>网上很多人的建议是在配置文件中去改<code>Hexo</code>中的逃逸字符，如：<br><a href="https://segmentfault.com/a/1190000007261752" target="_blank" rel="noopener">https://segmentfault.com/a/1190000007261752</a><br><a href="http://wangwlj.com/2017/09/21/markdown_mathjax/" target="_blank" rel="noopener">http://wangwlj.com/2017/09/21/markdown_mathjax/</a></p>
 <p>其实这样的做法并不优雅，如果在某种情况遇到需要用到这种逃逸字符的时候，就会失效，官方推荐的是用{\% raw \%}MathJax{\% endraw \%}来解决</p>
@@ -539,7 +551,7 @@ $$\alpha_{t' t} = \text{softmax}(\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/机器学习/NLP数据集介绍/" rel="prev" title="NLP数据集介绍">
+              <a href="/2019/隐藏/NLP数据集介绍/" rel="prev" title="NLP数据集介绍">
                 NLP数据集介绍 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -615,7 +627,7 @@ $$\alpha_{t' t} = \text{softmax}(\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -626,7 +638,7 @@ $$\alpha_{t' t} = \text{softmax}(\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -637,7 +649,7 @@ $$\alpha_{t' t} = \text{softmax}(\sigma(\boldsymbol{s}_{t' - 1}, \boldsymbol{h}_
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/small_logo_transparent.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码版本管理,git,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="建立代码版本管理规范对一个团队来说是很重要的，现在市面上主要的git版本管理规范有三个：基于git flow的规范,基于github flow的规范和基于gitlab flow的规范。">
+<meta name="keywords" content="代码版本管理,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码版本管理规范">
+<meta property="og:url" content="http://shikanon.com/2020/管理/代码版本管理规范/index.html">
+<meta property="og:site_name" content="shikanon">
+<meta property="og:description" content="建立代码版本管理规范对一个团队来说是很重要的，现在市面上主要的git版本管理规范有三个：基于git flow的规范,基于github flow的规范和基于gitlab flow的规范。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/hLBFIiCm7BxdAKBlzG5wy5rY_6qhjarDKzbnK0_RH4NGcp0OoZo80r4OesClqwxRQQzWQ_-ioLO4sVNBbtn_yX4g6CUQ2znZZix1PHfo2HScDLtY2AorW0YVWuAUmnLOp5LG3XOG3_JkILSvwJ3HCbNG9fu0hY7A7C6PXRND-3g-VuXdGN8tZST1xIHv74NpIGaZb5_5-Yakd1YOTe1UC5-W0iaEfLm6TdtBGX9sW4IPRPjYdrO9sS3RW3bS-k093zNrYh9sPhPXFnwEri4Y3djfj6quG0NdsFOgQSLUJKvE81cNlawodmpwg-Vt_5io-nBplo7IBU0plts09_jGiYZQ6L-TZ85NtpVhwTE-ptmoPVXoGDaRqhWCl0dUaiLdqpDgYRibbYENwvilezampPfyJLQzrsZv4R_S_lPOi8zVOML3RQ-cs5n6Ow5_DfPVasJaidu0">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/pPFFIiD04CRlUOebLuaFa4Cldhpv2jljj5sQPDVDHkjDYDZYNuGgw4KfWiLBGH2A8BvCjstUmjYrD9jkwrLoMMP-k_DzCnbC91F8vI1Y5da2E7CTZeMaX78SIUI6E9OWIa410U0OlFPs_dauu4syYN0TmY8fM83SME86PFqJTNsZHkdqQgZwQI7D1NXSi5f296LH8J7jFOu_NXQyerKXhs9Azr6TYPPZn2mGOM58vIgcN_LH2A81IC1-0h6CYyMiydqqwxogiu6wk9kydy-6jpkxZfqi5j5eTlmm--fi4LRxANX0uT0mPsjqhhy9GXpjKP9RjH7QijbA7sNfOFhvvfGJTbYhiy3hLUahuz6bzhH9cZ4DdWJ1doEhqpQg9WqBPnTJ6k6_QzDlZpO8CpTeFdJIOeb4NhLqA-VRwwgfxbDs_wowfvFUS1xJnzKNAgKTMpR226jd9NBH1GjPTc6ujuXORCVo5_y6">
+<meta property="og:updated_time" content="2020-08-30T14:22:59.603Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码版本管理规范">
+<meta name="twitter:description" content="建立代码版本管理规范对一个团队来说是很重要的，现在市面上主要的git版本管理规范有三个：基于git flow的规范,基于github flow的规范和基于gitlab flow的规范。">
+<meta name="twitter:image" content="http://www.plantuml.com/plantuml/svg/hLBFIiCm7BxdAKBlzG5wy5rY_6qhjarDKzbnK0_RH4NGcp0OoZo80r4OesClqwxRQQzWQ_-ioLO4sVNBbtn_yX4g6CUQ2znZZix1PHfo2HScDLtY2AorW0YVWuAUmnLOp5LG3XOG3_JkILSvwJ3HCbNG9fu0hY7A7C6PXRND-3g-VuXdGN8tZST1xIHv74NpIGaZb5_5-Yakd1YOTe1UC5-W0iaEfLm6TdtBGX9sW4IPRPjYdrO9sS3RW3bS-k093zNrYh9sPhPXFnwEri4Y3djfj6quG0NdsFOgQSLUJKvE81cNlawodmpwg-Vt_5io-nBplo7IBU0plts09_jGiYZQ6L-TZ85NtpVhwTE-ptmoPVXoGDaRqhWCl0dUaiLdqpDgYRibbYENwvilezampPfyJLQzrsZv4R_S_lPOi8zVOML3RQ-cs5n6Ow5_DfPVasJaidu0">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+
+
+
+  <title>代码版本管理规范 | shikanon</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3d35a7079362649e7e703b830e537f6a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">shikanon</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">技术博客空间</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://shikanon.com/2020/管理/代码版本管理规范/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="shikanon">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/img/头像.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="shikanon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">代码版本管理规范</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-22T21:43:08+08:00">
+                2020-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-30T22:22:59+08:00">
+                2020-08-30
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/管理/" itemprop="url" rel="index">
+                    <span itemprop="name">管理</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/管理/技术管理/" itemprop="url" rel="index">
+                    <span itemprop="name">技术管理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 min
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  建立代码版本管理规范对一个团队来说是很重要的，现在市面上主要的git版本管理规范有三个：基于git flow的规范,基于github flow的规范和基于gitlab flow的规范。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <iframe src="https://git.shikanon.com/?locale=zh_CN" width="800" height="600" frameborder="no" allowfullscreen="true" security="restricted" sandbox="allow-scripts allow-same-origin"></iframe>
+
+
+<h2 id="代码版本管理规范"><a href="#代码版本管理规范" class="headerlink" title="代码版本管理规范"></a>代码版本管理规范</h2><p>项目代码release包括三类：</p>
+<ul>
+<li>大版本(x.0.0)</li>
+<li>小版本(x.x.0)</li>
+<li>补丁(x.x.x)</li>
+</ul>
+<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>git 流程模式有两种：一种是<code>Git flow</code>工作流，一种是<code>Github flow</code>工作流。</p>
+<h3 id="Git-Flow-分支模型"><a href="#Git-Flow-分支模型" class="headerlink" title="Git Flow 分支模型"></a>Git Flow 分支模型</h3><img src="http://www.plantuml.com/plantuml/svg/hLBFIiCm7BxdAKBlzG5wy5rY_6qhjarDKzbnK0_RH4NGcp0OoZo80r4OesClqwxRQQzWQ_-ioLO4sVNBbtn_yX4g6CUQ2znZZix1PHfo2HScDLtY2AorW0YVWuAUmnLOp5LG3XOG3_JkILSvwJ3HCbNG9fu0hY7A7C6PXRND-3g-VuXdGN8tZST1xIHv74NpIGaZb5_5-Yakd1YOTe1UC5-W0iaEfLm6TdtBGX9sW4IPRPjYdrO9sS3RW3bS-k093zNrYh9sPhPXFnwEri4Y3djfj6quG0NdsFOgQSLUJKvE81cNlawodmpwg-Vt_5io-nBplo7IBU0plts09_jGiYZQ6L-TZ85NtpVhwTE-ptmoPVXoGDaRqhWCl0dUaiLdqpDgYRibbYENwvilezampPfyJLQzrsZv4R_S_lPOi8zVOML3RQ-cs5n6Ow5_DfPVasJaidu0">
+<hr>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@startuml</span><br><span class="line">actor &quot;person-repo&quot;</span><br><span class="line">participant &quot;feature&quot;</span><br><span class="line">participant &quot;develop&quot;</span><br><span class="line">participant &quot;release-x.x&quot;</span><br><span class="line">participant &quot;hotfix&quot;</span><br><span class="line">participant &quot;master&quot;</span><br><span class="line">control &quot;预发布环境&quot;</span><br><span class="line">control &quot;生产环境&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">master -&gt; develop: checkout</span><br><span class="line">develop -&gt; &quot;person-repo&quot;: pull</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: commit</span><br><span class="line">&quot;person-repo&quot; -&gt; develop: merge requests</span><br><span class="line"></span><br><span class="line">develop -&gt; feature: checkout（功能开发）</span><br><span class="line">feature -&gt; &quot;person-repo&quot;: pull</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: commit</span><br><span class="line">&quot;person-repo&quot; -&gt; feature: merge requests</span><br><span class="line">feature -&gt; develop: merge</span><br><span class="line"></span><br><span class="line">develop -&gt; &quot;release-x.x&quot;: checkout（版本发布）</span><br><span class="line">&quot;release-x.x&quot; -&gt; &quot;person-repo&quot;: pull</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: fix bug</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;release-x.x&quot;: merge requests</span><br><span class="line">&quot;release-x.x&quot; --&gt; &quot;预发布环境&quot;: 测试</span><br><span class="line">&quot;release-x.x&quot; -&gt; master: merge</span><br><span class="line">master --&gt; &quot;生产环境&quot;: 部署测试</span><br><span class="line">&quot;release-x.x&quot; -&gt; develop: merge</span><br><span class="line"></span><br><span class="line">master -&gt; &quot;hotfix&quot;: checkout（线上bug紧急修复）</span><br><span class="line">&quot;hotfix&quot; -&gt; &quot;person-repo&quot;: pull</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: fix bug</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;hotfix&quot;: merge requests</span><br><span class="line">&quot;hotfix&quot; -&gt; master: merge</span><br><span class="line">master --&gt; &quot;预发布环境&quot;: 测试</span><br><span class="line">master --&gt; &quot;生产环境&quot;: 部署发布</span><br><span class="line">&quot;hotfix&quot; -&gt; develop: merge</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+<p>步骤</p>
+<ul>
+<li>master分支不做代码提交，master为生产环境运行代码</li>
+<li>开发主要在develop分支上进行提交</li>
+<li>功能开发切换一个新的功能分支上，功能分支完成后需合并到develop分支</li>
+<li>用release分支做版本发布，release用于预发布环境测试</li>
+<li>release分支从开发分支切出来，完成后需要合并到master分支和develop分支</li>
+<li>预发布环境测试无误后，release分支合并到master分支，发布到生产环境测试</li>
+<li>生产环境测试完成后release分支可以删除</li>
+<li>生产环境运行中紧急修复采用hotfix分支，hotfix分支从mater分支切出</li>
+<li>hotfix分支修复后需合并会master分支和develop分支</li>
+</ul>
+<h4 id="功能开发"><a href="#功能开发" class="headerlink" title="功能开发"></a>功能开发</h4><p>创建功能分支<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 从develop创建功能分支</span></span><br><span class="line">$ git checkout -b myfeature develop</span><br></pre></td></tr></table></figure></p>
+<p>完成功能分支，合并develop，并推送到远程仓库<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到develop分支</span></span><br><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># develop分支合并功能分支</span></span><br><span class="line">$ git merge --no-ff myfeature</span><br><span class="line"><span class="comment"># 删除功能分支</span></span><br><span class="line">$ git branch -d myfeature</span><br><span class="line"><span class="comment"># 推到远程仓库</span></span><br><span class="line">$ git push origin develop</span><br></pre></td></tr></table></figure></p>
+<h4 id="版本发布"><a href="#版本发布" class="headerlink" title="版本发布"></a>版本发布</h4><p>版本发布前，创建版本分支<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 从develop分支切到版本发布分支</span></span><br><span class="line">$ git checkout -b release-1.2 develop</span><br></pre></td></tr></table></figure></p>
+<p>完成版本测试后，合并到master分支上<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到master</span></span><br><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># master合并release分支</span></span><br><span class="line">$ git merge --no-ff release-1.2</span><br><span class="line"><span class="comment"># 给master分支打tag</span></span><br><span class="line">$ git tag -a 1.2</span><br></pre></td></tr></table></figure></p>
+<p>生产环境测试没有问题后，将release分支合并会develop分支，并删除release分支<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到develop分支</span></span><br><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># develop分支合并release分支</span></span><br><span class="line">$ git merge --no-ff release-1.2</span><br><span class="line"><span class="comment"># 删除release分支</span></span><br><span class="line">$ git branch -d release-1.2</span><br></pre></td></tr></table></figure></p>
+<h4 id="临时补丁"><a href="#临时补丁" class="headerlink" title="临时补丁"></a>临时补丁</h4><p>生产环境上发现bug，直接通过hotfix快速修复:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 从master切出一条分支，紧急修复问题</span></span><br><span class="line">$ git checkout -b hotfix-1.2 master</span><br></pre></td></tr></table></figure></p>
+<p>完成问题修复后，合并进master：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切到master分支</span></span><br><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># master分支合并hotfix分支</span></span><br><span class="line">$ git merge --no-ff hotfix-1.2</span><br><span class="line"><span class="comment"># 打上新tag</span></span><br><span class="line">$ git tag -a 1.2</span><br><span class="line"><span class="comment"># 切换到develop分支</span></span><br></pre></td></tr></table></figure></p>
+<p>如果当前release分支还未删除，合并到release分支，再由release分支合并到develop分支:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git checkout release-1.2</span><br><span class="line"><span class="comment"># release-1.2合并hotfix分支</span></span><br><span class="line">$ git merge --no-ff hotfix-1.2</span><br><span class="line"><span class="comment"># 删除hotfix分支</span></span><br><span class="line">$ git branch -d hotfix-1.2</span><br><span class="line"><span class="comment"># 切换到develop分支</span></span><br><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># develop分支合并release分支</span></span><br><span class="line">$ git merge --no-ff release-1.2</span><br></pre></td></tr></table></figure></p>
+<p>如果release分支已删除，则直接合并到develop分支：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 切换到develop分支</span></span><br><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># develop分支合并release分支</span></span><br><span class="line">$ git merge --no-ff hotfix-1.2</span><br><span class="line"><span class="comment"># 删除hotfix分支</span></span><br><span class="line">$ git branch -d hotfix-1.2</span><br></pre></td></tr></table></figure></p>
+<h4 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h4><ul>
+<li>开发永远不直接提交到master分支，master保留用于发布到生产中的代码</li>
+<li>尽量一个任务，一个功能分支</li>
+<li>在合并到开发分支前，对每个merge requests测试</li>
+<li>新功能只添加到develop分支</li>
+</ul>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：</p>
+<ul>
+<li>流程清晰，覆盖面全，通过分支模型将工作流串通</li>
+<li>git flow作为最早提出的分支模型，也是最广泛使用的分支模型，受众广泛</li>
+<li>以master作为生产分支，面向单版本的线上产品迭代</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>分支十分复杂，敏捷性较差</li>
+<li>仅master分支上做持续集成，而大部分工具默认将master分支设为默认分支，因此经常面临分支切换，导致很繁琐</li>
+<li>修补分支和发布分支设置繁琐，比如每次使用修补分支都需要同时合并到master和develop分支，但开发经常犯错误，比如忘记合并回develop分支</li>
+</ul>
+<h3 id="Github-Flow-分支模型"><a href="#Github-Flow-分支模型" class="headerlink" title="Github Flow 分支模型"></a>Github Flow 分支模型</h3><p>面对git flow的繁琐，github flow分支模型仅具有功能分支和主分支，将所有内容合并到master分支中并进行部署，采用pull request方式进行代码合并，强调持续集成和连续交付。</p>
+<p>优点：</p>
+<ul>
+<li>流程十分简单，可以满足敏捷交付</li>
+<li>不需要频繁切换分支，在自己的仓库进行开发，统一合并master</li>
+<li>每次提交均需要测试</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>对自动化测试要求较高，需要大量的单元测、端到端测试和集成测试</li>
+<li>模型过于简单，对于部署、发版和集成上存在着大量问题</li>
+</ul>
+<h3 id="Gitlab-Flow-分支模型"><a href="#Gitlab-Flow-分支模型" class="headerlink" title="Gitlab Flow 分支模型"></a>Gitlab Flow 分支模型</h3><p>结合了git flow分支模型和github flow分支模型：</p>
+<img src="http://www.plantuml.com/plantuml/svg/pPFFIiD04CRlUOebLuaFa4Cldhpv2jljj5sQPDVDHkjDYDZYNuGgw4KfWiLBGH2A8BvCjstUmjYrD9jkwrLoMMP-k_DzCnbC91F8vI1Y5da2E7CTZeMaX78SIUI6E9OWIa410U0OlFPs_dauu4syYN0TmY8fM83SME86PFqJTNsZHkdqQgZwQI7D1NXSi5f296LH8J7jFOu_NXQyerKXhs9Azr6TYPPZn2mGOM58vIgcN_LH2A81IC1-0h6CYyMiydqqwxogiu6wk9kydy-6jpkxZfqi5j5eTlmm--fi4LRxANX0uT0mPsjqhhy9GXpjKP9RjH7QijbA7sNfOFhvvfGJTbYhiy3hLUahuz6bzhH9cZ4DdWJ1doEhqpQg9WqBPnTJ6k6_QzDlZpO8CpTeFdJIOeb4NhLqA-VRwwgfxbDs_wowfvFUS1xJnzKNAgKTMpR226jd9NBH1GjPTc6ujuXORCVo5_y6">
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@startuml</span><br><span class="line">actor &quot;person-repo&quot;</span><br><span class="line">participant &quot;master&quot;</span><br><span class="line">participant &quot;release-x.x.x-alpha&quot;</span><br><span class="line">participant &quot;release-x.x.x&quot;</span><br><span class="line">control &quot;stage预发布环境&quot;</span><br><span class="line">control &quot;pre-production&quot;</span><br><span class="line">control &quot;生产环境&quot;</span><br><span class="line"></span><br><span class="line">master -&gt; &quot;person-repo&quot;: fork</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: commit</span><br><span class="line">&quot;person-repo&quot; -&gt; master: merge requests</span><br><span class="line">master -&gt; &quot;stage预发布环境&quot;: 自动化测试CI</span><br><span class="line">&quot;stage预发布环境&quot; -&gt; master: 测试通过+code review</span><br><span class="line"></span><br><span class="line">master -&gt; &quot;release-x.x.x-alpha&quot;: cherryPick</span><br><span class="line">&quot;release-x.x.x-alpha&quot; -&gt; &quot;pre-production&quot;: 部署</span><br><span class="line">&quot;pre-production&quot; -&gt; &quot;pre-production&quot;: 测试</span><br><span class="line">&quot;pre-production&quot; --&gt; &quot;release-x.x.x-alpha&quot;: 测试不通过</span><br><span class="line">&quot;release-x.x.x-alpha&quot; -&gt; &quot;person-repo&quot;: pull</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;person-repo&quot;: fix bug</span><br><span class="line">&quot;person-repo&quot; -&gt; &quot;release-x.x.x-alpha&quot;: merge requests</span><br><span class="line">&quot;release-x.x.x-alpha&quot; -&gt; &quot;pre-production&quot;: 部署</span><br><span class="line">&quot;pre-production&quot; -&gt; &quot;pre-production&quot;: 测试</span><br><span class="line">&quot;pre-production&quot; --&gt; &quot;release-x.x.x-alpha&quot;: 测试通过</span><br><span class="line"></span><br><span class="line">&quot;release-x.x.x-alpha&quot; -&gt; &quot;release-x.x.x&quot;: checkout -b</span><br><span class="line">&quot;release-x.x.x&quot; -x &quot;release-x.x.x-alpha&quot;: 删除分支alpha分支</span><br><span class="line">&quot;release-x.x.x&quot; -&gt; &quot;生产环境&quot;: 部署</span><br><span class="line">&quot;生产环境&quot; --&gt; &quot;生产环境&quot;: 测试</span><br><span class="line">&quot;生产环境&quot; --&gt; &quot;release-x.x.x&quot;: 测试通过</span><br><span class="line">&quot;release-x.x.x&quot; -&gt; master: cherryPick</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+<ul>
+<li>需要一个staging环境和pre-production环境（两个生产环境镜像）</li>
+<li>所有请求直接提交到master分支，每次提交都做持续集成和测试，主要是自动化测试</li>
+<li>部署发布的时候，从master中摘取(cherry Pick)核心发布功能到”release-x.x.x-alpha”分支进行测试，并在其上进行修复</li>
+<li>测试通过后，切换到”release-x.x.x”分支并删除”release-x.x.x-alpha”分支，将”release-x.x.x”分支发布到生产环境中进行测试</li>
+<li>生产环境测试通过后，将”release-x.x.x”合并回master</li>
+</ul>
+<p><strong>要使用好cherry-pick，每个提交要清晰简洁</strong></p>
+<h4 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：</p>
+<ul>
+<li>相比git flow分支模型更简单，减少了分支数量</li>
+<li>和github flow分支模型一样，更强调测试，对所有提交都需进行测试或code review</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>需要自动化测试流程支撑，需要有较好的持续集成和连续交付基础</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>原git工作流程 <a href="https://wiki.corp.realibox.com/pages/viewpage.action?pageId=20414517" target="_blank" rel="noopener">https://wiki.corp.realibox.com/pages/viewpage.action?pageId=20414517</a><br>gitlab分支介绍 <a href="https://forge.etsi.org/rep/help/workflow/gitlab_flow.md" target="_blank" rel="noopener">https://forge.etsi.org/rep/help/workflow/gitlab_flow.md</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/img/wechat-qcode.jpg" alt="shikanon wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫，订阅我滴↑↑↑的微信公众号！</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    shikanon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://shikanon.com/2020/管理/代码版本管理规范/" title="代码版本管理规范">http://shikanon.com/2020/管理/代码版本管理规范/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码版本管理/" rel="tag"># 代码版本管理</a>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/架构/阿里云《云原生架构白皮书》/" rel="next" title="阿里云《云原生架构白皮书》解读：云计算的最佳演进路径">
+                <i class="fa fa-chevron-left"></i> 阿里云《云原生架构白皮书》解读：云计算的最佳演进路径
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/架构/基于云原生系统的应用分发实践/" rel="prev" title="基于云原生系统的应用分发系统设计">
+                基于云原生系统的应用分发系统设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/img/头像.jpg" alt="shikanon">
+            
+              <p class="site-author-name" itemprop="name">shikanon</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">102</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shikanon" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://my.oschina.net/Kanonpy" target="_blank" title="OSChina">
+                      
+                        <i class="fa fa-fw fa-user-circle"></i>OSChina</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/shikanon" target="_blank" title="知乎专刊">
+                      
+                        <i class="fa fa-fw fa-superpowers"></i>知乎专刊</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/8a0fb5445faf" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-buysellads"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.toutiao.com/c/user/68095235461/#mid=1577607065233422" target="_blank" title="头条号">
+                      
+                        <i class="fa fa-fw fa-windows"></i>头条号</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://mp.weixin.qq.com/s/KDpglyxvMWFr_TyUq9Qxnw" target="_blank" title="微信">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>微信</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码版本管理规范"><span class="nav-number">1.</span> <span class="nav-text">代码版本管理规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本管理"><span class="nav-number">2.</span> <span class="nav-text">版本管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-Flow-分支模型"><span class="nav-number">2.1.</span> <span class="nav-text">Git Flow 分支模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#功能开发"><span class="nav-number">2.1.1.</span> <span class="nav-text">功能开发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本发布"><span class="nav-number">2.1.2.</span> <span class="nav-text">版本发布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#临时补丁"><span class="nav-number">2.1.3.</span> <span class="nav-text">临时补丁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原则"><span class="nav-number">2.1.4.</span> <span class="nav-text">原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优缺点"><span class="nav-number">2.1.5.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Github-Flow-分支模型"><span class="nav-number">2.2.</span> <span class="nav-text">Github Flow 分支模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab-Flow-分支模型"><span class="nav-number">2.3.</span> <span class="nav-text">Gitlab Flow 分支模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优缺点-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">优缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+
+  <span class="author" itemprop="copyrightHolder">shikanon </span>
+
+  <span class="with-love">
+    <i class="fa fa-group"></i>
+  </span>
+
+<span>
+  备案号：
+  <a href="http://beian.miit.gov.cn">粤ICP备15073660号 </a>
+</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('3');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Twitter,Facebook,QQZone,Reddit,Douban,Evernote";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

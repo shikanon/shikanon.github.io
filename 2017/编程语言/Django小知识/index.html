@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -434,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  397
+                  393
                 </span>
               
 
@@ -478,11 +490,11 @@
 <a id="more"></a>
 <h2 id="Django知识小问答"><a href="#Django知识小问答" class="headerlink" title="Django知识小问答"></a>Django知识小问答</h2><h3 id="关于makemigrations"><a href="#关于makemigrations" class="headerlink" title="关于makemigrations"></a>关于makemigrations</h3><p>问：我用python manage.py makemigrations怎么没能将我的model文件生成数据？</p>
 <p>答：可以給我看下model的文件目录吗？</p>
-<p>问：目录是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(venv) G:\git\bigbooom\bigboomm\citizen&gt;tree /f</span><br><span class="line">卷 study 的文件夹 PATH 列表</span><br><span class="line">卷序列号为 0000000F B64E:66E1</span><br><span class="line">G:.</span><br><span class="line">    models.py</span><br><span class="line">    models.pyc</span><br><span class="line">    __init__.py</span><br><span class="line">    __init__.pyc</span><br></pre></td></tr></table></figure></p>
+<p>问：目录是这样的<br><figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">(venv) G:<span class="symbol">\g</span>it<span class="symbol">\b</span>igbooom<span class="symbol">\b</span>igboomm<span class="symbol">\c</span>itizen&gt;tree /f</span><br><span class="line">卷 study 的文件夹 PATH 列表</span><br><span class="line">卷序列号为 0000000F B64E:66E1</span><br><span class="line">G:.</span><br><span class="line">    models.py</span><br><span class="line">    models.pyc</span><br><span class="line">    __init__.py</span><br><span class="line">    __init__.pyc</span><br></pre></td></tr></table></figure></p>
 <p>答：嗯嗯，我知道，我想你应该是少了一个migrations的文件夹吧，所以他不知道你需要生成migrations，你试试在citizen文件夹下面建一个migrations，记得要在里面加一个<strong>init</strong>.py哦，不然也是不可以的</p>
-<p>问：啊，可以了~~ Good Job<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(venv) G:\git\bigbooom\bigboomm&gt;python manage.py makemigrations</span><br><span class="line">Migrations for &apos;citizen&apos;:</span><br><span class="line">  citizen\migrations\0001_initial.py:</span><br><span class="line">    - Create model Citizen</span><br></pre></td></tr></table></figure></p>
-<p>答：其实，一般Django中建app建议用<figure class="highlight python"><figcaption><span>manage.py startapp <app-name>```这个命令，这样可以帮你建立一个完整的app目录哦~~</app-name></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## cryptography 错误</span></span><br><span class="line"></span><br><span class="line">报`RuntimeError: cryptography <span class="keyword">is</span> required <span class="keyword">for</span> sha256_password <span class="keyword">or</span> caching_sha2_password`错：</span><br></pre></td></tr></table></figure></p>
-<p>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 325, in <strong>init</strong><br>    self.connect()<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 599, in connect<br>    self._request_authentication()<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 882, in _request_authentication<br>    auth_packet = _auth.caching_sha2_password_auth(self, auth_packet)<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql_auth.py”, line 264, in caching_sha2_password_auth<br>    data = sha2_rsa_encrypt(conn.password, conn.salt, conn.server_public_key)<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql_auth.py”, line 142, in sha2_rsa_encrypt<br>    raise RuntimeError(“cryptography is required for sha256_password or caching_sha2_password”)<br>RuntimeError: cryptography is required for sha256_password or caching_sha2_password<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">只要安装`cryptography`包就可以了：</span><br><span class="line">```pip install cryptography</span><br></pre></td></tr></table></figure></p>
+<p>问：啊，可以了~~ Good Job<br><figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line">(venv) G:<span class="symbol">\g</span>it<span class="symbol">\b</span>igbooom<span class="symbol">\b</span>igboomm&gt;python manage.py makemigrations</span><br><span class="line">Migrations for 'citizen':</span><br><span class="line">  citizen<span class="symbol">\m</span>igrations<span class="symbol">\0</span>001_initial.py:</span><br><span class="line">    - Create model Citizen</span><br></pre></td></tr></table></figure></p>
+<p>答：其实，一般Django中建app建议用<figure class="highlight python"><figcaption><span>manage.py startapp <app-name>```这个命令，这样可以帮你建立一个完整的app目录哦~~</app-name></span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## cryptography 错误</span></span><br><span class="line"></span><br><span class="line">报`RuntimeError: cryptography <span class="keyword">is</span> required <span class="keyword">for</span> sha256_password <span class="keyword">or</span> caching_sha2_password`错：</span><br></pre></td></tr></table></figure></p>
+<p>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 325, in <strong>init</strong><br>    self.connect()<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 599, in connect<br>    self._request_authentication()<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql\connections.py”, line 882, in _request_authentication<br>    auth_packet = _auth.caching_sha2_password_auth(self, auth_packet)<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql_auth.py”, line 264, in caching_sha2_password_auth<br>    data = sha2_rsa_encrypt(conn.password, conn.salt, conn.server_public_key)<br>  File “C:\Users\shikanon\Desktop\新建文件夹\venv\lib\site-packages\pymysql_auth.py”, line 142, in sha2_rsa_encrypt<br>    raise RuntimeError(“cryptography is required for sha256_password or caching_sha2_password”)<br>RuntimeError: cryptography is required for sha256_password or caching_sha2_password<br><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">只要安装`cryptography`包就可以了：</span><br><span class="line">```pip install cryptography</span><br></pre></td></tr></table></figure></p>
 <h2 id="windows-二进制包下载"><a href="#windows-二进制包下载" class="headerlink" title="windows 二进制包下载"></a>windows 二进制包下载</h2><p><a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
 
       
@@ -639,7 +651,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -650,7 +662,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -661,7 +673,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

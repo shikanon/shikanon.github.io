@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -464,9 +476,9 @@
       
 
       
-        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-libfastcommon"><a href="#安装-libfastcommon" class="headerlink" title="安装 libfastcommon"></a>安装 libfastcommon</h3><p>libfastcommon是 FastDFS 中的公共 C 函数库，基础环境。下载编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/happyfish100/libfastcommon.git</span><br><span class="line">cd libfastcommon</span><br><span class="line">./make.sh install</span><br></pre></td></tr></table></figure></p>
-<p>创建软链接（<a href="https://www.cnblogs.com/chiangchou/p/fastdfs.html" target="_blank" rel="noopener">好像主要是因为FastDFS主程序设置的lib目录而非lib64目录导致</a>，不过没尝试不清楚）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so</span><br><span class="line">ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so</span><br><span class="line">ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so</span><br></pre></td></tr></table></figure></p>
-<h3 id="安装-FastDFS"><a href="#安装-FastDFS" class="headerlink" title="安装 FastDFS"></a>安装 FastDFS</h3><p>下载编译安装 FastDFS:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/happyfish100/fastdfs.git</span><br><span class="line">cd fastdfs</span><br><span class="line">./make.sh install</span><br></pre></td></tr></table></figure></p>
+        <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-libfastcommon"><a href="#安装-libfastcommon" class="headerlink" title="安装 libfastcommon"></a>安装 libfastcommon</h3><p>libfastcommon是 FastDFS 中的公共 C 函数库，基础环境。下载编译安装<br><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/happyfish100/libfastcommon.git</span><br><span class="line"><span class="keyword">cd</span> libfastcommon</span><br><span class="line">./<span class="keyword">make</span>.<span class="keyword">sh</span> install</span><br></pre></td></tr></table></figure></p>
+<p>创建软链接（<a href="https://www.cnblogs.com/chiangchou/p/fastdfs.html" target="_blank" rel="noopener">好像主要是因为FastDFS主程序设置的lib目录而非lib64目录导致</a>，不过没尝试不清楚）<br><figure class="highlight crystal"><table><tr><td class="code"><pre><span class="line">ln -s /usr/lib64/libfastcommon.so /usr/local/<span class="class"><span class="keyword">lib</span>/<span class="title">libfastcommon</span>.<span class="title">so</span></span></span><br><span class="line">ln -s /usr/lib64/libfdfsclient.so /usr/local/<span class="class"><span class="keyword">lib</span>/<span class="title">libfdfsclient</span>.<span class="title">so</span></span></span><br><span class="line">ln -s /usr/lib64/libfdfsclient.so /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">libfdfsclient</span>.<span class="title">so</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-FastDFS"><a href="#安装-FastDFS" class="headerlink" title="安装 FastDFS"></a>安装 FastDFS</h3><p>下载编译安装 FastDFS:<br><figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/happyfish100/fastdfs.git</span><br><span class="line"><span class="keyword">cd</span> fastdfs</span><br><span class="line">./<span class="keyword">make</span>.<span class="keyword">sh</span> install</span><br></pre></td></tr></table></figure></p>
 <h2 id="配置-FastDFS"><a href="#配置-FastDFS" class="headerlink" title="配置 FastDFS"></a>配置 FastDFS</h2>
       
     </div>
@@ -620,7 +632,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -631,7 +643,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -642,7 +654,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

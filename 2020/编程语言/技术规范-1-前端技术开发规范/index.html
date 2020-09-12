@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-13T18:06:58+08:00">
+                2020-03-13
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  600
+                  582
                 </span>
               
 
@@ -475,7 +487,7 @@
 <p>例：retina_sprites.scss</p>
 <h3 id="HTML文件命名"><a href="#HTML文件命名" class="headerlink" title="HTML文件命名"></a>HTML文件命名</h3><p>参照项目命名规则。</p>
 <p>例：error_report.html</p>
-<h2 id="Vue项目规范"><a href="#Vue项目规范" class="headerlink" title="Vue项目规范"></a>Vue项目规范</h2><h3 id="vue文件基本结构"><a href="#vue文件基本结构" class="headerlink" title="vue文件基本结构"></a>vue文件基本结构</h3><p>vue文件基本结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;!--必须在div中编写页面--&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    components : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;!--声明语言，并且添加scoped--&gt;</span><br><span class="line">&lt;style lang=&quot;less&quot; scoped&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Vue项目规范"><a href="#Vue项目规范" class="headerlink" title="Vue项目规范"></a>Vue项目规范</h2><h3 id="vue文件基本结构"><a href="#vue文件基本结构" class="headerlink" title="vue文件基本结构"></a>vue文件基本结构</h3><p>vue文件基本结构：<br><figure class="highlight dust"><table><tr><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!--必须在div中编写页面--&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">export default </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">    components : &#123;</span></span><br><span class="line"><span class="template-variable">    &#125;</span><span class="xml">,</span></span><br><span class="line"><span class="xml">    data () </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">    return &#123;</span></span><br><span class="line"><span class="template-variable">    &#125;</span></span><br><span class="line"><span class="xml">    &#125;,</span></span><br><span class="line"><span class="xml">    methods: </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable">    &#125;</span><span class="xml">,</span></span><br><span class="line"><span class="xml">    mounted() </span><span class="template-variable">&#123;</span></span><br><span class="line"><span class="template-variable"></span></span><br><span class="line"><span class="template-variable">    &#125;</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="comment">&lt;!--声明语言，并且添加scoped--&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">"less"</span> <span class="attr">scoped</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
 <p>//组件的 data 必须是一个函数。</p>
 <p>//当在组件中使用 data 属性的时候 (除了 new Vue 外的任何地方)，它的值必须是返回一个对象的函数。</p>
 <h3 id="vue文件方法声明顺序"><a href="#vue文件方法声明顺序" class="headerlink" title="vue文件方法声明顺序"></a>vue文件方法声明顺序</h3><p>vue文件方法声明顺序（如不需要一些属性可不填）</p>
@@ -504,7 +516,7 @@
 <li>尽量使用常用单词开头（set、get、open、close、jump）</li>
 </ul>
 <h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p>组件注册方式：1）公共组件全局注册 2）其余组件局部注册</p>
-<p>组件的每一个属性单独使用一个 props，并且使用函数或是原始类型的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 推荐 --&gt;</span><br><span class="line">&lt;range-slider</span><br><span class="line">  :values=&quot;[10, 20]&quot;</span><br><span class="line">  min=&quot;0&quot;</span><br><span class="line">  max=&quot;100&quot;</span><br><span class="line">  step=&quot;5&quot;</span><br><span class="line">  :on-slide=&quot;updateInputs&quot;</span><br><span class="line">  :on-end=&quot;updateResults&quot;&gt;</span><br><span class="line">&lt;/range-slider&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 避免 --&gt;</span><br><span class="line">&lt;range-slider :config=&quot;complexConfigObject&quot;&gt;&lt;/range-slider&gt;</span><br></pre></td></tr></table></figure></p>
+<p>组件的每一个属性单独使用一个 props，并且使用函数或是原始类型的值。<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 推荐 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">range-slider</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:values</span>=<span class="string">"[10, 20]"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">min</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">max</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">step</span>=<span class="string">"5"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:on-slide</span>=<span class="string">"updateInputs"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:on-end</span>=<span class="string">"updateResults"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">range-slider</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 避免 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">range-slider</span> <span class="attr">:config</span>=<span class="string">"complexConfigObject"</span>&gt;</span><span class="tag">&lt;/<span class="name">range-slider</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>避免 <code>this.$parent</code> 进行组件间通信用<code>props</code>代替 ，谨慎使用 <code>this.$refs</code>，尽量保持组件的相对独立。 </p>
 
       
@@ -659,7 +671,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -670,7 +682,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -681,7 +693,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

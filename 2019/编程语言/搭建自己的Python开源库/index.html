@@ -367,7 +367,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -437,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.2k
                 </span>
               
 
@@ -453,7 +465,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5 min
+                  4 min
                 </span>
               
             </div>
@@ -489,26 +501,26 @@
 <h2 id="GIT-创建项目"><a href="#GIT-创建项目" class="headerlink" title="GIT 创建项目"></a>GIT 创建项目</h2><p>创建项目，确定项目名称，description, license等：</p>
 <p><img src="/img/创建GITHUB项目.png" alt=""><br>项目地址：<a href="https://github.com/shikanon/BaiduMapAPI" target="_blank" rel="noopener">https://github.com/shikanon/BaiduMapAPI</a></p>
 <h2 id="搭建虚拟环境"><a href="#搭建虚拟环境" class="headerlink" title="搭建虚拟环境"></a>搭建虚拟环境</h2><p>我们在搭建自己的库的时候，是希望有一个干净的项目环境的，这时候<code>virtualenv</code>就很有用了，采用 <code>virtualev</code> 搭建虚拟环境，可以方便为后面生成私有项目的 <code>requirement.txt</code> 依赖包文件。</p>
-<p>创建虚拟环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualev venv</span><br></pre></td></tr></table></figure></p>
-<p>启用 <code>virtualev</code> :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source venv/Script/activate</span><br></pre></td></tr></table></figure></p>
+<p>创建虚拟环境<br><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">virtualev venv</span></span><br></pre></td></tr></table></figure></p>
+<p>启用 <code>virtualev</code> :<br><figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="keyword">source</span> venv<span class="regexp">/Script/</span>activate</span><br></pre></td></tr></table></figure></p>
 <h2 id="构建项目代码"><a href="#构建项目代码" class="headerlink" title="构建项目代码"></a>构建项目代码</h2><p>简单，快速构建框架原型和骨架，记得包之间需要 <code>__init__.py</code> 文件，后面在编写<code>setup.py</code>也会很有用。<br>项目结构：<br><img src="/img/python项目结构目录.png" alt=""></p>
 <p>构建好架构后，可以开始编写单元测试代码，<code>pytest</code>是个简单易用的库，可以帮助我们快速完成单元测试构建。</p>
 <h2 id="构建安装脚本，编写-setup-py-文件"><a href="#构建安装脚本，编写-setup-py-文件" class="headerlink" title="构建安装脚本，编写 setup.py 文件"></a>构建安装脚本，编写 setup.py 文件</h2><p>完成代码构建和测试就可以开始进入构建安装包环节。<br>Python三方库安装常用的主要有两种模式：一种是直接从 github 上 clone 下来用 <code>setup.py</code> 安装，另一种是用 <code>pip install</code> 来安装。两种安装方法都是需要编写 <code>setup.py</code> 文件的。</p>
 <p>对于第一种方法我们在安装前一般还要提供安装的依赖包， 也就是<code>requirement.txt</code>文件。在这里我们可以直接用 <code>pip freeze</code> 命令生成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip freeze &gt; requirement.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">pip</span> <span class="selector-tag">freeze</span> &gt; <span class="selector-tag">requirement</span><span class="selector-class">.txt</span></span><br></pre></td></tr></table></figure>
 <p>因为我们是采用新建的虚拟环境开发，所以可以直接把环境中的三方库导入到<code>requirement.txt</code> 文件中。</p>
 <p>构建好 <code>requirement.txt</code>后，就可以编写安装脚本。<br>这里采用了<code>setuptools</code>编写安装脚本，Setuptools是一个包开发过程库，其增强Python标准库distutils，使得打包Python项目更简单。</p>
 <p><code>setup.py</code>文件案例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import Command, find_packages, setup</span><br><span class="line"></span><br><span class="line">__lib_name__ = &quot;BaiduMapAPI&quot;</span><br><span class="line">__lib_version__ = &quot;0.1.1&quot;</span><br><span class="line">__description__ = &quot;The Package of Baidu Map, with unofficial&quot;</span><br><span class="line">__url__ = &quot;https://github.com/shikanon/BaiduMapAPI&quot;</span><br><span class="line">__author__ = &quot;shikanon&quot;</span><br><span class="line">__author_email__ = &quot;account@shikanon.com&quot;</span><br><span class="line">__license__ = &quot;MIT&quot;</span><br><span class="line">__keywords__ = [&quot;Baidu&quot;, &quot;map&quot;]</span><br><span class="line">__requires__ = [&quot;requests&quot;,]</span><br><span class="line"></span><br><span class="line">with open(&quot;README.rst&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:</span><br><span class="line">    __long_description__ = f.read()</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name = __lib_name__,</span><br><span class="line">    version = __lib_version__,</span><br><span class="line">    description = __description__,</span><br><span class="line">    url = __url__,</span><br><span class="line">    author = __author__,</span><br><span class="line">    author_email = __author_email__,</span><br><span class="line">    license = __license__,</span><br><span class="line">    packages = find_packages(exclude=(&quot;tests&quot;, &quot;exmaple&quot;)),</span><br><span class="line">    install_requires = __requires__,</span><br><span class="line">    zip_safe = False,</span><br><span class="line">    include_package_data = True,</span><br><span class="line">    data_files = [(&quot;BaiduMapAPI/data&quot;, [&quot;BaiduMapAPI/data/BaiduMap_cityCode_1102.txt&quot;])],</span><br><span class="line">    long_description = __long_description__</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">from setuptools <span class="built_in">import</span> Command, find_packages, setup</span><br><span class="line"></span><br><span class="line"><span class="attr">__lib_name__</span> = <span class="string">"BaiduMapAPI"</span></span><br><span class="line"><span class="attr">__lib_version__</span> = <span class="string">"0.1.1"</span></span><br><span class="line"><span class="attr">__description__</span> = <span class="string">"The Package of Baidu Map, with unofficial"</span></span><br><span class="line"><span class="attr">__url__</span> = <span class="string">"https://github.com/shikanon/BaiduMapAPI"</span></span><br><span class="line"><span class="attr">__author__</span> = <span class="string">"shikanon"</span></span><br><span class="line"><span class="attr">__author_email__</span> = <span class="string">"account@shikanon.com"</span></span><br><span class="line"><span class="attr">__license__</span> = <span class="string">"MIT"</span></span><br><span class="line"><span class="attr">__keywords__</span> = [<span class="string">"Baidu"</span>, <span class="string">"map"</span>]</span><br><span class="line"><span class="attr">__requires__</span> = [<span class="string">"requests"</span>,]</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"README.rst"</span>, <span class="string">"r"</span>, <span class="attr">encoding="utf-8")</span> as f:</span><br><span class="line">    <span class="attr">__long_description__</span> = f.read()</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    <span class="attr">name</span> = __lib_name__,</span><br><span class="line">    <span class="attr">version</span> = __lib_version__,</span><br><span class="line">    <span class="attr">description</span> = __description__,</span><br><span class="line">    <span class="attr">url</span> = __url__,</span><br><span class="line">    <span class="attr">author</span> = __author__,</span><br><span class="line">    <span class="attr">author_email</span> = __author_email__,</span><br><span class="line">    <span class="attr">license</span> = __license__,</span><br><span class="line">    <span class="attr">packages</span> = find_packages(<span class="attr">exclude=("tests",</span> <span class="string">"exmaple"</span>)),</span><br><span class="line">    <span class="attr">install_requires</span> = __requires__,</span><br><span class="line">    <span class="attr">zip_safe</span> = False,</span><br><span class="line">    <span class="attr">include_package_data</span> = True,</span><br><span class="line">    <span class="attr">data_files</span> = [(<span class="string">"BaiduMapAPI/data"</span>, [<span class="string">"BaiduMapAPI/data/BaiduMap_cityCode_1102.txt"</span>])],</span><br><span class="line">    <span class="attr">long_description</span> = __long_description__</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p><code>name</code> 包名称<br><code>version</code> 版本号<br><code>description</code> 包描述<br><code>url</code> 包地址<br><code>license</code> 授权信息<br><code>packages</code> 需要处理的包目录，也就是包含<code>__init__.py</code>的文件夹<br><code>install_requires</code> 需要安装的依赖包<br><code>data_files</code> 可以用于引入一些额外的信息文件和数据，如图片、配置文件， <code>[(&#39;文件要放入的文件夹1&#39;,[&#39;file1&#39;,file2&#39;]),(&#39;文件要放入的文件夹2&#39;,[&#39;file3&#39;,file4&#39;])]</code> 第一个元素指最后在文件<strong>要放的位置/目录</strong>，如果空字符，表示放在根目录，第二个元素指原文件所在的位置。<br><code>long_description</code> 包的详细描述，后续上传到<code>pypi</code>，可以用于显示在主页上的描述</p>
 <p><strong>find_packages()</strong>:这个函数会默认在和setup.py同一目录下搜索各个含有<strong>init</strong>.py的包。<br>除了通过<code>data_files</code>添加数据包文件，还可以通过<code>package_data</code>设置可以被<code>find_packages</code>找到添加的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">packages = find_packages(exclude=(&quot;tests&quot;, &quot;exmaple&quot;)),  # 所有包除了tests和exmaple</span><br><span class="line">package_data = &#123;</span><br><span class="line">    &apos;&apos;: [&apos;*.csv&apos;], # 任何包中含有.csv文件，都包含它</span><br><span class="line">    &apos;data&apos;: [&apos;data/*.dat&apos;], # 包含data包data文件夹中的 *.dat文件</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">packages = find_packages(exclude=(<span class="string">"tests"</span>, <span class="string">"exmaple"</span>)),  <span class="meta"># 所有包除了tests和exmaple</span></span><br><span class="line">package_data = &#123;</span><br><span class="line">    '': ['*.csv'], <span class="meta"># 任何包中含有.csv文件，都包含它</span></span><br><span class="line">    'data': ['data/*.dat'], <span class="meta"># 包含data包data文件夹中的 *.dat文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>写好<code>setup.py</code>文件，可以<code>python setupy install</code>进行安装测试。</p>
 <h2 id="注册-pypi-并上传自己的库"><a href="#注册-pypi-并上传自己的库" class="headerlink" title="注册 pypi 并上传自己的库"></a>注册 pypi 并上传自己的库</h2><p>编写好安装脚本，就可以上传PyPi，当然，上传前要先看看上面是否已经有编写好的相关库了。<br>如果很幸运没有，那么可以开始上传自己的包了，这里我们采用<code>twine</code>协助上传。</p>
 <ul>
 <li>首先，完成PyPi的账户注册。</li>
 <li><p>在用户目录下创建<code>.pypirc</code>文件， Linux在<code>$HOME</code>创建<code>.pypirc</code>， Windows在<code>%HOMEDRIVE%</code>下创建<code>.pypirc</code>，加入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[distutils]</span><br><span class="line">index-servers = </span><br><span class="line">  pypi</span><br><span class="line">  pypitest</span><br><span class="line"></span><br><span class="line">[pypi]</span><br><span class="line">repository: https://upload.pypi.org/legacy/</span><br><span class="line">username: 账户</span><br><span class="line">password: 密码</span><br><span class="line"></span><br><span class="line">[pypitest]</span><br><span class="line">repository: https://test.pypi.org/legacy/</span><br><span class="line">username: 账户</span><br><span class="line">password: 密码</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">[distutils]</span><br><span class="line">index-servers = </span><br><span class="line">  pypi</span><br><span class="line">  pypitest</span><br><span class="line"></span><br><span class="line">[pypi]</span><br><span class="line"><span class="string">repository:</span> <span class="string">https:</span><span class="comment">//upload.pypi.org/legacy/</span></span><br><span class="line"><span class="string">username:</span> 账户</span><br><span class="line"><span class="string">password:</span> 密码</span><br><span class="line"></span><br><span class="line">[pypitest]</span><br><span class="line"><span class="string">repository:</span> <span class="string">https:</span><span class="comment">//test.pypi.org/legacy/</span></span><br><span class="line"><span class="string">username:</span> 账户</span><br><span class="line"><span class="string">password:</span> 密码</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>安装twine: <code>pip install twine</code></p>
 </li>
@@ -517,9 +529,9 @@
 </ul>
 <p>上传成功后可以运行<code>pip install</code>命令测试。</p>
 <h2 id="编写文档"><a href="#编写文档" class="headerlink" title="编写文档"></a>编写文档</h2><p>编写<code>README.md</code>和说明文档<code>docs</code>，这里我们用<code>sphinx</code>库来创建文档架构，<code>sphinx</code>是一个智能、漂亮的文档生成工具。</p>
-<p>初始化<code>docs</code>文件夹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sphinx-quickstart</span><br></pre></td></tr></table></figure></p>
+<p>初始化<code>docs</code>文件夹<br><figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">sphinx-quickstart</span></span><br></pre></td></tr></table></figure></p>
 <p>编写<code>rst</code>文件，运行<code>make html</code>即可生成<code>html</code>文档,</p>
-<p><code>rst</code>文档例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Welcome to BaiduMapAPI&apos;s documentation!</span><br><span class="line">=======================================</span><br><span class="line"></span><br><span class="line">.. toctree::</span><br><span class="line">   :caption: Basic concepts</span><br><span class="line">   :hidden:</span><br><span class="line"></span><br><span class="line">   api</span><br><span class="line">   dataset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Indices and tables</span><br><span class="line">==================</span><br><span class="line"></span><br><span class="line">* :ref:`genindex`</span><br><span class="line">* :ref:`modindex`</span><br><span class="line">* :ref:`search`</span><br></pre></td></tr></table></figure></p>
+<p><code>rst</code>文档例子：<br><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">Welcome to BaiduMapAPI's documentation!</span><br><span class="line">=======================================</span><br><span class="line"></span><br><span class="line"><span class="bullet">.. </span>toctree::</span><br><span class="line"><span class="code">   :caption: Basic concepts</span></span><br><span class="line"><span class="code">   :hidden:</span></span><br><span class="line"></span><br><span class="line"><span class="code">   api</span></span><br><span class="line"><span class="code">   dataset</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="code">   Indices and tables</span></span><br><span class="line">==================</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>:ref:<span class="code">`genindex`</span></span><br><span class="line"><span class="bullet">* </span>:ref:<span class="code">`modindex`</span></span><br><span class="line"><span class="bullet">* </span>:ref:<span class="code">`search`</span></span><br></pre></td></tr></table></figure></p>
 <p>注：<br>如果已经有配置文件了，可以用<code>sphinx-build</code>来指定生成目录<br><code>sphinx-build -b html source/ build/</code></p>
 <h2 id="上传github"><a href="#上传github" class="headerlink" title="上传github"></a>上传github</h2><p>最后上传到 github，这样一个完整的 Python 三方包的开源完成了。</p>
 <hr>
@@ -677,7 +689,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -688,7 +700,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -699,7 +711,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

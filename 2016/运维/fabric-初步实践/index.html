@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  518
+                  454
                 </span>
               
 
@@ -466,8 +478,8 @@
 <hr>
 <a id="more"></a>
 <p>fabric作为一种强大的运维工具，可以让部署运维轻松很多，最简单的fabric使用，首先设置<strong>env.user, env.port, env.hosts, env.password</strong>,如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf8</span><br><span class="line">from fabric.api import *</span><br><span class="line">#用户名</span><br><span class="line">env.user = &quot;shikanon&quot;</span><br><span class="line">#中转ip，堡垒机</span><br><span class="line">env.gateway = &quot;10.17.35.92&quot;</span><br><span class="line">env.port = 12303</span><br><span class="line">env.hosts = [&quot;192.168.6.%d&quot;%i for i in range(2,11)]</span><br><span class="line">#密码</span><br><span class="line">env.password = &quot;shikanon_123456&quot;</span><br></pre></td></tr></table></figure>
-<p>这样就配置好了集群，但通常情况下为了安全堡垒机和各机器的用户名、端口号、密码都是不同的，那么需要有针对性设置，在fabric中用env.hosts和env.password组合就可以了，不过需要注意的是原来的ip形式需要全部改为user@host:port这种形式，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#需要以user@host:port填写</span><br><span class="line">env.gateway = &quot;shikanon@183.3.169.134:12020&quot;</span><br><span class="line">env.hosts = [&quot;shikanon@183.3.169.134:12020&quot;, &quot;root@192.168.0.171:22&quot;, &quot;root@192.168.0.181:22&quot;]</span><br><span class="line">#可以定义不同的密码</span><br><span class="line">env.passwords = &#123;</span><br><span class="line">    &quot;shikanon@183.3.169.134:12020&quot;:&quot;shikanon_123456&quot;,</span><br><span class="line">    &quot;root@192.168.0.171:22&quot;:&quot;12shikanon_3456&quot;,</span><br><span class="line">    &quot;root@192.168.0.181:22&quot;:&quot;1234shikanon_56&quot;&#125;</span><br><span class="line">#下面是rsa免登录设置</span><br><span class="line">#</span><br><span class="line">def create_keygen():</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;rm -rf shikanon/.ssh&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;mkdir -p shikanon/.ssh&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        result = run(r&quot;ssh-keygen -t rsa -P &apos;&apos; -f ~/shikanon/.ssh/id_rsa&quot;)</span><br><span class="line"></span><br><span class="line">def get_ras_id():</span><br><span class="line">    get(&quot;~/shikanon/.ssh/id_rsa.pub&quot;,&quot;./rsa/rsa_%s_id_rsa.pub&quot;%(env.host))</span><br><span class="line"></span><br><span class="line">@runs_once</span><br><span class="line">def zip():</span><br><span class="line">    local(&quot;zip -r authorized_keys.zip rsa/&quot;)</span><br><span class="line"></span><br><span class="line">def clean():</span><br><span class="line">    run(&quot;rm -rf ~/shikanon/&quot;)</span><br><span class="line"></span><br><span class="line">def upload():</span><br><span class="line">    run(&quot;rm -f authorized_keys.zip&quot;)</span><br><span class="line">    put(&quot;authorized_keys.zip&quot;,&quot;~/shikanon/&quot;)</span><br><span class="line">    with settings(warn_only=True):</span><br><span class="line">        run(&quot;unzip ~/shikanon/authorized_keys.zip -d ~/shikanon/.ssh&quot;)</span><br><span class="line">    rsa_files = run(&quot;ls ~/shikanon/.ssh/rsa/&quot;)</span><br><span class="line">    for commandline in rsa_files.split(&quot;\r\n&quot;):</span><br><span class="line">        for rsa_file in commandline.split(&quot; &quot;):</span><br><span class="line">            if rsa_file:</span><br><span class="line">                print(&quot;rsa_file:&quot;,rsa_file)</span><br><span class="line">                run(&quot;cat ~/shikanon/.ssh/rsa/%s &gt;&gt; ~/shikanon/.ssh/authorized_keys&quot;%rsa_file)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#coding:utf8</span></span><br><span class="line"><span class="keyword">from</span> fabric.api import *</span><br><span class="line"><span class="comment">#用户名</span></span><br><span class="line"><span class="keyword">env</span>.<span class="keyword">user</span> = <span class="string">"shikanon"</span></span><br><span class="line"><span class="comment">#中转ip，堡垒机</span></span><br><span class="line"><span class="keyword">env</span>.gateway = <span class="string">"10.17.35.92"</span></span><br><span class="line"><span class="keyword">env</span>.port = <span class="number">12303</span></span><br><span class="line"><span class="keyword">env</span>.hosts = [<span class="string">"192.168.6.%d"</span>%i for i in range(<span class="number">2</span>,<span class="number">11</span>)]</span><br><span class="line"><span class="comment">#密码</span></span><br><span class="line"><span class="keyword">env</span>.password = <span class="string">"shikanon_123456"</span></span><br></pre></td></tr></table></figure>
+<p>这样就配置好了集群，但通常情况下为了安全堡垒机和各机器的用户名、端口号、密码都是不同的，那么需要有针对性设置，在fabric中用env.hosts和env.password组合就可以了，不过需要注意的是原来的ip形式需要全部改为user@host:port这种形式，代码如下<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#需要以user@host:port填写</span></span><br><span class="line">env.gateway = <span class="string">"shikanon@183.3.169.134:12020"</span></span><br><span class="line">env.hosts = [<span class="string">"shikanon@183.3.169.134:12020"</span>, <span class="string">"root@192.168.0.171:22"</span>, <span class="string">"root@192.168.0.181:22"</span>]</span><br><span class="line"><span class="comment">#可以定义不同的密码</span></span><br><span class="line">env.passwords = &#123;</span><br><span class="line">    <span class="string">"shikanon@183.3.169.134:12020"</span>:<span class="string">"shikanon_123456"</span>,</span><br><span class="line">    <span class="string">"root@192.168.0.171:22"</span>:<span class="string">"12shikanon_3456"</span>,</span><br><span class="line">    <span class="string">"root@192.168.0.181:22"</span>:<span class="string">"1234shikanon_56"</span>&#125;</span><br><span class="line"><span class="comment">#下面是rsa免登录设置</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_keygen</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> settings(warn_only=<span class="literal">True</span>):</span><br><span class="line">        run(<span class="string">"rm -rf shikanon/.ssh"</span>)</span><br><span class="line">    <span class="keyword">with</span> settings(warn_only=<span class="literal">True</span>):</span><br><span class="line">        run(<span class="string">"mkdir -p shikanon/.ssh"</span>)</span><br><span class="line">    <span class="keyword">with</span> settings(warn_only=<span class="literal">True</span>):</span><br><span class="line">        result = run(<span class="string">r"ssh-keygen -t rsa -P '' -f ~/shikanon/.ssh/id_rsa"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_ras_id</span><span class="params">()</span>:</span></span><br><span class="line">    get(<span class="string">"~/shikanon/.ssh/id_rsa.pub"</span>,<span class="string">"./rsa/rsa_%s_id_rsa.pub"</span>%(env.host))</span><br><span class="line"></span><br><span class="line"><span class="meta">@runs_once</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zip</span><span class="params">()</span>:</span></span><br><span class="line">    local(<span class="string">"zip -r authorized_keys.zip rsa/"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean</span><span class="params">()</span>:</span></span><br><span class="line">    run(<span class="string">"rm -rf ~/shikanon/"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">()</span>:</span></span><br><span class="line">    run(<span class="string">"rm -f authorized_keys.zip"</span>)</span><br><span class="line">    put(<span class="string">"authorized_keys.zip"</span>,<span class="string">"~/shikanon/"</span>)</span><br><span class="line">    <span class="keyword">with</span> settings(warn_only=<span class="literal">True</span>):</span><br><span class="line">        run(<span class="string">"unzip ~/shikanon/authorized_keys.zip -d ~/shikanon/.ssh"</span>)</span><br><span class="line">    rsa_files = run(<span class="string">"ls ~/shikanon/.ssh/rsa/"</span>)</span><br><span class="line">    <span class="keyword">for</span> commandline <span class="keyword">in</span> rsa_files.split(<span class="string">"\r\n"</span>):</span><br><span class="line">        <span class="keyword">for</span> rsa_file <span class="keyword">in</span> commandline.split(<span class="string">" "</span>):</span><br><span class="line">            <span class="keyword">if</span> rsa_file:</span><br><span class="line">                print(<span class="string">"rsa_file:"</span>,rsa_file)</span><br><span class="line">                run(<span class="string">"cat ~/shikanon/.ssh/rsa/%s &gt;&gt; ~/shikanon/.ssh/authorized_keys"</span>%rsa_file)</span><br></pre></td></tr></table></figure></p>
 <p><strong>以上是一个设置ssh免密码登陆的脚本</strong></p>
 
       
@@ -617,7 +629,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,7 +640,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -639,7 +651,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

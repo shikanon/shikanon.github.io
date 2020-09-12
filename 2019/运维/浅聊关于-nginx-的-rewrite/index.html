@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  450
+                  445
                 </span>
               
 
@@ -464,12 +476,12 @@
       
 
       
-        <h2 id="rewrite用法"><a href="#rewrite用法" class="headerlink" title="rewrite用法"></a>rewrite用法</h2><p><code>rewrite</code>用法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Syntax:	rewrite regex replacement [flag];</span><br><span class="line">Context:	server, location, if</span><br></pre></td></tr></table></figure></p>
+        <h2 id="rewrite用法"><a href="#rewrite用法" class="headerlink" title="rewrite用法"></a>rewrite用法</h2><p><code>rewrite</code>用法<br><figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">Syntax:</span>	rewrite regex replacement [flag]<span class="comment">;</span></span><br><span class="line"><span class="symbol">Context:</span>	server, location, if</span><br></pre></td></tr></table></figure></p>
 <p><code>rewrite</code>的主要放在<code>server</code>、<code>location</code>或者<code>if</code>中。</p>
 <p>语法： <code>rewrite 正则表达式 替换内容 [标识符]</code></p>
-<p><code>rewrite</code>标识符主要包含四种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- last</span><br><span class="line">stops processing the current set of ngx_http_rewrite_module directives and starts a search for a new location matching the changed URI;</span><br><span class="line">完成该rewrite规则的执行后，停止处理后续rewrite指令集；然后查找匹配改变后URI的新location；</span><br><span class="line">- break</span><br><span class="line">stops processing the current set of ngx_http_rewrite_module directives as with the break directive;</span><br><span class="line">完成该rewrite规则的执行后，停止处理后续rewrite指令集，并不再重新查找；但是当前location内剩余非rewrite语句和location外的的非rewrite语句可以执行；</span><br><span class="line">- redirect</span><br><span class="line">returns a temporary redirect with the 302 code; used if a replacement string does not start with “http://”, “https://”, or “$scheme”;</span><br><span class="line">返回302临时重定向，地址栏会显示跳转后的地址；</span><br><span class="line">- permanent</span><br><span class="line">returns a permanent redirect with the 301 code.</span><br><span class="line">返回301永久重定向，地址栏会显示跳转后的地址；即表示如果客户端不清理浏览器缓存，那么返回的结果将永久保存在客户端浏览器中了。</span><br></pre></td></tr></table></figure></p>
+<p><code>rewrite</code>标识符主要包含四种：<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">- last</span><br><span class="line">stops processing the current <span class="keyword">set</span> <span class="keyword">of</span> ngx_http_rewrite_module directives <span class="keyword">and</span> starts a <span class="keyword">search</span> <span class="keyword">for</span> a <span class="keyword">new</span> location matching the <span class="keyword">changed</span> URI;</span><br><span class="line">完成该rewrite规则的执行后，停止处理后续rewrite指令集；然后查找匹配改变后URI的新location；</span><br><span class="line">- break</span><br><span class="line">stops processing the current <span class="keyword">set</span> <span class="keyword">of</span> ngx_http_rewrite_module directives <span class="keyword">as</span> <span class="keyword">with</span> the break directive;</span><br><span class="line">完成该rewrite规则的执行后，停止处理后续rewrite指令集，并不再重新查找；但是当前location内剩余非rewrite语句和location外的的非rewrite语句可以执行；</span><br><span class="line">- redirect</span><br><span class="line">returns a temporary redirect <span class="keyword">with</span> the <span class="number">302</span> code; used if a replacement string does not <span class="keyword">start</span> <span class="keyword">with</span> “<span class="keyword">http</span>://”, “https://”, <span class="keyword">or</span> “$scheme”;</span><br><span class="line">返回302临时重定向，地址栏会显示跳转后的地址；</span><br><span class="line">- permanent</span><br><span class="line">returns a permanent redirect <span class="keyword">with</span> the <span class="number">301</span> code.</span><br><span class="line">返回<span class="number">301</span>永久重定向，地址栏会显示跳转后的地址；即表示如果客户端不清理浏览器缓存，那么返回的结果将永久保存在客户端浏览器中了。</span><br></pre></td></tr></table></figure></p>
 <p>1）last一般写在server和if中，而break一般使用在location中；<br>2）last不终止重写后的url匹配，即新的url会再从server走一遍匹配流程，而break终止重写后的匹配；<br>3）break和last都能组织继续执行后面的rewrite指令。</p>
-<p><strong>正则表达式和变量</strong><br>替换内容<code>$1</code>和<code>$2</code>表示前面匹配的第一个括号和第二个括号的内容，类似于Python的re模块的findall命令，比如下面例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rewrite &apos;^/([0-9]&#123;4&#125;)/\d+/\d+/(.*)$&apos; &apos;/$1/$2&apos; last;</span><br></pre></td></tr></table></figure></p>
+<p><strong>正则表达式和变量</strong><br>替换内容<code>$1</code>和<code>$2</code>表示前面匹配的第一个括号和第二个括号的内容，类似于Python的re模块的findall命令，比如下面例子<br><figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">rewrite</span> <span class="string">'^/([0-9]&#123;4&#125;)/\d+/\d+/(.*)$'</span> <span class="string">'/<span class="variable">$1</span>/<span class="variable">$2</span>'</span> <span class="literal">last</span>;</span><br></pre></td></tr></table></figure></p>
 <p><code>$1</code>表示<code>([0-9]{4})</code>匹配所得到的值;<br><code>$2</code>表示<code>(.*)</code>匹配所得到的值；</p>
 <p><code>^</code>表示以此为开头的完全匹配<br><code>$</code>表示以此为结尾的完全匹配</p>
 
@@ -530,8 +542,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/架构/随笔-创业这一年那些事-2/" rel="next" title="随笔:创业这一年那些事(2)">
-                <i class="fa fa-chevron-left"></i> 随笔:创业这一年那些事(2)
+              <a href="/2019/战略/随笔-创业这一年那些事-1/" rel="next" title="随笔:创业这一年那些事(1)">
+                <i class="fa fa-chevron-left"></i> 随笔:创业这一年那些事(1)
               </a>
             
           </div>
@@ -625,7 +637,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +648,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -647,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

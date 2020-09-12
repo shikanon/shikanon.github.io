@@ -116,7 +116,7 @@
 <meta property="og:image" content="http://shikanon.com/img/云原生/云原生架构.png">
 <meta property="og:image" content="http://shikanon.com/img/云原生/架构持续演进闭环.png">
 <meta property="og:image" content="http://shikanon.com/img/云原生/云原生未来发展.png">
-<meta property="og:updated_time" content="2020-07-21T12:55:07.795Z">
+<meta property="og:updated_time" content="2020-08-14T01:29:07.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云《云原生架构白皮书》解读：云计算的最佳演进路径">
 <meta name="twitter:description" content="7月17号就收到第一部分内容，看了编委组成员，满满的大神列表。从结构来看“白皮书”总共分为七章，主要从云原生的架构定义和相关技术栈、阿里云自身的产品和案例实践、未来发展趋势三大部分全面介绍了云原生架构。">
@@ -368,7 +368,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-14T09:29:07+08:00">
+                2020-08-14
+              </time>
             
           </span>
 
@@ -438,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.5k
                 </span>
               
 
@@ -454,7 +466,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 min
+                  5 min
                 </span>
               
             </div>
@@ -488,6 +500,7 @@
 <li>架构设计主要体现在云原生架构提供了高可用和可扩展能力。非功能特性的建设在实际业务中并不会带来直接业务价值，但又是必不可少的。记得在10年微服务刚出来的时候，需要构建一个高可用和具备可扩展能力的系统是一件很困难的事情，缺乏服务注册中心，需要自行解决上下游寻址、通讯，以及容错等问题。现在这些能力被抽象成云原生的基础设施，我们可以专注于核心业务代码的同时，轻松获得高可用和可扩展能力。</li>
 <li>云原生另一方面价值体现是在提高团队和组织的研发效能上。从敏捷交付到DevOps，本质上是对交付和运维效率的追求。自动化让研发变得更高效，非功能性特性和核心代码分离可以让我们更专注于核心业务逻辑。</li>
 </ul>
+<h2 id="微服务发展史"><a href="#微服务发展史" class="headerlink" title="微服务发展史"></a>微服务发展史</h2><p>第一代微服务需要自行解决上下游寻址、通讯，以及容错等问题；<br>第二代微服务架构中，引入了旁路服务注册中心作为协调者来完成服务的自动注册和发现。服务之间的通讯以及容错机制开始模块化，形成独立服务框架。<br>第三代微服务架构 - 服务网格，原来被模块化到服务框架里的微服务基础能力，被进一步的从一个 SDK 演进成为一个独立进程 - Sidecar。<br>第四代多运行时微服务架构（Muti-Runtime Microservices）。</p>
 <h2 id="从4-1看阿里云云原生架构设计"><a href="#从4-1看阿里云云原生架构设计" class="headerlink" title="从4+1看阿里云云原生架构设计"></a>从4+1看阿里云云原生架构设计</h2><p>阿里巴巴云原生架构ACNA「4+1」的架构设计流程，「4」 代表架构设计的关键视角，包括企业战略视角、业务发展视角、组织能力视角和云原生技术架构视角；「1」 表示云原生架构的架构持续演进闭环。</p>
 <p><img src="/img/云原生/架构持续演进闭环.png" alt=""></p>
 <p>企业战略视角来看，任何架构都必须服务于企业战略，云原生架构不仅是一个技术升级，更是一个对企业核心业务生产流程的重构，即通过软件开发和运营构建数字化业务。这样从顶层的战略上就需要设计技术赋能业务创新的重要角色。<br>从业务发展视角看，数字化业务对技术架构的主要诉求是业务连续性、<br>业务快速上线、成本以及科技赋能业务创新，云计算作为新的技术必须为企业释放成本红利，帮助企业从原来的 CAPEX 模式转变为 OPEX 模式。<br>从组织能力视角看，最重要是需要理性看待技术架构，需要满足“康威定律”原则——让技术架构与企业沟通架构需要保持一致。<br>从云原生技术视角来看，从服务化能力、弹性能力、无服务化程度、可观察性、韧性和自动化都需要逐步迭代，配合企业战略和业务诉求。</p>
@@ -563,6 +576,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/管理/代码版本管理规范/" rel="prev" title="代码版本管理规范">
+                代码版本管理规范 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -645,7 +662,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -656,7 +673,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -667,7 +684,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -740,7 +757,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从架构设计看云原生的价值核心"><span class="nav-number">1.</span> <span class="nav-text">从架构设计看云原生的价值核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从4-1看阿里云云原生架构设计"><span class="nav-number">2.</span> <span class="nav-text">从4+1看阿里云云原生架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云原生架构的发展演变和新技术的展望"><span class="nav-number">3.</span> <span class="nav-text">云原生架构的发展演变和新技术的展望</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从架构设计看云原生的价值核心"><span class="nav-number">1.</span> <span class="nav-text">从架构设计看云原生的价值核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务发展史"><span class="nav-number">2.</span> <span class="nav-text">微服务发展史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从4-1看阿里云云原生架构设计"><span class="nav-number">3.</span> <span class="nav-text">从4+1看阿里云云原生架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#云原生架构的发展演变和新技术的展望"><span class="nav-number">4.</span> <span class="nav-text">云原生架构的发展演变和新技术的展望</span></a></li></ol></div>
             
 
           </div>

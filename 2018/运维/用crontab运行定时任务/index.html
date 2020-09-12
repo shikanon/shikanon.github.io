@@ -366,7 +366,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -425,7 +437,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  440
+                  422
                 </span>
               
 
@@ -441,7 +453,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 min
+                  1 min
                 </span>
               
             </div>
@@ -467,20 +479,20 @@
 
       
         <p>以一个<code>Python</code>项目的定时任务为例：</p>
-<p>先写好一个<code>run.sh</code>脚本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">/bin/echo &quot;the script start `date`&quot; &gt;&gt; /home/shikanon/log/log.txt</span><br><span class="line">source venv/bin/activate</span><br><span class="line">python getMinuteData.py</span><br></pre></td></tr></table></figure></p>
-<p>然后编写<code>crontab</code>文件，<code>crontab</code>文件结构如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Example of job definition:</span><br><span class="line"># .---------------- minute (0 - 59)</span><br><span class="line"># |  .------------- hour (0 - 23)</span><br><span class="line"># |  |  .---------- day of month (1 - 31)</span><br><span class="line"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span><br><span class="line"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span><br><span class="line"># |  |  |  |  |</span><br><span class="line"># *  *  *  *  * user-name  command to be executed</span><br></pre></td></tr></table></figure></p>
+<p>先写好一个<code>run.sh</code>脚本:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">/bin/<span class="built_in">echo</span> <span class="string">"the script start `date`"</span> &gt;&gt; /home/shikanon/<span class="built_in">log</span>/log.txt</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">python getMinuteData.py</span><br></pre></td></tr></table></figure></p>
+<p>然后编写<code>crontab</code>文件，<code>crontab</code>文件结构如下：<br><figure class="highlight vala"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Example of job definition:</span></span><br><span class="line"><span class="meta"># .---------------- minute (0 - 59)</span></span><br><span class="line"><span class="meta"># |  .------------- hour (0 - 23)</span></span><br><span class="line"><span class="meta"># |  |  .---------- day of month (1 - 31)</span></span><br><span class="line"><span class="meta"># |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...</span></span><br><span class="line"><span class="meta"># |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat</span></span><br><span class="line"><span class="meta"># |  |  |  |  |</span></span><br><span class="line"><span class="meta"># *  *  *  *  * user-name  command to be executed</span></span><br></pre></td></tr></table></figure></p>
 <p><img src="/img/crontab命令.png" alt=""></p>
-<p>创建<code>crontab</code>文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; vim getData.cron</span><br><span class="line">&gt; 0 16 * * * /home/shikanon/download/getData/run.sh</span><br></pre></td></tr></table></figure></p>
+<p>创建<code>crontab</code>文件:<br><figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">&gt; vim getData.cron</span><br><span class="line">&gt; <span class="number">0</span> <span class="number">16</span> * * * /<span class="built_in">home</span>/shikanon/download/getData/<span class="built_in">run</span>.sh</span><br></pre></td></tr></table></figure></p>
 <p>表示每天16点运行一次<code>/home/shikanon/download/getData/run.sh</code>命令</p>
 <p>创建任务<code>crontab getData.cron</code><br>查看用户所有任务<code>crontab -l</code><br>删除当前用户所有任务<code>crontab -r</code><br>编辑当前用户下的任务<code>crontab -e</code>，当结束编辑离开时，编辑后的文件将自动安装。 </p>
 <p>更多例子：</p>
 <p>(注意单纯echo，从屏幕上看不到任何输出，因为cron把任何输出都email到root的信箱了。)</p>
-<p>每天早上6点执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0 6 * * * echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
-<p>每两个小时执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0 */2 * * * echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
-<p>23点到8点之间每两个小时执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0 23-7/2 * * * echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
-<p>23点到8点之间每两个小时执行一次，同时8点执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0 23-7/2，8 * * * echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
-<p>每个月的4号11点执行一次，同时每个周的周一到三11点执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 0 11 4 * 1-3 echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
-<p>每天的下午4点、5点、6点的5 min、15 min、25 min、35 min、45 min、55 min时执行一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; 5，15，25，35，45，55 16，17，18 * * * echo &quot;hello world&quot; &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
+<p>每天早上6点执行一次<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">&gt; 0 6 * * * <span class="keyword">echo</span> <span class="string">"hello world"</span> &gt;&gt; <span class="string">/tmp/test.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>每两个小时执行一次<br><figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line">&gt; 0 *<span class="string">/2</span> * * * <span class="keyword">echo</span> <span class="string">"hello world"</span> &gt;&gt; <span class="string">/tmp/test.txt</span></span><br></pre></td></tr></table></figure></p>
+<p>23点到8点之间每两个小时执行一次<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">0</span> <span class="number">23</span><span class="number">-7</span>/<span class="number">2</span> * * * echo <span class="string">"hello world"</span> &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
+<p>23点到8点之间每两个小时执行一次，同时8点执行一次<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">0</span> <span class="number">23</span><span class="number">-7</span>/<span class="number">2</span>，<span class="number">8</span> * * * echo <span class="string">"hello world"</span> &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
+<p>每个月的4号11点执行一次，同时每个周的周一到三11点执行一次<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">0</span> <span class="number">11</span> <span class="number">4</span> * <span class="number">1</span><span class="number">-3</span> echo <span class="string">"hello world"</span> &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
+<p>每天的下午4点、5点、6点的5 min、15 min、25 min、35 min、45 min、55 min时执行一次<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">5</span>，<span class="number">15</span>，<span class="number">25</span>，<span class="number">35</span>，<span class="number">45</span>，<span class="number">55</span> <span class="number">16</span>，<span class="number">17</span>，<span class="number">18</span> * * * echo <span class="string">"hello world"</span> &gt;&gt; /tmp/test.txt</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -625,7 +637,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +648,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -647,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

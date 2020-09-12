@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-28T11:28:03+08:00">
+                2020-03-28
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  542
+                  539
                 </span>
               
 
@@ -466,7 +478,7 @@
       
         <h2 id="nextcloud"><a href="#nextcloud" class="headerlink" title="nextcloud"></a>nextcloud</h2><p>nextcloud是一个私有云存储网盘项目，nextcloud是owncloud的衍生版本，2016年4月27日，ownCloud联合创始人Frank Karlitschek宣布离开ownCloud ltc.，转而成立另一家公司“Nextcloud”，由于ownCloud程序本身归其开发人员所有，所以Nextcloud可以直接使用ownCloud的核心技术。nextcloud具有强大的扩展性，同时主打 a safe home for all your data，所以在安全性上nextcloud也十分出色。</p>
 <h2 id="nextcloud安装"><a href="#nextcloud安装" class="headerlink" title="nextcloud安装"></a>nextcloud安装</h2><p>参考：<a href="https://hub.docker.com/_/nextcloud/" target="_blank" rel="noopener">https://hub.docker.com/_/nextcloud/</a></p>
-<p>nextcloud安装最简单的方式就是用docker来拉起应用：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="_">-d</span> \</span><br><span class="line">    -v nextcloud:/var/www/html \</span><br><span class="line">    -v apps:/var/www/html/custom_apps \</span><br><span class="line">    -v config:/var/www/html/config \</span><br><span class="line">    -v data:/var/www/html/data \</span><br><span class="line">    -v theme:/var/www/html/themes/&lt;YOUR_CUSTOM_THEME&gt; \</span><br><span class="line">    -p 8080:80 \</span><br><span class="line">    nextcloud</span><br></pre></td></tr></table></figure></p>
+<p>nextcloud安装最简单的方式就是用docker来拉起应用：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -d \</span><br><span class="line">    -v nextcloud:/var/www/html \</span><br><span class="line">    -v apps:/var/www/html/custom_apps \</span><br><span class="line">    -v config:/var/www/html/config \</span><br><span class="line">    -v data:/var/www/html/data \</span><br><span class="line">    -v theme:/var/www/html/themes/&lt;YOUR_CUSTOM_THEME&gt; \</span><br><span class="line">    -p 8080:80 \</span><br><span class="line">    nextcloud</span><br></pre></td></tr></table></figure></p>
 <p>nextcloud文件目录说明：</p>
 <ul>
 <li><code>/var/www/html</code>主文件夹</li>
@@ -494,15 +506,15 @@
 <li><code>POSTGRES_PASSWORD</code> 数据库密码</li>
 <li><code>POSTGRES_HOST</code> 数据库服务器地址</li>
 </ul>
-<p>比如连接一个MySQL:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker run <span class="_">-d</span> \</span><br><span class="line">    <span class="_">-e</span> MYSQL_DATABASE=<span class="string">"nextcloud"</span> \</span><br><span class="line">    <span class="_">-e</span> MYSQL_USER=<span class="string">"root"</span> \</span><br><span class="line">    <span class="_">-e</span> MYSQL_PASSWORD=<span class="string">"123456"</span> \</span><br><span class="line">    <span class="_">-e</span> MYSQL_HOST=<span class="string">"127.0.0.1:3306"</span> \</span><br><span class="line">    -p 8080:80 \</span><br><span class="line">    nextcloud</span><br></pre></td></tr></table></figure></p>
+<p>比如连接一个MySQL:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -d \</span><br><span class="line">    -e MYSQL_DATABASE=<span class="string">"nextcloud"</span> \</span><br><span class="line">    -e MYSQL_USER=<span class="string">"root"</span> \</span><br><span class="line">    -e MYSQL_PASSWORD=<span class="string">"123456"</span> \</span><br><span class="line">    -e MYSQL_HOST=<span class="string">"127.0.0.1:3306"</span> \</span><br><span class="line">    -p 8080:80 \</span><br><span class="line">    nextcloud</span><br></pre></td></tr></table></figure></p>
 <p>docker设置管理员用户名密码：</p>
 <ul>
 <li><code>NEXTCLOUD_ADMIN_USER</code>管理员用户名</li>
 <li><code>NEXTCLOUD_ADMIN_PASSWORD</code>管理员密码</li>
 </ul>
 <p>如果在安装得时候没设置管理员用户名和密码，在第一次打开界面得时候会让你设置。</p>
-<h2 id="nextcloud-docker迁移"><a href="#nextcloud-docker迁移" class="headerlink" title="nextcloud docker迁移"></a>nextcloud docker迁移</h2><p>可以采用docker-compose的形式部署，将数据存在容器的数据卷中，<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="attr">  nextcloud:</span></span><br><span class="line"><span class="attr">  db:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  db:</span></span><br><span class="line"><span class="attr">    image:</span> mariadb</span><br><span class="line"><span class="attr">    command:</span> --transaction-isolation=READ-COMMITTED --binlog-format=ROW</span><br><span class="line"><span class="attr">    restart:</span> always</span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="attr">      - db:</span>/var/lib/mysql</span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> MYSQL_ROOT_PASSWORD=</span><br><span class="line"><span class="bullet">      -</span> MYSQL_PASSWORD=</span><br><span class="line"><span class="bullet">      -</span> MYSQL_DATABASE=nextcloud</span><br><span class="line"><span class="bullet">      -</span> MYSQL_USER=nextcloud</span><br><span class="line"></span><br><span class="line"><span class="attr">  app:</span></span><br><span class="line"><span class="attr">    image:</span> nextcloud</span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8080</span>:<span class="number">80</span></span><br><span class="line"><span class="attr">    links:</span></span><br><span class="line"><span class="bullet">      -</span> db</span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="attr">      - nextcloud:</span>/var/www/html</span><br><span class="line"><span class="attr">    restart:</span> always</span><br></pre></td></tr></table></figure></p>
-<p>在容器升级或者数据迁移的时候直接重新拉起即可:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose pull</span><br><span class="line">$ docker-compose up <span class="_">-d</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="nextcloud-docker迁移"><a href="#nextcloud-docker迁移" class="headerlink" title="nextcloud docker迁移"></a>nextcloud docker迁移</h2><p>可以采用docker-compose的形式部署，将数据存在容器的数据卷中，<br><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">nextcloud:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">--transaction-isolation=READ-COMMITTED</span> <span class="string">--binlog-format=ROW</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db:/var/lib/mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=nextcloud</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=nextcloud</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nextcloud</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8080</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">nextcloud:/var/www/html</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure></p>
+<p>在容器升级或者数据迁移的时候直接重新拉起即可:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker-compose pull</span><br><span class="line">$ docker-compose up -d</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -656,7 +668,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -667,7 +679,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -678,7 +690,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

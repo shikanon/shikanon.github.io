@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-01T03:32:18+08:00">
+                2020-03-01
+              </time>
             
           </span>
 
@@ -480,17 +492,17 @@
 <p>这个脚本没有任何参数，而且退出状态不会影响提交。对于大多数的 post-commit 脚本来说，你只是想访问你刚刚创建的提交。你可以用 git rev-parse HEAD来获得最近一次提交的 SHA1 哈希字符串，或者你可以用 git log -l HEAD 来获得完整的信息。</p>
 <h3 id="post-checkout"><a href="#post-checkout" class="headerlink" title="post-checkout"></a>post-checkout</h3><p>post-checkout Hook 和 post-commit Hook 很像，但它在你用 git checkout查看引用的时候被调用。</p>
 <h2 id="gitlab-runner"><a href="#gitlab-runner" class="headerlink" title="gitlab runner"></a>gitlab runner</h2><p><a href="./CI与runner关系图.png"></a></p>
-<p>docker 运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name gitlab-runner \</span><br><span class="line">  -v /srv/gitlab-runner/config:/home/gitlab-runner \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  gitlab/gitlab-runner</span><br></pre></td></tr></table></figure></p>
-<h3 id="gitlab-runner注册"><a href="#gitlab-runner注册" class="headerlink" title="gitlab-runner注册"></a>gitlab-runner注册</h3><p>输入:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ci-multi-runner register</span><br></pre></td></tr></table></figure></p>
+<p>docker 运行<br><figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">docker run -d --name gitlab-runner \</span><br><span class="line">  -v <span class="regexp">/srv/gi</span>tlab-runner<span class="regexp">/config:/</span>home<span class="regexp">/gitlab-runner \</span></span><br><span class="line"><span class="regexp">  -v /</span>var<span class="regexp">/run/</span>docker.sock:<span class="regexp">/var/</span>run<span class="regexp">/docker.sock \</span></span><br><span class="line"><span class="regexp">  gitlab/gi</span>tlab-runner</span><br></pre></td></tr></table></figure></p>
+<h3 id="gitlab-runner注册"><a href="#gitlab-runner注册" class="headerlink" title="gitlab-runner注册"></a>gitlab-runner注册</h3><p>输入:<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">gitlab-ci-multi-runner <span class="keyword">register</span></span><br></pre></td></tr></table></figure></p>
 <p>这里主要是需要两个信息进行注册，一个是gitlab的url，和runner token。<br>可以在gitlab CI/CD 的Runners settings中Specific Runners找到，如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )</span><br><span class="line">https://172.17.0.2   (因为我这里gitlab是放在dockder下面因此需要改成docker内网地址)</span><br><span class="line">Please enter the gitlab-ci token for this runner</span><br><span class="line">kpSL7ViitQLYbSs3zS1x</span><br><span class="line">Please enter the gitlab-ci description for this runner</span><br><span class="line">my-runner</span><br><span class="line">INFO[0034] fcf5c619 Registering runner... succeeded</span><br><span class="line">Please enter the executor: shell, docker, docker-ssh, ssh?</span><br><span class="line">shell</span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">Please enter <span class="keyword">the</span> gitlab-ci coordinator <span class="built_in">URL</span> (e.g. <span class="keyword">https</span>://gitlab.com )</span><br><span class="line"><span class="keyword">https</span>://<span class="number">172.17</span><span class="number">.0</span><span class="number">.2</span>   (因为我这里gitlab是放在dockder下面因此需要改成docker内网地址)</span><br><span class="line">Please enter <span class="keyword">the</span> gitlab-ci <span class="keyword">token</span> <span class="keyword">for</span> this runner</span><br><span class="line">kpSL7ViitQLYbSs3zS1x</span><br><span class="line">Please enter <span class="keyword">the</span> gitlab-ci description <span class="keyword">for</span> this runner</span><br><span class="line">my-runner</span><br><span class="line">INFO[<span class="number">0034</span>] fcf5c619 Registering runner... succeeded</span><br><span class="line">Please enter <span class="keyword">the</span> executor: <span class="built_in">shell</span>, docker, docker-ssh, ssh?</span><br><span class="line"><span class="built_in">shell</span></span><br></pre></td></tr></table></figure>
 <h3 id="gitlab-runner-运行"><a href="#gitlab-runner-运行" class="headerlink" title="gitlab-runner 运行"></a>gitlab-runner 运行</h3><p>检查runner的状态：<br><code>gitlab-ci-multi-runner verify</code></p>
 <p>重启所有runner：<br><code>gitlab-ci-multi-runner run</code></p>
 <p>重启单个runner：<br><code>gitlab-ci-multi-runner run-single --url https://172.17.0.2 --token runnerToken --executor shell</code></p>
 <p><a href="./图片/gitlab-runner运行成功界面.png">gitlab-runner运行成功界面</a></p>
 <p>需要在gitlab-runner环境下按照运行所需要</p>
-<h2 id="git-修改注释并强制提交新记录"><a href="#git-修改注释并强制提交新记录" class="headerlink" title="git 修改注释并强制提交新记录"></a>git 修改注释并强制提交新记录</h2><p>仅修改注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></table></figure></p>
-<p>git 强制提交远程分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --force &lt;远程地址&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="git-修改注释并强制提交新记录"><a href="#git-修改注释并强制提交新记录" class="headerlink" title="git 修改注释并强制提交新记录"></a>git 修改注释并强制提交新记录</h2><p>仅修改注释<br><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">git <span class="keyword">commit</span> <span class="comment">--amend</span></span><br></pre></td></tr></table></figure></p>
+<p>git 强制提交远程分支<br><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">git push --force <span class="tag">&lt;<span class="name">远程地址</span>&gt;</span> <span class="tag">&lt;<span class="name">本地分支名</span>&gt;</span>:<span class="tag">&lt;<span class="name">远程分支名</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -644,7 +656,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -655,7 +667,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -666,7 +678,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

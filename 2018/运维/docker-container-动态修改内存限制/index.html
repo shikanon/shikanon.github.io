@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -434,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  336
+                  334
                 </span>
               
 
@@ -475,11 +487,11 @@
       
 
       
-        <p>docker动态修改配置用<code>docker update</code>,用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">docker update -h</span><br><span class="line">Flag shorthand -h has been deprecated, please use --help</span><br><span class="line"></span><br><span class="line">Usage:	docker update [OPTIONS] CONTAINER [CONTAINER...]</span><br><span class="line"></span><br><span class="line">Update configuration of one or more containers</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --blkio-weight uint16         Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)</span><br><span class="line">      --cpu-period int              Limit CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int               Limit CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">      --cpu-rt-period int           Limit the CPU real-time period in microseconds</span><br><span class="line">      --cpu-rt-runtime int          Limit the CPU real-time runtime in microseconds</span><br><span class="line">  -c, --cpu-shares int              CPU shares (relative weight)</span><br><span class="line">      --cpuset-cpus string          CPUs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string          MEMs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --help                        Print usage</span><br><span class="line">      --kernel-memory string        Kernel memory limit</span><br><span class="line">  -m, --memory string               Memory limit</span><br><span class="line">      --memory-reservation string   Memory soft limit</span><br><span class="line">      --memory-swap string          Swap limit equal to memory plus swap: &apos;-1&apos; to enable unlimited swap</span><br><span class="line">      --restart string              Restart policy to apply when a container exits</span><br></pre></td></tr></table></figure></p>
+        <p>docker动态修改配置用<code>docker update</code>,用法：<br><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">docker update -h</span><br><span class="line">Flag shorthand -h has been deprecated, please use --help</span><br><span class="line"></span><br><span class="line">Usage:	docker update [OPTIONS] CONTAINER [CONTAINER<span class="built_in">..</span>.]</span><br><span class="line"></span><br><span class="line">Update configuration of one <span class="keyword">or</span> more containers</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --blkio-weight uint16         Block IO (relative weight), between 10 <span class="keyword">and</span> 1000, <span class="keyword">or</span> 0 <span class="keyword">to</span> <span class="builtin-name">disable</span> (default 0)</span><br><span class="line">      --cpu-period int              Limit CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int               Limit CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">      --cpu-rt-period int           Limit the CPU real-time period <span class="keyword">in</span> microseconds</span><br><span class="line">      --cpu-rt-runtime int          Limit the CPU real-time runtime <span class="keyword">in</span> microseconds</span><br><span class="line">  -c, --cpu-shares int              CPU<span class="built_in"> shares </span>(relative weight)</span><br><span class="line">      --cpuset-cpus string          CPUs <span class="keyword">in</span> which <span class="keyword">to</span> allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string          MEMs <span class="keyword">in</span> which <span class="keyword">to</span> allow execution (0-3, 0,1)</span><br><span class="line">      --help                        <span class="builtin-name">Print</span> usage</span><br><span class="line">      --kernel-memory string        Kernel memory limit</span><br><span class="line">  -m, --memory string               Memory limit</span><br><span class="line">      --memory-reservation string   Memory soft limit</span><br><span class="line">      --memory-swap string          Swap limit equal <span class="keyword">to</span> memory plus swap: <span class="string">'-1'</span> <span class="keyword">to</span> <span class="builtin-name">enable</span> unlimited swap</span><br><span class="line">      --restart string              Restart<span class="built_in"> policy </span><span class="keyword">to</span> apply when a container exits</span><br></pre></td></tr></table></figure></p>
 <p>当前要做的是把一个运行着gitlab 的容器内存限制在2048M以内，尝试用:<br><code>docker update -m 2048m gitlab</code></p>
-<p>报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Memory limit should be smaller than already set memoryswap limit, update the memoryswap at the same time</span><br></pre></td></tr></table></figure></p>
+<p>报错：<br><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">Memory limit should be smaller than already <span class="built_in">set</span> memoryswap limit, update <span class="keyword">the</span> memoryswap <span class="keyword">at</span> <span class="keyword">the</span> same <span class="built_in">time</span></span><br></pre></td></tr></table></figure></p>
 <p>发现问题，docker 默认没有启用memory-swap交换内存，直接设置了内存问题会出问题，也就是说宿主 swap 支持使用多少则容器即可使用多少，如果 –memory-swap 设置小于 –memory则设置不生效。</p>
-<p>将memory-swap 设置值为 -1，表示容器程序使用内存受限，而 swap 空间使用不受限制。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update --memory 2048m --memory-swap -1 gitlab</span><br></pre></td></tr></table></figure></p>
+<p>将memory-swap 设置值为 -1，表示容器程序使用内存受限，而 swap 空间使用不受限制。<br><figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">update</span> --<span class="keyword">memory</span> 2048m --<span class="keyword">memory</span>-swap -1 gitlab</span><br></pre></td></tr></table></figure></p>
 <p>问题解决。</p>
 
       
@@ -627,7 +639,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -638,7 +650,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -649,7 +661,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

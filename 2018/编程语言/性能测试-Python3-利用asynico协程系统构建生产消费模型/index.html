@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="shikanon">
 <meta property="og:description" content="今天研究了下python3的新特性 asynico ，试了试 aiohttp 协程效果，单核QPS在500~600左右">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-11T01:11:52.975Z">
+<meta property="og:updated_time" content="2020-08-30T14:22:59.603Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能测试: Python3 利用asynico协程系统构建生产消费模型">
 <meta name="twitter:description" content="今天研究了下python3的新特性 asynico ，试了试 aiohttp 协程效果，单核QPS在500~600左右">
@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-08-30T22:22:59+08:00">
+                2020-08-30
+              </time>
             
           </span>
 
@@ -434,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  267
+                  693
                 </span>
               
 
@@ -450,7 +462,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 min
+                  4 min
                 </span>
               
             </div>
@@ -476,7 +488,12 @@
 
       
         <p>今天研究了下python3的新特性 asynico ，试了试 aiohttp 协程效果，单核QPS在500~600之间，性能还可以。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">import aiohttp</span><br><span class="line">import asyncio</span><br><span class="line">import hashlib</span><br><span class="line">import time</span><br><span class="line">from asyncio import Queue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Fetch:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.work_queue = Queue()</span><br><span class="line">        self.max_loop = 10000</span><br><span class="line">        self.host = &quot;http://14.29.5.29/XXXX&quot;</span><br><span class="line">        self.payload = &#123;&quot;planId&quot;: 10000007, &quot;activityId&quot;: 1002, &quot;label&quot;: 1,</span><br><span class="line">                        &quot;key&quot;: &quot;98214ecfe6b9ae8855e3ac6509ad940f&quot;, &quot;keyType&quot;: &quot;imei&quot;,</span><br><span class="line">                        &quot;batchId&quot;: 1, &quot;token&quot;: &quot;395La7f9x9x&quot;&#125;</span><br><span class="line"></span><br><span class="line">    async def get_url(self, host, payload):</span><br><span class="line">        async with aiohttp.ClientSession() as session:</span><br><span class="line">            async with session.post(host, data=payload) as resp:</span><br><span class="line">                text = await resp.text()</span><br><span class="line">                if &quot;1&quot; in text:</span><br><span class="line">                    print(text, payload[&quot;key&quot;])</span><br><span class="line"></span><br><span class="line">    async def consumer(self):</span><br><span class="line">        while True:</span><br><span class="line">            param = await self.work_queue.get()</span><br><span class="line">            if param:</span><br><span class="line">                await self.get_url(self.host, param)</span><br><span class="line">                self.work_queue.task_done()</span><br><span class="line">            else:</span><br><span class="line">                break</span><br><span class="line"></span><br><span class="line">    async def producer(self):</span><br><span class="line">        i = 0</span><br><span class="line">        string = &apos;866260035710238&apos;</span><br><span class="line">        while 1:</span><br><span class="line">            if i:</span><br><span class="line">                md5_str = hashlib.md5(string.encode(&apos;utf-8&apos;))</span><br><span class="line">                self.payload[&quot;key&quot;] = md5_str.hexdigest()</span><br><span class="line">                string = str(int(string) + 1)</span><br><span class="line">            await self.work_queue.put(self.payload.copy()) #必须要</span><br><span class="line">            i += 1</span><br><span class="line">            if i &gt; self.max_loop:</span><br><span class="line">                break</span><br><span class="line"></span><br><span class="line">    async def run(self):</span><br><span class="line">        await self.producer()</span><br><span class="line">        print(&apos;start consumer...&apos;)</span><br><span class="line"></span><br><span class="line">        tasks = [</span><br><span class="line">            loop.create_task(self.consumer())</span><br><span class="line">            for i in range(10)</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        await self.work_queue.join()</span><br><span class="line">        print(&apos;end join&apos;)</span><br><span class="line">        for task in tasks:</span><br><span class="line">            task.cancel()</span><br><span class="line"></span><br><span class="line">t1 = time.time()</span><br><span class="line">loop = asyncio.get_event_loop()</span><br><span class="line">test = Fetch()</span><br><span class="line">loop.run_until_complete(test.run())</span><br><span class="line">loop.close()</span><br><span class="line">print(time.time() - t1)</span><br></pre></td></tr></table></figure>
+<h2 id="ab测试工具"><a href="#ab测试工具" class="headerlink" title="ab测试工具"></a>ab测试工具</h2><p>ab测试工具全名叫<code>Apache Bench</code>，主要用来做网站压力和性能测试。</p>
+<p>ab命令：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ab -h</span><br><span class="line">Usage: ab [options] [http[s]://]hostname[:port]/path</span><br><span class="line">Options are:</span><br><span class="line">    -n requests     Number of requests to perform</span><br><span class="line">    -c concurrency  Number of multiple requests to make at a time</span><br><span class="line">    -t timelimit    Seconds to max. to spend on benchmarking</span><br><span class="line">                    This implies -n 50000</span><br><span class="line">    -s timeout      Seconds to max. <span class="built_in">wait</span> <span class="keyword">for</span> each response</span><br><span class="line">                    Default is 30 seconds</span><br><span class="line">    -b windowsize   Size of TCP send/receive buffer, <span class="keyword">in</span> bytes</span><br><span class="line">    -B address      Address to <span class="built_in">bind</span> to when making outgoing connections</span><br><span class="line">    -p postfile     File containing data to POST. Remember also to <span class="built_in">set</span> -T</span><br><span class="line">    -u putfile      File containing data to PUT. Remember also to <span class="built_in">set</span> -T</span><br><span class="line">    -T content-type Content-type header to use <span class="keyword">for</span> POST/PUT data, eg.</span><br><span class="line">                    <span class="string">'application/x-www-form-urlencoded'</span></span><br><span class="line">                    Default is <span class="string">'text/plain'</span></span><br><span class="line">    -v verbosity    How much troubleshooting info to <span class="built_in">print</span></span><br><span class="line">    -w              Print out results <span class="keyword">in</span> HTML tables</span><br><span class="line">    -i              Use HEAD instead of GET</span><br><span class="line">    -x attributes   String to insert as table attributes</span><br><span class="line">    -y attributes   String to insert as tr attributes</span><br><span class="line">    -z attributes   String to insert as td or th attributes</span><br><span class="line">    -C attribute    Add cookie, eg. <span class="string">'Apache=1234'</span>. (repeatable)</span><br><span class="line">    -H attribute    Add Arbitrary header line, eg. <span class="string">'Accept-Encoding: gzip'</span></span><br><span class="line">                    Inserted after all normal header lines. (repeatable)</span><br><span class="line">    -A attribute    Add Basic WWW Authentication, the attributes</span><br><span class="line">                    are a colon separated username and password.</span><br><span class="line">    -P attribute    Add Basic Proxy Authentication, the attributes</span><br><span class="line">                    are a colon separated username and password.</span><br><span class="line">    -X proxy:port   Proxyserver and port number to use</span><br><span class="line">    -V              Print version number and <span class="built_in">exit</span></span><br><span class="line">    -k              Use HTTP KeepAlive feature</span><br><span class="line">    -d              Do not show percentiles served table.</span><br><span class="line">    -S              Do not show confidence estimators and warnings.</span><br><span class="line">    -q              Do not show progress when doing more than 150 requests</span><br><span class="line">    -g filename     Output collected data to gnuplot format file.</span><br><span class="line">    -e filename     Output CSV file with percentages served</span><br><span class="line">    -r              Don<span class="string">'t exit on socket receive errors.</span></span><br><span class="line"><span class="string">    -h              Display usage information (this message)</span></span><br><span class="line"><span class="string">    -Z ciphersuite  Specify SSL/TLS cipher suite (See openssl ciphers)</span></span><br><span class="line"><span class="string">    -f protocol     Specify SSL/TLS protocol</span></span><br><span class="line"><span class="string">                    (SSL3, TLS1, TLS1.1, TLS1.2 or ALL)</span></span><br></pre></td></tr></table></figure></p>
+<p>比如开启一个10并发的1000次请求：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ab -c 10 -n 1000 http://www.tensorbytes.com/</span><br></pre></td></tr></table></figure></p>
+<p>添加头信息：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ab -c 1 -n 1 -w \</span><br><span class="line">  -H <span class="string">'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'</span> \</span><br><span class="line">  -H <span class="string">'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'</span> \</span><br><span class="line">  -H <span class="string">'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8'</span> \</span><br><span class="line"> http://www.tensorbytes.com/</span><br></pre></td></tr></table></figure></p>
+<h2 id="案例代码"><a href="#案例代码" class="headerlink" title="案例代码"></a>案例代码</h2><p>代码：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> asyncio <span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fetch</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.work_queue = Queue()</span><br><span class="line">        self.max_loop = <span class="number">10000</span></span><br><span class="line">        self.host = <span class="string">"http://14.29.5.29/XXXX"</span></span><br><span class="line">        self.payload = &#123;<span class="string">"planId"</span>: <span class="number">10000007</span>, <span class="string">"activityId"</span>: <span class="number">1002</span>, <span class="string">"label"</span>: <span class="number">1</span>,</span><br><span class="line">                        <span class="string">"key"</span>: <span class="string">"98214ecfe6b9ae8855e3ac6509ad940f"</span>, <span class="string">"keyType"</span>: <span class="string">"imei"</span>,</span><br><span class="line">                        <span class="string">"batchId"</span>: <span class="number">1</span>, <span class="string">"token"</span>: <span class="string">"395La7f9x9x"</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get_url</span><span class="params">(self, host, payload)</span>:</span></span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">with</span> session.post(host, data=payload) <span class="keyword">as</span> resp:</span><br><span class="line">                text = <span class="keyword">await</span> resp.text()</span><br><span class="line">                <span class="keyword">if</span> <span class="string">"1"</span> <span class="keyword">in</span> text:</span><br><span class="line">                    print(text, payload[<span class="string">"key"</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            param = <span class="keyword">await</span> self.work_queue.get()</span><br><span class="line">            <span class="keyword">if</span> param:</span><br><span class="line">                <span class="keyword">await</span> self.get_url(self.host, param)</span><br><span class="line">                self.work_queue.task_done()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">producer</span><span class="params">(self)</span>:</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        string = <span class="string">'866260035710238'</span></span><br><span class="line">        <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> i:</span><br><span class="line">                md5_str = hashlib.md5(string.encode(<span class="string">'utf-8'</span>))</span><br><span class="line">                self.payload[<span class="string">"key"</span>] = md5_str.hexdigest()</span><br><span class="line">                string = str(int(string) + <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">await</span> self.work_queue.put(self.payload.copy()) <span class="comment">#必须要</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; self.max_loop:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">await</span> self.producer()</span><br><span class="line">        print(<span class="string">'start consumer...'</span>)</span><br><span class="line"></span><br><span class="line">        tasks = [</span><br><span class="line">            loop.create_task(self.consumer())</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>)</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> self.work_queue.join()</span><br><span class="line">        print(<span class="string">'end join'</span>)</span><br><span class="line">        <span class="keyword">for</span> task <span class="keyword">in</span> tasks:</span><br><span class="line">            task.cancel()</span><br><span class="line"></span><br><span class="line">t1 = time.time()</span><br><span class="line">loop = asyncio.get_event_loop()</span><br><span class="line">test = Fetch()</span><br><span class="line">loop.run_until_complete(test.run())</span><br><span class="line">loop.close()</span><br><span class="line">print(time.time() - t1)</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -604,8 +621,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -622,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -633,7 +659,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -644,7 +670,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -707,6 +733,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ab测试工具"><span class="nav-number">1.</span> <span class="nav-text">ab测试工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例代码"><span class="nav-number">2.</span> <span class="nav-text">案例代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-03-24T13:47:18+08:00">
+                2020-03-24
+              </time>
             
           </span>
 
@@ -423,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  764
+                  763
                 </span>
               
 
@@ -465,29 +477,29 @@
 
       
         <p>新硬盘回来，需要在现有的系统挂载使用。</p>
-<h2 id="分区-格式化"><a href="#分区-格式化" class="headerlink" title="分区/格式化"></a>分区/格式化</h2><p><code>fdisk /dev/sdb</code><br>输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Command (m for help): n                               #### 创建新的分区</span><br><span class="line">Command action</span><br><span class="line">   e   extended</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">p                                                     #### 创建主分区</span><br><span class="line">Partition number (1-4):1                              #### 分区ID</span><br><span class="line">First cylinder (1-65270, default 1): </span><br><span class="line">Using default value 1</span><br><span class="line">Last cylinder, +cylinders or +size&#123;K,M,G&#125; (1-65270, default 65270): </span><br><span class="line">Using default value 65270</span><br><span class="line"></span><br><span class="line">Command (m for help):t                                 #### 修改分区类型</span><br><span class="line">Command (m for help):8e                                #### Linux lvm</span><br><span class="line">Command (m for help):w                                 #### 保存修改</span><br></pre></td></tr></table></figure></p>
+<h2 id="分区-格式化"><a href="#分区-格式化" class="headerlink" title="分区/格式化"></a>分区/格式化</h2><p><code>fdisk /dev/sdb</code><br>输入：<br><figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">Command (m <span class="keyword">for</span> help): n                               #### 创建新的分区</span><br><span class="line">Command action</span><br><span class="line">   e   extended</span><br><span class="line">   p   primary partition (1-4)</span><br><span class="line">p                                                     #### 创建主分区</span><br><span class="line">Partition number (1-4):1                              #### 分区ID</span><br><span class="line">First cylinder (1-65270,<span class="built_in"> default </span>1): </span><br><span class="line">Using<span class="built_in"> default </span>value 1</span><br><span class="line">Last cylinder, +cylinders <span class="keyword">or</span> +size&#123;K,M,G&#125; (1-65270,<span class="built_in"> default </span>65270): </span><br><span class="line">Using<span class="built_in"> default </span>value 65270</span><br><span class="line"></span><br><span class="line">Command (m <span class="keyword">for</span> help):t                                 #### 修改分区类型</span><br><span class="line">Command (m <span class="keyword">for</span> help):8e                                #### Linux lvm</span><br><span class="line">Command (m <span class="keyword">for</span> help):w                                 #### 保存修改</span><br></pre></td></tr></table></figure></p>
 <p><strong>parted</strong><br><code>parted /dev/sdb</code></p>
 <p>可以用于修改 Disk label type, 比如把dos 改为 gpt:<code>mklabel gpt</code><br>新增分区：<code>mkpart</code><br>查看分区 ：<code>p</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(parted) mklabel gpt   # 将MBR磁盘格式化为GPT</span><br><span class="line">(parted) mkpart primary ext4 0% 100%    将所有容量分为一个主分区</span><br><span class="line">(parted) p    #打印当前分区</span><br><span class="line">(parted) q    #退出</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line"><span class="comment">(parted)</span> mklabel gpt   <span class="attr"># 将MBR磁盘格式化为GPT</span></span><br><span class="line"><span class="attr">(parted) mkpart primary ext4</span> <span class="number">0</span><span class="meta">%</span> <span class="number">100</span><span class="meta">%</span>    将所有容量分为一个主分区</span><br><span class="line"><span class="comment">(parted)</span> p    <span class="attr">#打印当前分区</span></span><br><span class="line"><span class="attr">(parted) q    #退出</span></span><br></pre></td></tr></table></figure>
 <h2 id="创建物理卷"><a href="#创建物理卷" class="headerlink" title="创建物理卷"></a>创建物理卷</h2><p>物理卷就是指硬盘分区或从逻辑上与磁盘分区具有同样功能的设备(如RAID)，是LVM的基本存储逻辑块，但和基本的物理存储介质（如分区、磁盘等）比较，却包含有与LVM相关的管理参数</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvcreate /dev/sdb1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pvcreate /dev/sdb1</span><br></pre></td></tr></table></figure>
 <h2 id="创建逻辑组"><a href="#创建逻辑组" class="headerlink" title="创建逻辑组"></a>创建逻辑组</h2><p>由一个或多个物理卷组成一个整体，即称为卷组，在卷组中可以动态的添加或移除物理卷，许多个物理卷可以分别组成不同的卷组，卷组名称由用户自行定义。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgcreate fastDevice /dev/sdb1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vgcreate fastDevice /dev/sdb1</span><br></pre></td></tr></table></figure>
 <h2 id="创建逻辑卷"><a href="#创建逻辑卷" class="headerlink" title="创建逻辑卷"></a>创建逻辑卷</h2><p>逻辑卷是建立在卷组之上的，与物理卷无直接关系，对于逻辑卷来说，每一个卷组就是一个整体，从这个整体中切出一小块空间，作为用户创建文件系统的基础，这一小块空间就称为逻辑卷，使用mkfs等工具在逻辑卷之上建立文件系统以后，即可挂载到Linux系统中的目录下使用。</p>
-<p>使用600G空间从fastDevice创建一个名叫data<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvcreate -L 600G -n data fastDevice</span><br></pre></td></tr></table></figure></p>
-<p>使用剩余空闲空间的100%<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvcreate <span class="_">-l</span> 100%Free -n runtime fastDevice</span><br></pre></td></tr></table></figure></p>
-<h2 id="创建文件系统"><a href="#创建文件系统" class="headerlink" title="创建文件系统"></a>创建文件系统</h2><p>使用mkfs.ext4命令在逻辑卷data上创建ext4文件系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/fastDevice/data</span><br></pre></td></tr></table></figure></p>
-<h2 id="设置挂载和开机自动挂载"><a href="#设置挂载和开机自动挂载" class="headerlink" title="设置挂载和开机自动挂载"></a>设置挂载和开机自动挂载</h2><p>挂在分区到本地目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/fastDevice/data /home/data</span><br></pre></td></tr></table></figure></p>
-<p>设置开机挂载<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/fstab                                   #### 修改fstab 开机自动挂载</span><br><span class="line">-----------</span><br><span class="line"></span><br><span class="line">UUID=94e4e384-0ace-437f-bc96-057dd64f42ee / ext4 defaults,barrier=0 1 1</span><br><span class="line">tmpfs                   /dev/shm                tmpfs   defaults        0 0</span><br><span class="line">devpts                  /dev/pts                devpts  gid=5,mode=620  0 0</span><br><span class="line">sysfs                   /sys                    sysfs   defaults        0 0</span><br><span class="line">proc                    /proc                   proc    defaults        0 0</span><br><span class="line">/dev/VolGroup01/lvmServer       /server         ext4    defaults        0 0</span><br></pre></td></tr></table></figure></p>
+<p>使用600G空间从fastDevice创建一个名叫data<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lvcreate -L 600G -n data fastDevice</span><br></pre></td></tr></table></figure></p>
+<p>使用剩余空闲空间的100%<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lvcreate -l 100%Free -n runtime fastDevice</span><br></pre></td></tr></table></figure></p>
+<h2 id="创建文件系统"><a href="#创建文件系统" class="headerlink" title="创建文件系统"></a>创建文件系统</h2><p>使用mkfs.ext4命令在逻辑卷data上创建ext4文件系统<br><figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"><span class="title">mkfs</span>.ext4 /dev/fastDevice/<span class="class"><span class="keyword">data</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="设置挂载和开机自动挂载"><a href="#设置挂载和开机自动挂载" class="headerlink" title="设置挂载和开机自动挂载"></a>设置挂载和开机自动挂载</h2><p>挂在分区到本地目录<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/fastDevice/data /home/data</span><br></pre></td></tr></table></figure></p>
+<p>设置开机挂载<br><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">vi /etc/fstab                                   #### 修改fstab 开机自动挂载</span><br><span class="line">-----------</span><br><span class="line"></span><br><span class="line">UUID=<span class="number">94e4</span>e384<span class="number">-0</span>ace<span class="number">-437</span>f-bc96<span class="number">-057</span>dd64f42ee / ext4 defaults,barrier=<span class="number">0</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">tmpfs                   /dev/shm                tmpfs   defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">devpts                  /dev/pts                devpts  gid=<span class="number">5</span>,mode=<span class="number">620</span>  <span class="number">0</span> <span class="number">0</span></span><br><span class="line">sysfs                   /sys                    sysfs   defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">proc                    /proc                   proc    defaults        <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/dev/VolGroup01/lvmServer       /server         ext4    defaults        <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="新硬盘扩容"><a href="#新硬盘扩容" class="headerlink" title="新硬盘扩容"></a>新硬盘扩容</h2><p>将新的物理卷加入卷组:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgextend data /dev/vdc</span><br></pre></td></tr></table></figure>
-<p>卸载要扩充逻辑卷：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount /home/data</span><br></pre></td></tr></table></figure></p>
-<p>扩充逻辑卷:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvextend -L +100G /dev/data/data</span><br></pre></td></tr></table></figure></p>
-<p>检查逻辑卷及重新设置大小:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e2fsck <span class="_">-f</span> /dev/data/data</span><br><span class="line">resize2fs /dev/data/data</span><br></pre></td></tr></table></figure></p>
-<p>挂载：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/data/data /home/data</span><br></pre></td></tr></table></figure></p>
-<h2 id="数据迁移"><a href="#数据迁移" class="headerlink" title="数据迁移"></a>数据迁移</h2><p>如果做数据迁移可以先将逻辑卷挂到一个临时目录：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/data/data /home/tmp</span><br></pre></td></tr></table></figure></p>
-<p>然后将数据拷贝到临时目录：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsync -avx /home/data/ /home/tmp</span><br></pre></td></tr></table></figure></p>
-<p>到/home/tmp下查看，没问题后将源目录重命名，将硬盘挂载过来：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv /home/data /home/data.bak</span><br><span class="line">umount /dev/data/data</span><br><span class="line">mount /dev/data/data /home/data</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vgextend data /dev/vdc</span><br></pre></td></tr></table></figure>
+<p>卸载要扩充逻辑卷：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">umount /home/data</span><br></pre></td></tr></table></figure></p>
+<p>扩充逻辑卷:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lvextend -L +100G /dev/data/data</span><br></pre></td></tr></table></figure></p>
+<p>检查逻辑卷及重新设置大小:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">e2fsck -f /dev/data/data</span><br><span class="line">resize2fs /dev/data/data</span><br></pre></td></tr></table></figure></p>
+<p>挂载：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/data/data /home/data</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据迁移"><a href="#数据迁移" class="headerlink" title="数据迁移"></a>数据迁移</h2><p>如果做数据迁移可以先将逻辑卷挂到一个临时目录：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mount /dev/data/data /home/tmp</span><br></pre></td></tr></table></figure></p>
+<p>然后将数据拷贝到临时目录：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rsync -avx /home/data/ /home/tmp</span><br></pre></td></tr></table></figure></p>
+<p>到/home/tmp下查看，没问题后将源目录重命名，将硬盘挂载过来：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mv /home/data /home/data.bak</span><br><span class="line">umount /dev/data/data</span><br><span class="line">mount /dev/data/data /home/data</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -643,7 +655,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -654,7 +666,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -665,7 +677,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

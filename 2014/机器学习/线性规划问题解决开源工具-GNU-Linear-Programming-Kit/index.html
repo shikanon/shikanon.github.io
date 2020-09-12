@@ -371,7 +371,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -480,32 +492,32 @@
 <p>线性规划方程：</p>
 <p><img src="/img/GLPK-线性规划公式.png" alt="GLPK-线性规划公式"></p>
 <p>本案列就用Sriram在Coursera公开课的上讲的案例直接进行介绍了，math方法是最简单的方法，就是直接把线性方程写下来，找一个txt记事本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var x1&gt;=0;</span><br><span class="line">var x2&gt;=0;</span><br><span class="line">maximize obj:x1+2*x2;</span><br><span class="line">c1:-3*x1+x2&lt;=2;</span><br><span class="line">c2:x2&lt;=11;</span><br><span class="line">c3:x1-x2&lt;=3;</span><br><span class="line">c4:x1&lt;=6;</span><br><span class="line">solve;</span><br><span class="line">display x1;</span><br><span class="line">display x2;</span><br><span class="line">end;</span><br></pre></td></tr></table></figure>
+<figure class="highlight llvm"><table><tr><td class="code"><pre><span class="line">var <span class="keyword">x</span><span class="number">1</span>&gt;=<span class="number">0</span><span class="comment">;</span></span><br><span class="line"><span class="comment">var x2&gt;=0;</span></span><br><span class="line"><span class="comment">maximize obj:x1+2*x2;</span></span><br><span class="line"><span class="comment">c1:-3*x1+x2&lt;=2;</span></span><br><span class="line"><span class="comment">c2:x2&lt;=11;</span></span><br><span class="line"><span class="comment">c3:x1-x2&lt;=3;</span></span><br><span class="line"><span class="comment">c4:x1&lt;=6;</span></span><br><span class="line"><span class="comment">solve;</span></span><br><span class="line"><span class="comment">display x1;</span></span><br><span class="line"><span class="comment">display x2;</span></span><br><span class="line"><span class="comment">end;</span></span><br></pre></td></tr></table></figure>
 <p>可以看出MathProg language很简单，定义变量范围var,定义目标maximize obj:和约束条件就可以了，最后求解solve和显示display 然后保持为first.ampl</p>
 <p>在CMD命令行直接输入glpsol –math fitst.ampl就可以了</p>
 <p><img src="/img/GLPK-first-计算结果.png" alt="GLPK-计算结果"></p>
-<p>可以看到结果为<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这种方法在解决简单少量的线性规划的时候很简单清晰，但是在解决大量线性规划的时候是不具备可操作性的，因此介绍GLPK的第二种命令--model,这种命令可以用两个文件存储一个为MODEL文件，一个为DATA文件，MODEL文件主要通过构建矩阵进行线性规划计算，同样以上面的线性规划为例，可以得出其实上面的约束方程可以看出两个矩阵相乘，分别为一个系数矩阵A和所求矩阵X相乘小于等于b矩阵(A*x&lt;=b)：</span><br></pre></td></tr></table></figure></p>
+<p>可以看到结果为<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">这种方法在解决简单少量的线性规划的时候很简单清晰，但是在解决大量线性规划的时候是不具备可操作性的，因此介绍GLPK的第二种命令--model,这种命令可以用两个文件存储一个为MODEL文件，一个为DATA文件，MODEL文件主要通过构建矩阵进行线性规划计算，同样以上面的线性规划为例，可以得出其实上面的约束方程可以看出两个矩阵相乘，分别为一个系数矩阵A和所求矩阵X相乘小于等于b矩阵(A*x&lt;=b)：</span><br></pre></td></tr></table></figure></p>
 <p>param m;<br>param n;</p>
 <p>param c{i in 1..n};<br>param A{i in 1..m,j in 1..n};<br>param b{i in 1..m};</p>
 <p>var x{i in 1..n}&gt;=0;</p>
 <p>maximize obj:sum{i in 1..n} c[i]<em>x[i];<br>s.t.<br>e{j in 1..m}:sum{i in 1..n} A[j,i]</em>x[i]&lt;=b[j];</p>
-<p>solve;<br>display x;<br>end;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">写完model文件还需要写一个赋值的data文件对model中的参数赋值：</span><br></pre></td></tr></table></figure></p>
+<p>solve;<br>display x;<br>end;<br><figure class="highlight stan"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">写完<span class="title">model</span>文件还需要写一个赋值的<span class="title">data</span>文件对<span class="title">model</span>中的参数赋值：</span><br></pre></td></tr></table></figure></p>
 <p>param n:=2;</p>
 <p>param m:=4;</p>
 <p>param c:=1 2：<br>1 2;</p>
 <p>param A:=1 2：<br>1 -3 1<br>2 0 1<br>3 1 -1<br>4 1 0;</p>
-<p>param b:= 1：<br>1 2<br>2 11<br>3 3<br>4 6;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">具体data文件的写作格式可以参考我的百度云盘上的gmpl文件（ http://pan.baidu.com/s/1i3CDq8t  ）</span><br><span class="line"></span><br><span class="line">里面有详细说明，</span><br><span class="line"></span><br><span class="line">然后只要再在cmd中用命令--model执行就可以了：</span><br><span class="line"></span><br><span class="line">![GLPK-计算结果](./img/GLPK-计算结果.png)</span><br><span class="line"></span><br><span class="line">结果和math命令一样，不过内存使用稍微大了点。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 过剩通勤应用</span><br><span class="line"></span><br><span class="line">&gt; 本文继续对 GNU Linear Programming Kit进行解释，本次介绍引进实际应用，计算最大过剩通勤和最小过剩通勤。</span><br><span class="line"></span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">通过上面对GLPK的建模计算有了大概了解，本章完成BOSS下达任务，完成一个过剩通勤计算。</span><br><span class="line"></span><br><span class="line">首先当然是写好model文件,其中最大通勤为：</span><br></pre></td></tr></table></figure></p>
+<p>param b:= 1：<br>1 2<br>2 11<br>3 3<br>4 6;<br><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">具体data文件的写作格式可以参考我的百度云盘上的gmpl文件（ http://pan.baidu.com/s/1i3CDq8t  ）</span><br><span class="line"></span><br><span class="line">里面有详细说明，</span><br><span class="line"></span><br><span class="line">然后只要再在cmd中用命令--model执行就可以了：</span><br><span class="line"></span><br><span class="line">![<span class="string">GLPK-计算结果</span>](<span class="link">./img/GLPK-计算结果.png</span>)</span><br><span class="line"></span><br><span class="line">结果和math命令一样，不过内存使用稍微大了点。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">## 过剩通勤应用</span></span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 本文继续对 GNU Linear Programming Kit进行解释，本次介绍引进实际应用，计算最大过剩通勤和最小过剩通勤。</span></span><br><span class="line"></span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">通过上面对GLPK的建模计算有了大概了解，本章完成BOSS下达任务，完成一个过剩通勤计算。</span><br><span class="line"></span><br><span class="line">首先当然是写好model文件,其中最大通勤为：</span><br></pre></td></tr></table></figure></p>
 <p>param n;<br>param m;</p>
 <p>param Population{i in 1..n,j in 1..m};<br>param Distance{i in 1..n,j in 1..m};</p>
 <p>var x{i in 1..n,j in 1..m}&gt;=0,integer;</p>
 <p>maximize obj:sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>s.t.<br>e{i in 1..n}:sum{j in 1..m}x[i,j]=sum{j in 1..m}Population[i,j];<br>f{j in 1..m}:sum{i in 1..n}x[i,j]=sum{i in 1..n}Population[i,j];</p>
-<p>solve;<br>printf “min sum:%d”,sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>end;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最小通勤为：</span><br></pre></td></tr></table></figure></p>
+<p>solve;<br>printf “min sum:%d”,sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>end;<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">最小通勤为：</span><br></pre></td></tr></table></figure></p>
 <p>param n;<br>param m;</p>
 <p>param Population{i in 1..n,j in 1..m};<br>param Distance{i in 1..n,j in 1..m};</p>
 <p>var x{i in 1..n,j in 1..m}&gt;=0,integer;</p>
 <p>minimize obj:sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>s.t.<br>e{i in 1..n}:sum{j in 1..m}x[i,j]=sum{j in 1..m}Population[i,j];<br>f{j in 1..m}:sum{i in 1..n}x[i,j]=sum{i in 1..n}Population[i,j];</p>
-<p>solve;<br>printf “min sum:%d”,sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>end;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">就是将maximize改为miniminze，写了个run.bat文件方便输出：</span><br></pre></td></tr></table></figure></p>
-<p>glpsol –model MaxTrafficCommuting.model –data Data.data –output max.solve<br>glpsol –model MinTrafficCommuting.model –data Data.data –output min.solve<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">接下来是data文件部分了，由于原始数据是excel数据，需要先进行格式整理，主要就用pandas进行整理，操作方便，直接附上python代码：（data文件的格式可以参照上一篇GPLK解释的文章）</span><br></pre></td></tr></table></figure></p>
+<p>solve;<br>printf “min sum:%d”,sum{i in 1..n}sum{j in 1..m} Distance[i,j]*x[i,j];<br>end;<br><figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">就是将maximize改为miniminze，写了个<span class="keyword">run</span>.<span class="bash">bat文件方便输出：</span></span><br></pre></td></tr></table></figure></p>
+<p>glpsol –model MaxTrafficCommuting.model –data Data.data –output max.solve<br>glpsol –model MinTrafficCommuting.model –data Data.data –output min.solve<br><figure class="highlight haskell"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">接下来是<span class="class"><span class="keyword">data</span>文件部分了，由于原始数据是excel数据，需要先进行格式整理，主要就用pandas进行整理，操作方便，直接附上python代码：（<span class="keyword">data</span>文件的格式可以参照上一篇<span class="type">GPLK</span>解释的文章）</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="coding-cp936"><a href="#coding-cp936" class="headerlink" title="-- coding: cp936 --"></a>-<em>- coding: cp936 -</em>-</h1><p>import pandas as pd</p>
 <p>def toformat():</p>
 <pre><code>#data is big table, and data1 is small table
@@ -693,7 +705,7 @@ return data,n
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -704,7 +716,7 @@ return data,n
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -715,7 +727,7 @@ return data,n
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

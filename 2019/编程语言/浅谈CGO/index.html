@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="shikanon">
 <meta property="og:description" content="C 语言是大量语言的基础，很多库会选择提供一个C兼容的API， 通过 C 语言可以整合大量的函数库，Golang 主要通过 CGO 支持 C 语言的函数调用，同时可以通过 CGO 导出 C 的动态库接口。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-11T01:11:52.975Z">
+<meta property="og:updated_time" content="2020-09-08T13:31:50.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈CGO">
 <meta name="twitter:description" content="C 语言是大量语言的基础，很多库会选择提供一个C兼容的API， 通过 C 语言可以整合大量的函数库，Golang 主要通过 CGO 支持 C 语言的函数调用，同时可以通过 CGO 导出 C 的动态库接口。">
@@ -364,7 +364,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-09-08T21:31:50+08:00">
+                2020-09-08
+              </time>
             
           </span>
 
@@ -399,6 +411,17 @@
 
                 
                 
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术博文/编程语言/GO/" itemprop="url" rel="index">
+                    <span itemprop="name">GO</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -423,7 +446,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  224
+                  220
                 </span>
               
 
@@ -464,8 +487,8 @@
       
 
       
-        <p>C 语言作为最古老的一门编程语言之一，其具有大量的高性能的函数库，很多语言都提供了C 语言的调用接口，<code>GO</code> 作为新时代的开拓者，同时也应该站在巨人的肩膀上， <code>CGO</code> 就是一个提供 GO 和 C 相互调用的桥梁工具。</p>
-<h1 id="CGO-的基本语法"><a href="#CGO-的基本语法" class="headerlink" title="CGO 的基本语法"></a>CGO 的基本语法</h1><p>在 <code>GO</code> 中调用 C：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//#include &lt;stdio.h&gt;</span><br><span class="line">import &quot;C&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	C.puts(C.CString(&quot;vim-go&quot;))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>C 语言作为最古老的一门编程语言之一，其具有大量的高性能的函数库，很多语言都提供了<code>C</code> 语言的调用接口，<code>GO</code> 作为新时代的开拓者，同时也应该站在巨人的肩膀上， <code>CGO</code> 就是一个提供 <code>GO</code> 和 <code>C</code> 相互调用的桥梁工具。</p>
+<h1 id="CGO-的基本语法"><a href="#CGO-的基本语法" class="headerlink" title="CGO 的基本语法"></a>CGO 的基本语法</h1><p>在 <code>GO</code> 中调用 C：<br><figure class="highlight autoit"><table><tr><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line">import <span class="string">"C"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span> &#123;</span></span><br><span class="line">	C.puts(C.CString(<span class="string">"vim-go"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>直接在go的源码里面加入<code>import &quot;C&quot;</code>就可以导入<code>CGO</code>。<br>在<code>import &quot;C&quot;</code>前面的注释会被默认成 C 代码（不能空行，必须在顶行相连）<br>这里的 “C” 不是包名，而是一种类似名字空间的概念，或可以理解为伪包，C语言所有语法元素均在该伪包下面如C.uint、C.print、C.free等。</p>
 
       
@@ -620,7 +643,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -631,7 +654,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -642,7 +665,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

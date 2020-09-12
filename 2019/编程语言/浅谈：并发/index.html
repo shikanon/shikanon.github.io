@@ -373,7 +373,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-11-11T09:11:52+08:00">
+                2019-11-11
+              </time>
             
           </span>
 
@@ -511,7 +523,7 @@
 <p>M：是一个线程或称为Machine，所有M是有线程栈的。</p>
 <p>G：表示一个Goroutine。</p>
 <p><strong>执行队列</strong><br>在 Go 调度器中有 2 个不同的执行队列：全局队列（Global Run Queue, 简称 GRQ）和本地队列（Local Run Queue，简称 LRQ）。每一个 P 都会有一个 LRQ 来管理分配给 P 上的 Goroutine。这些 Goroutine 轮流被交付给 M 执行。GRQ 是用来保存还没有被分配到 P 的 Goroutine。<br>LRQ是 Lock-Free 的，处理速度快；GRQ为保证数据竞争问题，需要加锁处理，速度比LRQ慢，因此 P 处理完LRQ的时候会先找其他 P 的LRQ，最后再去找GRQ。</p>
-<p><strong>goroutine队列调度</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">runtime.schedule() &#123;</span><br><span class="line">    // only 1/61 of the time, check the global runnable queue for a G.</span><br><span class="line">    // if not found, check the local queue.</span><br><span class="line">    // if not found,</span><br><span class="line">    //     try to steal from other Ps.</span><br><span class="line">    //     if not, check the global runnable queue.</span><br><span class="line">    //     if not found, poll network.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>goroutine队列调度</strong><br><figure class="highlight smali"><table><tr><td class="code"><pre><span class="line">runtime.schedule() &#123;</span><br><span class="line">    // only 1/61 of the time,<span class="built_in"> check </span>the global runnable queue for a G.</span><br><span class="line">    //<span class="built_in"> if </span>not found,<span class="built_in"> check </span>the local queue.</span><br><span class="line">    //<span class="built_in"> if </span>not found,</span><br><span class="line">    //     try to steal from other Ps.</span><br><span class="line">    //    <span class="built_in"> if </span>not,<span class="built_in"> check </span>the global runnable queue.</span><br><span class="line">    //    <span class="built_in"> if </span>not found, poll network.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="/img/并发/scheduler-concepts.png" alt=""><br><img src="/img/并发/scheduler-stealing.png" alt=""></p>
 <h2 id="Goroutine调度为何更好？"><a href="#Goroutine调度为何更好？" class="headerlink" title="Goroutine调度为何更好？"></a>Goroutine调度为何更好？</h2><ul>
 <li>Go的调度是基于用户态事件而非抢占式的，比如关键字<code>go</code>、垃圾回收、同步互斥操作如<code>Lock()</code> <code>Unlock()</code>。</li>
@@ -679,7 +691,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -690,7 +702,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -701,7 +713,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">129</span>
+                  <span class="site-state-item-count">150</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
